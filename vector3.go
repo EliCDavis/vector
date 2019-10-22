@@ -1,6 +1,8 @@
 package vector
 
-import "math"
+import (
+	"math"
+)
 
 type Vector3 struct {
 	x float64
@@ -22,6 +24,16 @@ func Vector3Zero() Vector3 {
 
 func Vector3One() Vector3 {
 	return NewVector3(1, 1, 1)
+}
+
+// AverageVector3 sums all vector3's components together and divides each
+// component by the number of vectors added
+func AverageVector3(vectors []Vector3) Vector3 {
+	var center Vector3
+	for _, v := range vectors {
+		center = center.Add(v)
+	}
+	return center.DivByConstant(float64(len(vectors)))
 }
 
 func (v Vector3) X() float64 {
