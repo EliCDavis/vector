@@ -14,6 +14,13 @@ func NewVector2(x float64, y float64) Vector2 {
 	}
 }
 
+func Vector2Zero() Vector2 {
+	return Vector2{
+		x: 0,
+		y: 0,
+	}
+}
+
 func (v Vector2) X() float64 {
 	return v.x
 }
