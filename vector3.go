@@ -25,6 +25,31 @@ func Vector3Right() Vector3 {
 	return NewVector3(1, 0, 0)
 }
 
+// Vector3Left is (-1, 0, 0)
+func Vector3Left() Vector3 {
+	return NewVector3(-1, 0, 0)
+}
+
+// Vector3Forward is (0, 0, 1)
+func Vector3Forward() Vector3 {
+	return NewVector3(0, 0, 1)
+}
+
+// Vector3Backwards is (0, 0, -1)
+func Vector3Backwards() Vector3 {
+	return NewVector3(0, 0, -1)
+}
+
+// Vector3Up is (0, 1, 0)
+func Vector3Up() Vector3 {
+	return NewVector3(0, 1, 0)
+}
+
+// Vector3Down is (0, -1, 0)
+func Vector3Down() Vector3 {
+	return NewVector3(0, -1, 0)
+}
+
 // Vector3Zero is (0, 0, 0)
 func Vector3Zero() Vector3 {
 	return NewVector3(0, 0, 0)
@@ -33,11 +58,6 @@ func Vector3Zero() Vector3 {
 // Vector3One is (1, 1, 1)
 func Vector3One() Vector3 {
 	return NewVector3(1, 1, 1)
-}
-
-// Vector3Up is (0, 1, 0)
-func Vector3Up() Vector3 {
-	return NewVector3(0, 1, 0)
 }
 
 // AverageVector3 sums all vector3's components together and divides each
