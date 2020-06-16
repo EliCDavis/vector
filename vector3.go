@@ -75,14 +75,41 @@ func (v Vector3) X() float64 {
 	return v.x
 }
 
+// SetX changes the x component of the vector
+func (v Vector3) SetX(newX float64) Vector3 {
+	return Vector3{
+		x: newX,
+		y: v.y,
+		z: v.z,
+	}
+}
+
 // Y returns the y component
 func (v Vector3) Y() float64 {
 	return v.y
 }
 
+// SetY changes the y component of the vector
+func (v Vector3) SetY(newY float64) Vector3 {
+	return Vector3{
+		x: v.x,
+		y: newY,
+		z: v.z,
+	}
+}
+
 // Z returns the z component
 func (v Vector3) Z() float64 {
 	return v.z
+}
+
+// SetZ changes the z component of the vector
+func (v Vector3) SetZ(newZ float64) Vector3 {
+	return Vector3{
+		x: v.x,
+		y: v.y,
+		z: newZ,
+	}
 }
 
 // Perpendicular finds a vector that meets this vector at a right angle.
