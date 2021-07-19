@@ -124,6 +124,34 @@ func (v Vector3) Perpendicular() Vector3 {
 	return v.Cross(c)
 }
 
+// Round takes each component of the vector and rounds it to the nearest whole
+// number
+func (v Vector3) Round() Vector3 {
+	return NewVector3(
+		math.Round(v.x),
+		math.Round(v.y),
+		math.Round(v.z),
+	)
+}
+
+// Floor applies the floor math operation to each component of the vector
+func (v Vector3) Floor() Vector3 {
+	return NewVector3(
+		math.Floor(v.x),
+		math.Floor(v.y),
+		math.Floor(v.z),
+	)
+}
+
+// Ceil applies the ciel math operation to each component of the vector
+func (v Vector3) Ceil() Vector3 {
+	return NewVector3(
+		math.Ceil(v.x),
+		math.Ceil(v.y),
+		math.Ceil(v.z),
+	)
+}
+
 // Add takes each component of our vector and adds them to the vector passed
 // in, returning a resulting vector
 func (v Vector3) Add(other Vector3) Vector3 {
