@@ -217,3 +217,11 @@ func (v Vector3) SquaredLength() float64 {
 func (v Vector3) Distance(other Vector3) float64 {
 	return math.Sqrt(math.Pow(other.x-v.x, 2.0) + math.Pow(other.y-v.y, 2.0) + math.Pow(other.z-v.z, 2.0))
 }
+
+func (v Vector3) Angle(other Vector3) float64 {
+	denominator := math.Sqrt(v.SquaredLength() * other.SquaredLength())
+	if denominator < 1e-15 {
+		return 0.
+	}
+	return math.Acos(clamp(v.Dot(other)/denominator, -1., 1.))
+}

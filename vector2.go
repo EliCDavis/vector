@@ -21,12 +21,49 @@ func Vector2Zero() Vector2 {
 	}
 }
 
+func Vector2Up() Vector2 {
+	return Vector2{
+		x: 0,
+		y: 1,
+	}
+}
+
+func Vector2Down() Vector2 {
+	return Vector2{
+		x: 0,
+		y: -1,
+	}
+}
+
+func Vector2Left() Vector2 {
+	return Vector2{
+		x: -1,
+		y: 0,
+	}
+}
+
+func Vector2Right() Vector2 {
+	return Vector2{
+		x: 1,
+		y: 0,
+	}
+}
+
 func (v Vector2) X() float64 {
 	return v.x
 }
 
 func (v Vector2) Y() float64 {
 	return v.y
+}
+
+// Perpendicular creates a vector perpendicular to the one passed in with the
+// same magnitude
+func (v Vector2) Perpendicular() Vector2 {
+	return Vector2{
+		x: v.y,
+		y: -v.x,
+	}
 }
 
 // Add returns a vector that is the result of two vectors added together
