@@ -112,6 +112,21 @@ func (v Vector3) SetZ(newZ float64) Vector3 {
 	}
 }
 
+// XY returns vector2 with the x and y components
+func (v Vector3) XY() Vector2 {
+	return NewVector2(v.x, v.y)
+}
+
+// XZ returns vector2 with the x and z components
+func (v Vector3) XZ() Vector2 {
+	return NewVector2(v.x, v.z)
+}
+
+// YZ returns vector2 with the y and z components
+func (v Vector3) YZ() Vector2 {
+	return NewVector2(v.y, v.z)
+}
+
 // Perpendicular finds a vector that meets this vector at a right angle.
 // https://stackoverflow.com/a/11132720/4974261
 func (v Vector3) Perpendicular() Vector3 {
