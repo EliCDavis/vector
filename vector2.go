@@ -49,12 +49,30 @@ func Vector2Right() Vector2 {
 	}
 }
 
+func Vector2One() Vector2 {
+	return Vector2{
+		x: 1,
+		y: 1,
+	}
+}
+
 func (v Vector2) X() float64 {
 	return v.x
 }
 
 func (v Vector2) Y() float64 {
 	return v.y
+}
+
+func (v Vector2) Floor() Vector2 {
+	return Vector2{
+		x: math.Floor(v.x),
+		y: math.Floor(v.y),
+	}
+}
+
+func (v Vector2) Dot(other Vector2) float64 {
+	return (v.x * other.x) + (v.y * other.y)
 }
 
 // Perpendicular creates a vector perpendicular to the one passed in with the
