@@ -2,6 +2,7 @@ package vector
 
 import (
 	"math"
+	"math/rand"
 )
 
 // Vector3 contains 3 components
@@ -199,6 +200,14 @@ func (v Vector3) Cross(other Vector3) Vector3 {
 
 func (v Vector3) Normalized() Vector3 {
 	return v.DivByConstant(v.Length())
+}
+
+func Vector3Rnd() Vector3 {
+	return Vector3{
+		x: rand.Float64(),
+		y: rand.Float64(),
+		z: rand.Float64(),
+	}
 }
 
 func (v Vector3) MultByConstant(t float64) Vector3 {

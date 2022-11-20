@@ -1,6 +1,9 @@
 package vector
 
-import "math"
+import (
+	"math"
+	"math/rand"
+)
 
 type Vector2 struct {
 	x float64
@@ -53,6 +56,13 @@ func Vector2One() Vector2 {
 	return Vector2{
 		x: 1,
 		y: 1,
+	}
+}
+
+func Vector2Rnd() Vector2 {
+	return Vector2{
+		x: rand.Float64(),
+		y: rand.Float64(),
 	}
 }
 
@@ -114,6 +124,13 @@ func (v Vector2) MultByConstant(t float64) Vector2 {
 	return Vector2{
 		x: v.x * t,
 		y: v.y * t,
+	}
+}
+
+func (v Vector2) MultByVector(o Vector2) Vector2 {
+	return Vector2{
+		x: v.x * o.x,
+		y: v.y * o.y,
 	}
 }
 
