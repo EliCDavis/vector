@@ -14,6 +14,17 @@ func (v3a Vector3Array) Add(other Vector3) (out Vector3Array) {
 	return
 }
 
+func (v3a Vector3Array) Distance() float64 {
+	if len(v3a) < 2 {
+		return 0
+	}
+	total := 0.
+	for i := 1; i < len(v3a); i++ {
+		total += v3a[i].Distance(v3a[i-1])
+	}
+	return total
+}
+
 func (v3a Vector3Array) MultByConstant(t float64) (out Vector3Array) {
 	out = make(Vector3Array, len(v3a))
 
