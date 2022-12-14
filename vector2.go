@@ -70,8 +70,24 @@ func (v Vector2) X() float64 {
 	return v.x
 }
 
+// SetX changes the x component of the vector
+func (v Vector2) SetX(newX float64) Vector2 {
+	return Vector2{
+		x: newX,
+		y: v.y,
+	}
+}
+
 func (v Vector2) Y() float64 {
 	return v.y
+}
+
+// SetY changes the y component of the vector
+func (v Vector2) SetY(newY float64) Vector2 {
+	return Vector2{
+		x: v.x,
+		y: newY,
+	}
 }
 
 func (v Vector2) Floor() Vector2 {
