@@ -158,3 +158,28 @@ func (v Vector2) DivByConstant(t float64) Vector2 {
 func (v Vector2) Distance(other Vector2) float64 {
 	return math.Sqrt(math.Pow(other.x-v.x, 2.0) + math.Pow(other.y-v.y, 2.0))
 }
+
+// Round takes each component of the vector and rounds it to the nearest whole
+// number
+func (v Vector2) Round() Vector2 {
+	return Vector2{
+		x: math.Round(v.x),
+		y: math.Round(v.y),
+	}
+}
+
+// Ceil applies the ceil math operation to each component of the vector
+func (v Vector2) Ceil() Vector2 {
+	return Vector2{
+		x: math.Ceil(v.x),
+		y: math.Ceil(v.y),
+	}
+}
+
+// Abs applies the Abs math operation to each component of the vector
+func (v Vector2) Abs() Vector2 {
+	return Vector2{
+		x: math.Abs(v.x),
+		y: math.Abs(v.y),
+	}
+}

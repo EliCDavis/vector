@@ -159,12 +159,21 @@ func (v Vector3) Floor() Vector3 {
 	)
 }
 
-// Ceil applies the ciel math operation to each component of the vector
+// Ceil applies the ceil math operation to each component of the vector
 func (v Vector3) Ceil() Vector3 {
 	return NewVector3(
 		math.Ceil(v.x),
 		math.Ceil(v.y),
 		math.Ceil(v.z),
+	)
+}
+
+// Abs applies the Abs math operation to each component of the vector
+func (v Vector3) Abs() Vector3 {
+	return NewVector3(
+		math.Abs(v.x),
+		math.Abs(v.y),
+		math.Abs(v.z),
 	)
 }
 
