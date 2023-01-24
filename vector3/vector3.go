@@ -258,7 +258,10 @@ func (v Vector[T]) SquaredLength() float64 {
 }
 
 func (v Vector[T]) SquaredDistance(other Vector[T]) float64 {
-	return math.Pow(float64(other.x-v.x), 2.0) + math.Pow(float64(other.y-v.y), 2.0) + math.Pow(float64(other.z-v.z), 2.0)
+	xDist := other.x - v.x
+	yDist := other.y - v.y
+	zDist := other.z - v.z
+	return float64((xDist * xDist) + (yDist * yDist) + (zDist * zDist))
 }
 
 func (v Vector[T]) Distance(other Vector[T]) float64 {

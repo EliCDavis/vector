@@ -28,6 +28,27 @@ func TestAdd(t *testing.T) {
 	}
 }
 
+func TestSub(t *testing.T) {
+	tests := map[string]struct {
+		left  vector3.Float64
+		right vector3.Float64
+		want  vector3.Float64
+	}{
+		"0, 0, 0 - 0, 0, 0 = 0, 0, 0": {left: vector3.New(0., 0., 0.), right: vector3.New(0., 0., 0.), want: vector3.New(0., 0., 0.)},
+		"4, 5, 6 - 1, 2, 3 = 3, 3, 3": {left: vector3.New(4., 5., 6.), right: vector3.New(1., 2., 3.), want: vector3.New(3., 3., 3.)},
+	}
+
+	for name, tc := range tests {
+		t.Run(name, func(t *testing.T) {
+			got := tc.left.Sub(tc.right)
+
+			assert.InDelta(t, tc.want.X(), got.X(), 0.000001)
+			assert.InDelta(t, tc.want.Y(), got.Y(), 0.000001)
+			assert.InDelta(t, tc.want.Z(), got.Z(), 0.000001)
+		})
+	}
+}
+
 func TestDefaults(t *testing.T) {
 	tests := map[string]struct {
 		got  vector3.Float64
@@ -50,4 +71,16 @@ func TestDefaults(t *testing.T) {
 			assert.InDelta(t, tc.want.Z(), tc.got.Z(), 0.000001)
 		})
 	}
+}
+
+var result float64
+
+func BenchmarkDistance(b *testing.B) {
+	var r float64
+	a := vector3.New(1., 2., 3.)
+	c := vector3.New(4., 5., 6.)
+	for i := 0; i < b.N; i++ {
+		r = a.Distance(c)
+	}
+	result = r
 }

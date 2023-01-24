@@ -1,20 +1,26 @@
 # Vector
 
-Collection of **generic, immutable** vector math functions I've written overtime for different hobby projects. 
+Collection of **generic, immutable** vector math functions I've written overtime for different hobby projects.
 
 Has support for both Vector2 (x, y) and Vector3 (x, y, z) functions.
 
 ## Example
 
+Below is an example on how to implement the sign distance field of a sphere in a generic fashion to work for both int, int64, float32, and float64.
+
 ```go
-// Move all points by a certain amount
-func Translate[T vector.Number](starting []vector3.Vector[T], amount vector3.Vector[T]) []vector3.Vector[T] {
-	results := make([]vector3.Vector[T], len(starting))
+package sdf
 
-	for i := 0; i < len(starting); i++ {
-		results[i] = starting[i].Add(amt)
+import (
+	"github.com/EliCDavis/vector"
+	"github.com/EliCDavis/vector/vector3"
+)
+
+type Field[T vector.Number] func(v vector3.Vector[T]) float64
+
+func Sphere[T vector.Number](pos vector3.Vector[T], radius float64) Field[T] {
+	return func(v vector3.Vector[T]) float64 {
+		return v.Distance(pos) - radius
 	}
-
-	return results
 }
 ```

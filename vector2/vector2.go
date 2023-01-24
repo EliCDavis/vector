@@ -163,9 +163,15 @@ func (v Vector[T]) DivByConstant(t float64) Vector[T] {
 	return v.MultByConstant(1.0 / t)
 }
 
+func (v Vector[T]) SquaredDistance(other Vector[T]) float64 {
+	xDist := other.x - v.x
+	yDist := other.y - v.y
+	return float64((xDist * xDist) + (yDist * yDist))
+}
+
 // Distance is the euclidean distance between two points
 func (v Vector[T]) Distance(other Vector[T]) float64 {
-	return math.Sqrt(math.Pow(float64(other.x-v.x), 2.0) + math.Pow(float64(other.y-v.y), 2.0))
+	return math.Sqrt(v.SquaredDistance(other))
 }
 
 // Round takes each component of the vector and rounds it to the nearest whole

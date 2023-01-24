@@ -8,6 +8,13 @@ import (
 
 type Array[T vector.Number] []Vector[T]
 
+type (
+	Float64Array = Array[float64]
+	Float32Array = Array[float32]
+	IntArray     = Array[int]
+	Int64Array   = Array[int64]
+)
+
 func (v3a Array[T]) Add(other Vector[T]) (out Array[T]) {
 	out = make(Array[T], len(v3a))
 
