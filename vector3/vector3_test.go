@@ -9,9 +9,9 @@ import (
 
 func TestAdd(t *testing.T) {
 	tests := map[string]struct {
-		left  vector3.Vector[float64]
-		right vector3.Vector[float64]
-		want  vector3.Vector[float64]
+		left  vector3.Float64
+		right vector3.Float64
+		want  vector3.Float64
 	}{
 		"0, 0, 0 + 0, 0, 0 = 0, 0, 0": {left: vector3.New(0., 0., 0.), right: vector3.New(0., 0., 0.), want: vector3.New(0., 0., 0.)},
 		"1, 2, 3 + 4, 5, 6 = 5, 7, 9": {left: vector3.New(1., 2., 3.), right: vector3.New(4., 5., 6.), want: vector3.New(5., 7., 9.)},
@@ -30,8 +30,8 @@ func TestAdd(t *testing.T) {
 
 func TestDefaults(t *testing.T) {
 	tests := map[string]struct {
-		got  vector3.Vector[float64]
-		want vector3.Vector[float64]
+		got  vector3.Float64
+		want vector3.Float64
 	}{
 		"zero":    {got: vector3.Zero[float64](), want: vector3.New(0., 0., 0.)},
 		"one":     {got: vector3.One[float64](), want: vector3.New(1., 1., 1.)},

@@ -12,6 +12,13 @@ type Vector[T vector.Number] struct {
 	y T
 }
 
+type (
+	Float64 = Vector[float64]
+	Float32 = Vector[float32]
+	Int     = Vector[int]
+	Int64   = Vector[int64]
+)
+
 func New[T vector.Number](x T, y T) Vector[T] {
 	return Vector[T]{
 		x: x,

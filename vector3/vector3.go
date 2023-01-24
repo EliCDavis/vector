@@ -14,6 +14,13 @@ type Vector[T vector.Number] struct {
 	z T
 }
 
+type (
+	Float64 = Vector[float64]
+	Float32 = Vector[float32]
+	Int     = Vector[int]
+	Int64   = Vector[int64]
+)
+
 // New creates a new vector with corresponding 3 components
 func New[T vector.Number](x T, y T, z T) Vector[T] {
 	return Vector[T]{
@@ -145,7 +152,7 @@ func (v Vector[T]) Perpendicular() Vector[T] {
 // Round takes each component of the vector and rounds it to the nearest whole
 // number
 func (v Vector[T]) Round() Vector[T] {
-	return New[T](
+	return New(
 		T(math.Round(float64(v.x))),
 		T(math.Round(float64(v.y))),
 		T(math.Round(float64(v.z))),
@@ -154,7 +161,7 @@ func (v Vector[T]) Round() Vector[T] {
 
 // Floor applies the floor math operation to each component of the vector
 func (v Vector[T]) Floor() Vector[T] {
-	return New[T](
+	return New(
 		T(math.Floor(float64(v.x))),
 		T(math.Floor(float64(v.y))),
 		T(math.Floor(float64(v.z))),
