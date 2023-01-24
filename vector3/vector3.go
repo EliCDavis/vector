@@ -5,6 +5,7 @@ import (
 	"math/rand"
 
 	"github.com/EliCDavis/vector"
+	"github.com/EliCDavis/vector/vector2"
 )
 
 // Vector contains 3 components
@@ -122,20 +123,20 @@ func (v Vector[T]) SetZ(newZ T) Vector[T] {
 	}
 }
 
-// // XY returns vector2 with the x and y components
-// func (v Vector3[T]) XY() Vector2 {
-// 	return NewVector2(v.x, v.y)
-// }
+// XY returns vector2 with the x and y components
+func (v Vector[T]) XY() vector2.Vector[T] {
+	return vector2.New(v.x, v.y)
+}
 
-// // XZ returns vector2 with the x and z components
-// func (v Vector3[T]) XZ() Vector2 {
-// 	return NewVector2(v.x, v.z)
-// }
+// XZ returns vector2 with the x and z components
+func (v Vector[T]) XZ() vector2.Vector[T] {
+	return vector2.New(v.x, v.z)
+}
 
-// // YZ returns vector2 with the y and z components
-// func (v Vector3[T]) YZ() Vector2 {
-// 	return NewVector2(v.y, v.z)
-// }
+// YZ returns vector2 with the y and z components
+func (v Vector[T]) YZ() vector2.Vector[T] {
+	return vector2.New(v.y, v.z)
+}
 
 // Perpendicular finds a vector that meets this vector at a right angle.
 // https://stackoverflow.com/a/11132720/4974261
