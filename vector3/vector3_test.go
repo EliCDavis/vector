@@ -49,6 +49,50 @@ func TestSub(t *testing.T) {
 	}
 }
 
+func TestScaleVecFloat(t *testing.T) {
+	tests := map[string]struct {
+		vec    vector3.Float64
+		scalar float64
+		want   vector3.Float64
+	}{
+		"1, 2, 3 *  2 =  2,  4,  6": {vec: vector3.New(1., 2., 3.), scalar: 2, want: vector3.New(2., 4., 6.)},
+		"1, 2, 3 *  0 =  0,  0,  0": {vec: vector3.New(1., 2., 3.), scalar: 0, want: vector3.New(0., 0., 0.)},
+		"1, 2, 3 * -2 = -2, -4, -6": {vec: vector3.New(1., 2., 3.), scalar: -2, want: vector3.New(-2., -4., -6.)},
+	}
+
+	for name, tc := range tests {
+		t.Run(name, func(t *testing.T) {
+			got := tc.vec.Scale(tc.scalar)
+
+			assert.InDelta(t, tc.want.X(), got.X(), 0.000001)
+			assert.InDelta(t, tc.want.Y(), got.Y(), 0.000001)
+			assert.InDelta(t, tc.want.Z(), got.Z(), 0.000001)
+		})
+	}
+}
+
+func TestScaleVecInt(t *testing.T) {
+	tests := map[string]struct {
+		vec    vector3.Int
+		scalar float64
+		want   vector3.Int
+	}{
+		"1, 2, 3 *  2 =  2,  4,  6": {vec: vector3.New(1, 2, 3), scalar: 2, want: vector3.New(2, 4, 6)},
+		"1, 2, 3 *  0 =  0,  0,  0": {vec: vector3.New(1, 2, 3), scalar: 0, want: vector3.New(0, 0, 0)},
+		"1, 2, 3 * -2 = -2, -4, -6": {vec: vector3.New(1, 2, 3), scalar: -2, want: vector3.New(-2, -4, -6)},
+	}
+
+	for name, tc := range tests {
+		t.Run(name, func(t *testing.T) {
+			got := tc.vec.Scale(tc.scalar)
+
+			assert.InDelta(t, tc.want.X(), got.X(), 0.000001)
+			assert.InDelta(t, tc.want.Y(), got.Y(), 0.000001)
+			assert.InDelta(t, tc.want.Z(), got.Z(), 0.000001)
+		})
+	}
+}
+
 func TestDefaults(t *testing.T) {
 	tests := map[string]struct {
 		got  vector3.Float64

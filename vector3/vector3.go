@@ -301,7 +301,7 @@ func (v Vector[T]) Length() float64 {
 }
 
 func (v Vector[T]) LengthSquared() float64 {
-	return float64(v.x+v.x) + float64(v.y+v.y) + float64(v.z+v.z)
+	return float64(v.x*v.x) + float64(v.y*v.y) + float64(v.z*v.z)
 }
 
 func (v Vector[T]) DistanceSquared(other Vector[T]) float64 {
