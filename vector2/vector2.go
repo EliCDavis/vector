@@ -75,6 +75,20 @@ func Rand() Vector[float64] {
 	}
 }
 
+func (v Vector[T]) ToInt() Vector[int] {
+	return Vector[int]{
+		x: int(v.x),
+		y: int(v.y),
+	}
+}
+
+func (v Vector[T]) ToFloat64() Vector[float64] {
+	return Vector[float64]{
+		x: float64(v.x),
+		y: float64(v.y),
+	}
+}
+
 func (v Vector[T]) X() T {
 	return v.x
 }
@@ -96,13 +110,6 @@ func (v Vector[T]) SetY(newY T) Vector[T] {
 	return Vector[T]{
 		x: v.x,
 		y: newY,
-	}
-}
-
-func (v Vector[T]) Floor() Vector[T] {
-	return Vector[T]{
-		x: T(math.Floor(float64(v.x))),
-		y: T(math.Floor(float64(v.y))),
 	}
 }
 
@@ -138,6 +145,10 @@ func (v Vector[T]) Length() float64 {
 	return math.Sqrt(float64(v.x*v.x) + float64(v.y*v.y))
 }
 
+func (v Vector[T]) LengthSquared() float64 {
+	return float64(v.x*v.x) + float64(v.y*v.y)
+}
+
 func (v Vector[T]) Normalized() Vector[T] {
 	if v.Length() == 0 {
 		return New(v.x, v.y)
@@ -145,7 +156,7 @@ func (v Vector[T]) Normalized() Vector[T] {
 	return v.DivByConstant(v.Length())
 }
 
-func (v Vector[T]) MultByConstant(t float64) Vector[T] {
+func (v Vector[T]) Scale(t float64) Vector[T] {
 	return Vector[T]{
 		x: T(float64(v.x) * t),
 		y: T(float64(v.y) * t),
@@ -160,10 +171,10 @@ func (v Vector[T]) MultByVector(o Vector[T]) Vector[T] {
 }
 
 func (v Vector[T]) DivByConstant(t float64) Vector[T] {
-	return v.MultByConstant(1.0 / t)
+	return v.Scale(1.0 / t)
 }
 
-func (v Vector[T]) SquaredDistance(other Vector[T]) float64 {
+func (v Vector[T]) DistanceSquared(other Vector[T]) float64 {
 	xDist := other.x - v.x
 	yDist := other.y - v.y
 	return float64((xDist * xDist) + (yDist * yDist))
@@ -171,7 +182,7 @@ func (v Vector[T]) SquaredDistance(other Vector[T]) float64 {
 
 // Distance is the euclidean distance between two points
 func (v Vector[T]) Distance(other Vector[T]) float64 {
-	return math.Sqrt(v.SquaredDistance(other))
+	return math.Sqrt(v.DistanceSquared(other))
 }
 
 // Round takes each component of the vector and rounds it to the nearest whole
@@ -183,12 +194,46 @@ func (v Vector[T]) Round() Vector[T] {
 	}
 }
 
+// RoundToInt takes each component of the vector and rounds it to the nearest
+// whole number, and then casts it to a int
+func (v Vector[T]) RoundToInt() Vector[int] {
+	return New(
+		int(math.Round(float64(v.x))),
+		int(math.Round(float64(v.y))),
+	)
+}
+
 // Ceil applies the ceil math operation to each component of the vector
 func (v Vector[T]) Ceil() Vector[T] {
 	return Vector[T]{
 		x: T(math.Ceil(float64(v.x))),
 		y: T(math.Ceil(float64(v.y))),
 	}
+}
+
+// CeilToInt applies the ceil math operation to each component of the vector,
+// and then casts it to a int
+func (v Vector[T]) CeilToInt() Vector[int] {
+	return New(
+		int(math.Ceil(float64(v.x))),
+		int(math.Ceil(float64(v.y))),
+	)
+}
+
+func (v Vector[T]) Floor() Vector[T] {
+	return Vector[T]{
+		x: T(math.Floor(float64(v.x))),
+		y: T(math.Floor(float64(v.y))),
+	}
+}
+
+// FloorToInt applies the floor math operation to each component of the vector,
+// and then casts it to a int
+func (v Vector[T]) FloorToInt() Vector[int] {
+	return New(
+		int(math.Floor(float64(v.x))),
+		int(math.Floor(float64(v.y))),
+	)
 }
 
 // Abs applies the Abs math operation to each component of the vector

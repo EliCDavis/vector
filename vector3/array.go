@@ -36,11 +36,11 @@ func (v3a Array[T]) Distance() float64 {
 	return total
 }
 
-func (v3a Array[T]) MultByConstant(t float64) (out Array[T]) {
+func (v3a Array[T]) Scale(t float64) (out Array[T]) {
 	out = make(Array[T], len(v3a))
 
 	for i, v := range v3a {
-		out[i] = v.MultByConstant(t)
+		out[i] = v.Scale(t)
 	}
 
 	return

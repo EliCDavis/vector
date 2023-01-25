@@ -81,6 +81,22 @@ func Average[T vector.Number](vectors []Vector[T]) Vector[T] {
 	return center.DivByConstant(float64(len(vectors)))
 }
 
+func (v Vector[T]) ToInt() Vector[int] {
+	return Vector[int]{
+		x: int(v.x),
+		y: int(v.y),
+		z: int(v.z),
+	}
+}
+
+func (v Vector[T]) ToFloat64() Vector[float64] {
+	return Vector[float64]{
+		x: float64(v.x),
+		y: float64(v.y),
+		z: float64(v.z),
+	}
+}
+
 // X returns the x component
 func (v Vector[T]) X() T {
 	return v.x
@@ -160,6 +176,16 @@ func (v Vector[T]) Round() Vector[T] {
 	)
 }
 
+// RoundToInt takes each component of the vector and rounds it to the nearest
+// whole number, and then casts it to a int
+func (v Vector[T]) RoundToInt() Vector[int] {
+	return New(
+		int(math.Round(float64(v.x))),
+		int(math.Round(float64(v.y))),
+		int(math.Round(float64(v.z))),
+	)
+}
+
 // Floor applies the floor math operation to each component of the vector
 func (v Vector[T]) Floor() Vector[T] {
 	return New(
@@ -169,12 +195,32 @@ func (v Vector[T]) Floor() Vector[T] {
 	)
 }
 
+// FloorToInt applies the floor math operation to each component of the vector,
+// and then casts it to a int
+func (v Vector[T]) FloorToInt() Vector[int] {
+	return New(
+		int(math.Floor(float64(v.x))),
+		int(math.Floor(float64(v.y))),
+		int(math.Floor(float64(v.z))),
+	)
+}
+
 // Ceil applies the ceil math operation to each component of the vector
 func (v Vector[T]) Ceil() Vector[T] {
 	return New(
 		T(math.Ceil(float64(v.x))),
 		T(math.Ceil(float64(v.y))),
 		T(math.Ceil(float64(v.z))),
+	)
+}
+
+// CeilToInt applies the ceil math operation to each component of the vector,
+// and then casts it to a int
+func (v Vector[T]) CeilToInt() Vector[int] {
+	return New(
+		int(math.Ceil(float64(v.x))),
+		int(math.Ceil(float64(v.y))),
+		int(math.Ceil(float64(v.z))),
 	)
 }
 
@@ -229,7 +275,7 @@ func Rand() Vector[float64] {
 	}
 }
 
-func (v Vector[T]) MultByConstant(t float64) Vector[T] {
+func (v Vector[T]) Scale(t float64) Vector[T] {
 	return Vector[T]{
 		x: T(float64(v.x) * t),
 		y: T(float64(v.y) * t),
@@ -237,6 +283,7 @@ func (v Vector[T]) MultByConstant(t float64) Vector[T] {
 	}
 }
 
+// MultByVector is component wise multiplication, also known as Hadamard product.
 func (v Vector[T]) MultByVector(o Vector[T]) Vector[T] {
 	return Vector[T]{
 		x: v.x * o.x,
@@ -246,18 +293,18 @@ func (v Vector[T]) MultByVector(o Vector[T]) Vector[T] {
 }
 
 func (v Vector[T]) DivByConstant(t float64) Vector[T] {
-	return v.MultByConstant(1.0 / t)
+	return v.Scale(1.0 / t)
 }
 
 func (v Vector[T]) Length() float64 {
-	return math.Sqrt(v.SquaredLength())
+	return math.Sqrt(v.LengthSquared())
 }
 
-func (v Vector[T]) SquaredLength() float64 {
-	return math.Pow(float64(v.x), 2.0) + math.Pow(float64(v.y), 2.0) + math.Pow(float64(v.z), 2.0)
+func (v Vector[T]) LengthSquared() float64 {
+	return float64(v.x+v.x) + float64(v.y+v.y) + float64(v.z+v.z)
 }
 
-func (v Vector[T]) SquaredDistance(other Vector[T]) float64 {
+func (v Vector[T]) DistanceSquared(other Vector[T]) float64 {
 	xDist := other.x - v.x
 	yDist := other.y - v.y
 	zDist := other.z - v.z
@@ -265,11 +312,11 @@ func (v Vector[T]) SquaredDistance(other Vector[T]) float64 {
 }
 
 func (v Vector[T]) Distance(other Vector[T]) float64 {
-	return math.Sqrt(v.SquaredDistance(other))
+	return math.Sqrt(v.DistanceSquared(other))
 }
 
 func (v Vector[T]) Angle(other Vector[T]) float64 {
-	denominator := math.Sqrt(v.SquaredLength() * other.SquaredLength())
+	denominator := math.Sqrt(v.LengthSquared() * other.LengthSquared())
 	if denominator < 1e-15 {
 		return 0.
 	}
