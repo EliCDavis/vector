@@ -1,6 +1,5 @@
 # Vector
 ![Coverage](https://img.shields.io/badge/Coverage-24.6%25-red)
-
 [![Go Report Card](https://goreportcard.com/badge/github.com/EliCDavis/vector)](https://goreportcard.com/report/github.com/EliCDavis/vector)
 [![GoDoc](https://godoc.org/github.com/EliCDavis/vector?status.svg)](http://godoc.org/github.com/EliCDavis/vector)
 

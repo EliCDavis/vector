@@ -7,6 +7,50 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+func TestVectorOperations(t *testing.T) {
+	start := vector3.New(1.2, -2.4, 3.7)
+
+	tests := map[string]struct {
+		want vector3.Float64
+		got  vector3.Float64
+	}{
+		"x":            {want: start.SetX(4), got: vector3.New(4., -2.4, 3.7)},
+		"y":            {want: start.SetY(4), got: vector3.New(1.2, 4., 3.7)},
+		"z":            {want: start.SetZ(4), got: vector3.New(1.2, -2.4, 4.)},
+		"abs":          {want: start.Abs(), got: vector3.New(1.2, 2.4, 3.7)},
+		"floor":        {want: start.Floor(), got: vector3.New(1., -3., 3.)},
+		"ceil":         {want: start.Ceil(), got: vector3.New(2., -2., 4.)},
+		"round":        {want: start.Round(), got: vector3.New(1., -2., 4.)},
+		"multByVector": {want: start.MultByVector(vector3.New(2., 4., 6.)), got: vector3.New(2.4, -9.6, 22.2)},
+	}
+
+	for name, tc := range tests {
+		t.Run(name, func(t *testing.T) {
+			assert.InDelta(t, tc.want.X(), tc.got.X(), 0.000001)
+			assert.InDelta(t, tc.want.Y(), tc.got.Y(), 0.000001)
+			assert.InDelta(t, tc.want.Z(), tc.got.Z(), 0.000001)
+		})
+	}
+}
+
+func TestDistances(t *testing.T) {
+	tests := map[string]struct {
+		a    vector3.Float64
+		b    vector3.Float64
+		want float64
+	}{
+		"(0, 0, 0), (0, 0, 0)":  {a: vector3.Zero[float64](), b: vector3.New(0., 0., 0.), want: 0},
+		"(0, 0, 0), (0, 1, 0)":  {a: vector3.Zero[float64](), b: vector3.New(0., 1., 0.), want: 1},
+		"(0, -1, 0), (0, 1, 0)": {a: vector3.New(0., -1., 0.), b: vector3.New(0., 1., 0.), want: 2},
+	}
+
+	for name, tc := range tests {
+		t.Run(name, func(t *testing.T) {
+			assert.InDelta(t, tc.want, tc.a.Distance(tc.b), 0.000001)
+		})
+	}
+}
+
 func TestAdd(t *testing.T) {
 	tests := map[string]struct {
 		left  vector3.Float64

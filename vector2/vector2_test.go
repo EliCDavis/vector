@@ -7,6 +7,29 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+func TestSet(t *testing.T) {
+	start := vector2.New(1.2, -2.4)
+
+	tests := map[string]struct {
+		want vector2.Float64
+		got  vector2.Float64
+	}{
+		"x":     {want: start.SetX(4), got: vector2.New(4., -2.4)},
+		"y":     {want: start.SetY(4), got: vector2.New(1.2, 4.)},
+		"abs":   {want: start.Abs(), got: vector2.New(1.2, 2.4)},
+		"floor": {want: start.Floor(), got: vector2.New(1., -3.)},
+		"ceil":  {want: start.Ceil(), got: vector2.New(2., -2.)},
+		"round": {want: start.Round(), got: vector2.New(1., -2.)},
+	}
+
+	for name, tc := range tests {
+		t.Run(name, func(t *testing.T) {
+			assert.InDelta(t, tc.want.X(), tc.got.X(), 0.000001)
+			assert.InDelta(t, tc.want.Y(), tc.got.Y(), 0.000001)
+		})
+	}
+}
+
 func TestAdd(t *testing.T) {
 	tests := map[string]struct {
 		left  vector2.Float64
