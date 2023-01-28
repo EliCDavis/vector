@@ -309,12 +309,31 @@ func (v Vector[T]) Normalized() Vector[T] {
 	return v.DivByConstant(v.Length())
 }
 
+// Rand returns a vector with each component being a random value between [0.0, 1.0)
 func Rand() Vector[float64] {
 	return Vector[float64]{
 		x: rand.Float64(),
 		y: rand.Float64(),
 		z: rand.Float64(),
 	}
+}
+
+// RandInUnitSphere returns a randomly sampled point in or on the unit sphere
+func RandInUnitSphere() Vector[float64] {
+	return Vector[float64]{
+		x: -1. + (rand.Float64() * 2.),
+		y: -1. + (rand.Float64() * 2.),
+		z: -1. + (rand.Float64() * 2.),
+	}
+}
+
+// RandOnUnitSphere returns a randomly sampled point on the unit sphere
+func RandOnUnitSphere() Vector[float64] {
+	return Vector[float64]{
+		x: -1. + (rand.Float64() * 2.),
+		y: -1. + (rand.Float64() * 2.),
+		z: -1. + (rand.Float64() * 2.),
+	}.Normalized()
 }
 
 func (v Vector[T]) Scale(t float64) Vector[T] {

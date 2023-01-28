@@ -85,8 +85,18 @@ func (v3a Array[T]) Modify(f func(Vector[T]) Vector[T]) (out Array[T]) {
 
 // Average sums all vector3's components together and divides each
 // component by the number of values added
-func (v3a Array[T]) Average(vectors []Vector[T]) Vector[T] {
-	return v3a.Sum().DivByConstant(float64(len(vectors)))
+func (v3a Array[T]) Average(vectors []Vector[T]) Vector[float64] {
+	xTotal := 0.
+	yTotal := 0.
+	zTotal := 0.
+
+	for _, v := range v3a {
+		xTotal += float64(v.X())
+		yTotal += float64(v.Y())
+		zTotal += float64(v.Z())
+	}
+
+	return New(xTotal, yTotal, zTotal).DivByConstant(float64(len(v3a)))
 }
 
 // Bounds returns the min and max points of an AABB encompassing
@@ -109,4 +119,25 @@ func (v3a Array[T]) Bounds() (Vector[T], Vector[T]) {
 	}
 
 	return New(T(min.x), T(min.y), T(min.z)), New(T(max.x), T(max.y), T(max.z))
+}
+
+// StandardDeviation calculates the population standard deviation on each
+// component of the vector
+func (v3a Array[T]) StandardDeviation() (mean, deviation Vector[float64]) {
+	mean = v3a.Average(v3a)
+
+	xTotal, yTotal, zTotal := 0., 0., 0.
+	for _, v := range v3a {
+		diff := v.ToFloat64().Sub(mean)
+		xTotal += (diff.x * diff.x)
+		yTotal += (diff.y * diff.y)
+		zTotal += (diff.z * diff.z)
+	}
+
+	deviation = New(
+		math.Sqrt(xTotal/float64(len(v3a))),
+		math.Sqrt(yTotal/float64(len(v3a))),
+		math.Sqrt(zTotal/float64(len(v3a))),
+	)
+	return
 }

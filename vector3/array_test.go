@@ -60,7 +60,7 @@ func TestArrayDistanceWithOnlyOnePoint(t *testing.T) {
 	assert.InDelta(t, 0, dst, 0.000001)
 }
 
-func TestArrayNormalized(t *testing.T) {
+func TestArrayNormalizedAndScaleAndDiv(t *testing.T) {
 	// ARRANGE ================================================================
 	ptCount := 1000
 	pts := make([]vector3.Float64, ptCount)
@@ -69,10 +69,58 @@ func TestArrayNormalized(t *testing.T) {
 	}
 
 	// ACT ====================================================================
-	dst := vector3.Array[float64](pts).Normalized()
+	dst := vector3.Array[float64](pts).
+		Normalized().
+		Scale(3).
+		DivByConstant(2)
 
 	// ASSERT =================================================================
 	for i := 0; i < ptCount; i++ {
-		assert.InDelta(t, 1., dst[i].Length(), 0.000001)
+		assert.InDelta(t, 1.5, dst[i].Length(), 0.000001)
 	}
+}
+
+func TestArrayModify(t *testing.T) {
+	// ARRANGE ================================================================
+	ptCount := 1000
+	pts := make([]vector3.Float64, ptCount)
+	for i := 0; i < ptCount; i++ {
+		pts[i] = vector3.Rand()
+	}
+
+	// ACT ====================================================================
+	dst := vector3.Array[float64](pts).
+		Modify(func(v vector3.Float64) vector3.Float64 {
+			return v.Normalized()
+		})
+
+	// ASSERT =================================================================
+	for i := 0; i < ptCount; i++ {
+		assert.InDelta(t, 1, dst[i].Length(), 0.000001)
+	}
+}
+
+func TestArrayStandardDeviation(t *testing.T) {
+	// ARRANGE ================================================================
+	ptCount := 10000
+	pts := make([]vector3.Float64, ptCount)
+	for i := 0; i < ptCount; i++ {
+		pts[i] = vector3.
+			Rand().
+			Scale(2).
+			Sub(vector3.One[float64]()).
+			Normalized()
+	}
+
+	// ACT ====================================================================
+	average, deviation := vector3.Array[float64](pts).StandardDeviation()
+
+	// ASSERT =================================================================
+	assert.InDelta(t, 0, average.X(), 0.01)
+	assert.InDelta(t, 0, average.Y(), 0.01)
+	assert.InDelta(t, 0, average.Z(), 0.01)
+
+	assert.InDelta(t, 0.5, deviation.X(), 0.1)
+	assert.InDelta(t, 0.5, deviation.Y(), 0.1)
+	assert.InDelta(t, 0.5, deviation.Z(), 0.1)
 }
