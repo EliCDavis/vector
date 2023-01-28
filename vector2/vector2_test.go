@@ -68,6 +68,87 @@ func TestDefaults(t *testing.T) {
 	}
 }
 
+func TestMidpoint(t *testing.T) {
+	tests := map[string]struct {
+		left  vector2.Float64
+		right vector2.Float64
+		want  vector2.Float64
+	}{
+		"0, 0 m 0, 0 = 0, 0":   {left: vector2.New(0., 0.), right: vector2.New(0., 0.), want: vector2.New(0., 0.)},
+		"-1, -1 m 1, 1 = 0, 0": {left: vector2.New(-1., -1.), right: vector2.New(1., 1.), want: vector2.New(0., 0.)},
+		"0, 0 m 1, 2 = 0.5, 1": {left: vector2.New(0., 0.), right: vector2.New(1., 2.), want: vector2.New(0.5, 1.)},
+	}
+
+	for name, tc := range tests {
+		t.Run(name, func(t *testing.T) {
+			got := tc.left.Midpoint(tc.right)
+
+			assert.InDelta(t, tc.want.X(), got.X(), 0.000001)
+			assert.InDelta(t, tc.want.Y(), got.Y(), 0.000001)
+		})
+	}
+}
+
+func TestLerp(t *testing.T) {
+	tests := map[string]struct {
+		left  vector2.Float64
+		right vector2.Float64
+		t     float64
+		want  vector2.Float64
+	}{
+		"(0, 0) =(0)=> (0, 0) = (0, 0)":     {left: vector2.New(0., 0.), right: vector2.New(0., 0.), t: 0, want: vector2.New(0., 0.)},
+		"(0, 0) =(0.5)=> (1, 2) = (0.5, 1)": {left: vector2.New(0., 0.), right: vector2.New(1., 2.), t: 0.5, want: vector2.New(0.5, 1.)},
+		"(0, 0) =(1)=> (1, 2) = (1, 2)":     {left: vector2.New(0., 0.), right: vector2.New(1., 2.), t: 1, want: vector2.New(1., 2.)},
+	}
+
+	for name, tc := range tests {
+		t.Run(name, func(t *testing.T) {
+			got := vector2.Lerp(tc.left, tc.right, tc.t)
+
+			assert.InDelta(t, tc.want.X(), got.X(), 0.000001)
+			assert.InDelta(t, tc.want.Y(), got.Y(), 0.000001)
+		})
+	}
+}
+
+func TestMin(t *testing.T) {
+	tests := map[string]struct {
+		left  vector2.Float64
+		right vector2.Float64
+		want  vector2.Float64
+	}{
+		"(1, 2) m (3, 2) = (1, 2)": {left: vector2.New(1., 2.), right: vector2.New(3., 2.), want: vector2.New(1., 2.)},
+	}
+
+	for name, tc := range tests {
+		t.Run(name, func(t *testing.T) {
+			got := vector2.Min(tc.left, tc.right)
+
+			assert.InDelta(t, tc.want.X(), got.X(), 0.000001)
+			assert.InDelta(t, tc.want.Y(), got.Y(), 0.000001)
+		})
+	}
+}
+
+func TestMax(t *testing.T) {
+	tests := map[string]struct {
+		left  vector2.Float64
+		right vector2.Float64
+		want  vector2.Float64
+	}{
+		"(1, 2) m (3, 2) = (3, 2)": {left: vector2.New(1., 2.), right: vector2.New(3., 2.), want: vector2.New(3., 2.)},
+	}
+
+	for name, tc := range tests {
+		t.Run(name, func(t *testing.T) {
+			got := vector2.Max(tc.left, tc.right)
+
+			assert.InDelta(t, tc.want.X(), got.X(), 0.000001)
+			assert.InDelta(t, tc.want.Y(), got.Y(), 0.000001)
+		})
+	}
+}
+
 var result float64
 
 func BenchmarkDistance(b *testing.B) {

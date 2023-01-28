@@ -81,6 +81,27 @@ func Average[T vector.Number](vectors []Vector[T]) Vector[T] {
 	return center.DivByConstant(float64(len(vectors)))
 }
 
+// Lerp linearly interpolates between a and b by t
+func Lerp[T vector.Number](a, b Vector[T], t float64) Vector[T] {
+	return b.Sub(a).Scale(t).Add(a)
+}
+
+func Min[T vector.Number](a, b Vector[T]) Vector[T] {
+	return New(
+		T(math.Min(float64(a.x), float64(b.x))),
+		T(math.Min(float64(a.y), float64(b.y))),
+		T(math.Min(float64(a.z), float64(b.z))),
+	)
+}
+
+func Max[T vector.Number](a, b Vector[T]) Vector[T] {
+	return New(
+		T(math.Max(float64(a.x), float64(b.x))),
+		T(math.Max(float64(a.y), float64(b.y))),
+		T(math.Max(float64(a.z), float64(b.z))),
+	)
+}
+
 func (v Vector[T]) ToInt() Vector[int] {
 	return Vector[int]{
 		x: int(v.x),
@@ -94,6 +115,22 @@ func (v Vector[T]) ToFloat64() Vector[float64] {
 		x: float64(v.x),
 		y: float64(v.y),
 		z: float64(v.z),
+	}
+}
+
+func (v Vector[T]) ToFloat32() Vector[float32] {
+	return Vector[float32]{
+		x: float32(v.x),
+		y: float32(v.y),
+		z: float32(v.z),
+	}
+}
+
+func (v Vector[T]) ToInt64() Vector[int64] {
+	return Vector[int64]{
+		x: int64(v.x),
+		y: int64(v.y),
+		z: int64(v.z),
 	}
 }
 
@@ -152,6 +189,11 @@ func (v Vector[T]) XZ() vector2.Vector[T] {
 // YZ returns vector2 with the y and z components
 func (v Vector[T]) YZ() vector2.Vector[T] {
 	return vector2.New(v.y, v.z)
+}
+
+// Midpoint returns the midpoint between this vector and the vector passed in.
+func (v Vector[T]) Midpoint(o Vector[T]) Vector[T] {
+	return o.Add(v).Scale(0.5)
 }
 
 // Perpendicular finds a vector that meets this vector at a right angle.

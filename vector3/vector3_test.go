@@ -49,6 +49,91 @@ func TestSub(t *testing.T) {
 	}
 }
 
+func TestMidpoint(t *testing.T) {
+	tests := map[string]struct {
+		left  vector3.Float64
+		right vector3.Float64
+		want  vector3.Float64
+	}{
+		"0, 0, 0 m 0, 0, 0 = 0, 0, 0":     {left: vector3.New(0., 0., 0.), right: vector3.New(0., 0., 0.), want: vector3.New(0., 0., 0.)},
+		"-1, -1, -1 m 1, 1, 1 = 0, 0, 0":  {left: vector3.New(-1., -1., -1.), right: vector3.New(1., 1., 1.), want: vector3.New(0., 0., 0.)},
+		"0, 0, 0 m 1, 2, 3 = 0.5, 1, 1.5": {left: vector3.New(0., 0., 0.), right: vector3.New(1., 2., 3.), want: vector3.New(0.5, 1., 1.5)},
+	}
+
+	for name, tc := range tests {
+		t.Run(name, func(t *testing.T) {
+			got := tc.left.Midpoint(tc.right)
+
+			assert.InDelta(t, tc.want.X(), got.X(), 0.000001)
+			assert.InDelta(t, tc.want.Y(), got.Y(), 0.000001)
+			assert.InDelta(t, tc.want.Z(), got.Z(), 0.000001)
+		})
+	}
+}
+
+func TestLerp(t *testing.T) {
+	tests := map[string]struct {
+		left  vector3.Float64
+		right vector3.Float64
+		t     float64
+		want  vector3.Float64
+	}{
+		"(0, 0, 0) =(0)=> (0, 0, 0) = (0, 0, 0)":       {left: vector3.New(0., 0., 0.), right: vector3.New(0., 0., 0.), t: 0, want: vector3.New(0., 0., 0.)},
+		"(0, 0, 0) =(0.5)=> (1, 2, 3) = (0.5, 1, 1.5)": {left: vector3.New(0., 0., 0.), right: vector3.New(1., 2., 3.), t: 0.5, want: vector3.New(0.5, 1., 1.5)},
+		"(0, 0, 0) =(1)=> (1, 2, 3) = (1, 2, 3)":       {left: vector3.New(0., 0., 0.), right: vector3.New(1., 2., 3.), t: 1, want: vector3.New(1., 2., 3.)},
+	}
+
+	for name, tc := range tests {
+		t.Run(name, func(t *testing.T) {
+			got := vector3.Lerp(tc.left, tc.right, tc.t)
+
+			assert.InDelta(t, tc.want.X(), got.X(), 0.000001)
+			assert.InDelta(t, tc.want.Y(), got.Y(), 0.000001)
+			assert.InDelta(t, tc.want.Z(), got.Z(), 0.000001)
+		})
+	}
+}
+
+func TestMin(t *testing.T) {
+	tests := map[string]struct {
+		left  vector3.Float64
+		right vector3.Float64
+		want  vector3.Float64
+	}{
+		"(1, 2, 3) m (3, 2, 1) = (1, 2, 1)": {left: vector3.New(1., 2., 3.), right: vector3.New(3., 2., 1.), want: vector3.New(1., 2., 1.)},
+	}
+
+	for name, tc := range tests {
+		t.Run(name, func(t *testing.T) {
+			got := vector3.Min(tc.left, tc.right)
+
+			assert.InDelta(t, tc.want.X(), got.X(), 0.000001)
+			assert.InDelta(t, tc.want.Y(), got.Y(), 0.000001)
+			assert.InDelta(t, tc.want.Z(), got.Z(), 0.000001)
+		})
+	}
+}
+
+func TestMax(t *testing.T) {
+	tests := map[string]struct {
+		left  vector3.Float64
+		right vector3.Float64
+		want  vector3.Float64
+	}{
+		"(1, 2, 3) m (3, 2, 1) = (3, 2, 3)": {left: vector3.New(1., 2., 3.), right: vector3.New(3., 2., 1.), want: vector3.New(3., 2., 3.)},
+	}
+
+	for name, tc := range tests {
+		t.Run(name, func(t *testing.T) {
+			got := vector3.Max(tc.left, tc.right)
+
+			assert.InDelta(t, tc.want.X(), got.X(), 0.000001)
+			assert.InDelta(t, tc.want.Y(), got.Y(), 0.000001)
+			assert.InDelta(t, tc.want.Z(), got.Z(), 0.000001)
+		})
+	}
+}
+
 func TestScaleVecFloat(t *testing.T) {
 	tests := map[string]struct {
 		vec    vector3.Float64

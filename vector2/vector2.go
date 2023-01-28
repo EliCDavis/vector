@@ -68,6 +68,25 @@ func One[T vector.Number]() Vector[T] {
 	}
 }
 
+// Lerp linearly interpolates between a and b by t
+func Lerp[T vector.Number](a, b Vector[T], t float64) Vector[T] {
+	return b.Sub(a).Scale(t).Add(a)
+}
+
+func Min[T vector.Number](a, b Vector[T]) Vector[T] {
+	return New(
+		T(math.Min(float64(a.x), float64(b.x))),
+		T(math.Min(float64(a.y), float64(b.y))),
+	)
+}
+
+func Max[T vector.Number](a, b Vector[T]) Vector[T] {
+	return New(
+		T(math.Max(float64(a.x), float64(b.x))),
+		T(math.Max(float64(a.y), float64(b.y))),
+	)
+}
+
 func Rand() Vector[float64] {
 	return Vector[float64]{
 		x: rand.Float64(),
@@ -86,6 +105,20 @@ func (v Vector[T]) ToFloat64() Vector[float64] {
 	return Vector[float64]{
 		x: float64(v.x),
 		y: float64(v.y),
+	}
+}
+
+func (v Vector[T]) ToFloat32() Vector[float32] {
+	return Vector[float32]{
+		x: float32(v.x),
+		y: float32(v.y),
+	}
+}
+
+func (v Vector[T]) ToInt64() Vector[int64] {
+	return Vector[int64]{
+		x: int64(v.x),
+		y: int64(v.y),
 	}
 }
 
@@ -111,6 +144,11 @@ func (v Vector[T]) SetY(newY T) Vector[T] {
 		x: v.x,
 		y: newY,
 	}
+}
+
+// Midpoint returns the midpoint between this vector and the vector passed in.
+func (v Vector[T]) Midpoint(o Vector[T]) Vector[T] {
+	return o.Add(v).Scale(0.5)
 }
 
 func (v Vector[T]) Dot(other Vector[T]) float64 {

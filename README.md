@@ -1,5 +1,8 @@
 # Vector
 
+[![Go Report Card](https://goreportcard.com/badge/github.com/EliCDavis/vector)](https://goreportcard.com/report/github.com/EliCDavis/vector)
+[![GoDoc](https://godoc.org/github.com/EliCDavis/vector?status.svg)](http://godoc.org/github.com/EliCDavis/vector)
+
 Collection of **generic, immutable** vector math functions I've written overtime for different hobby projects.
 
 Has support for both Vector2 (x, y) and Vector3 (x, y, z) functions.
