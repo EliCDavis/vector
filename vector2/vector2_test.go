@@ -1,6 +1,7 @@
 package vector2_test
 
 import (
+	"math"
 	"testing"
 
 	"github.com/EliCDavis/vector/vector2"
@@ -20,6 +21,7 @@ func TestSet(t *testing.T) {
 		"floor": {want: start.Floor(), got: vector2.New(1., -3.)},
 		"ceil":  {want: start.Ceil(), got: vector2.New(2., -2.)},
 		"round": {want: start.Round(), got: vector2.New(1., -2.)},
+		"sqrt":  {want: start.Sqrt(), got: vector2.New(1.0954451, math.NaN())},
 	}
 
 	for name, tc := range tests {

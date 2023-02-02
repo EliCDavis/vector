@@ -266,6 +266,15 @@ func (v Vector[T]) CeilToInt() Vector[int] {
 	)
 }
 
+// Sqrt applies the math.Sqrt to each component of the vector
+func (v Vector[T]) Sqrt() Vector[T] {
+	return New(
+		T(math.Sqrt(float64(v.x))),
+		T(math.Sqrt(float64(v.y))),
+		T(math.Sqrt(float64(v.z))),
+	)
+}
+
 // Abs applies the Abs math operation to each component of the vector
 func (v Vector[T]) Abs() Vector[T] {
 	return New(
@@ -318,7 +327,7 @@ func Rand() Vector[float64] {
 	}
 }
 
-// RandInUnitSphere returns a randomly sampled point in or on the unit sphere
+// RandInUnitSphere returns a randomly sampled point in or on the unit
 func RandInUnitSphere() Vector[float64] {
 	return Vector[float64]{
 		x: -1. + (rand.Float64() * 2.),

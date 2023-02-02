@@ -94,6 +94,14 @@ func Rand() Vector[float64] {
 	}
 }
 
+// Sqrt applies the math.Sqrt to each component of the vector
+func (v Vector[T]) Sqrt() Vector[T] {
+	return New(
+		T(math.Sqrt(float64(v.x))),
+		T(math.Sqrt(float64(v.y))),
+	)
+}
+
 func (v Vector[T]) ToInt() Vector[int] {
 	return Vector[int]{
 		x: int(v.x),

@@ -1,6 +1,7 @@
 package vector3_test
 
 import (
+	"math"
 	"testing"
 
 	"github.com/EliCDavis/vector/vector3"
@@ -22,6 +23,7 @@ func TestVectorOperations(t *testing.T) {
 		"ceil":         {want: start.Ceil(), got: vector3.New(2., -2., 4.)},
 		"round":        {want: start.Round(), got: vector3.New(1., -2., 4.)},
 		"multByVector": {want: start.MultByVector(vector3.New(2., 4., 6.)), got: vector3.New(2.4, -9.6, 22.2)},
+		"sqrt":         {want: start.Sqrt(), got: vector3.New(1.0954451, math.NaN(), 1.923538)},
 	}
 
 	for name, tc := range tests {
