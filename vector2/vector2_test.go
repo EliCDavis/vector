@@ -15,13 +15,16 @@ func TestSet(t *testing.T) {
 		want vector2.Float64
 		got  vector2.Float64
 	}{
-		"x":     {want: start.SetX(4), got: vector2.New(4., -2.4)},
-		"y":     {want: start.SetY(4), got: vector2.New(1.2, 4.)},
-		"abs":   {want: start.Abs(), got: vector2.New(1.2, 2.4)},
-		"floor": {want: start.Floor(), got: vector2.New(1., -3.)},
-		"ceil":  {want: start.Ceil(), got: vector2.New(2., -2.)},
-		"round": {want: start.Round(), got: vector2.New(1., -2.)},
-		"sqrt":  {want: start.Sqrt(), got: vector2.New(1.0954451, math.NaN())},
+		"x":             {want: start.SetX(4), got: vector2.New(4., -2.4)},
+		"y":             {want: start.SetY(4), got: vector2.New(1.2, 4.)},
+		"abs":           {want: start.Abs(), got: vector2.New(1.2, 2.4)},
+		"floor":         {want: start.Floor(), got: vector2.New(1., -3.)},
+		"ceil":          {want: start.Ceil(), got: vector2.New(2., -2.)},
+		"round":         {want: start.Round(), got: vector2.New(1., -2.)},
+		"sqrt":          {want: start.Sqrt(), got: vector2.New(1.0954451, math.NaN())},
+		"clamp":         {want: start.Clamp(1, 2), got: vector2.New(1.2, 1.)},
+		"perpendicular": {want: start.Perpendicular(), got: vector2.New(-2.4, -1.2)},
+		"normalized":    {want: start.Normalized(), got: vector2.New(0.447213, -.894427)},
 	}
 
 	for name, tc := range tests {
@@ -170,6 +173,23 @@ func TestMax(t *testing.T) {
 
 			assert.InDelta(t, tc.want.X(), got.X(), 0.000001)
 			assert.InDelta(t, tc.want.Y(), got.Y(), 0.000001)
+		})
+	}
+}
+
+func TestNearZero(t *testing.T) {
+	tests := map[string]struct {
+		vec  vector2.Float64
+		want bool
+	}{
+		"0, 0, 0":           {vec: vector2.New(0., 0.), want: true},
+		"0, 0, 1":           {vec: vector2.New(0., 1.), want: false},
+		"0, 0, .0000000001": {vec: vector2.New(0., 0.0000000001), want: true},
+	}
+
+	for name, tc := range tests {
+		t.Run(name, func(t *testing.T) {
+			assert.Equal(t, tc.want, tc.vec.NearZero())
 		})
 	}
 }

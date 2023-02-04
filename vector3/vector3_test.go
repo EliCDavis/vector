@@ -24,6 +24,7 @@ func TestVectorOperations(t *testing.T) {
 		"round":        {want: start.Round(), got: vector3.New(1., -2., 4.)},
 		"multByVector": {want: start.MultByVector(vector3.New(2., 4., 6.)), got: vector3.New(2.4, -9.6, 22.2)},
 		"sqrt":         {want: start.Sqrt(), got: vector3.New(1.0954451, math.NaN(), 1.923538)},
+		"clamp":        {want: start.Clamp(1, 2), got: vector3.New(1.2, 1., 2.)},
 	}
 
 	for name, tc := range tests {
@@ -220,6 +221,23 @@ func TestScaleVecInt(t *testing.T) {
 			assert.InDelta(t, tc.want.X(), got.X(), 0.000001)
 			assert.InDelta(t, tc.want.Y(), got.Y(), 0.000001)
 			assert.InDelta(t, tc.want.Z(), got.Z(), 0.000001)
+		})
+	}
+}
+
+func TestNearZero(t *testing.T) {
+	tests := map[string]struct {
+		vec  vector3.Float64
+		want bool
+	}{
+		"0, 0, 0":           {vec: vector3.New(0., 0., 0.), want: true},
+		"0, 0, 1":           {vec: vector3.New(0., 0., 1.), want: false},
+		"0, 0, .0000000001": {vec: vector3.New(0., 0., 0.0000000001), want: true},
+	}
+
+	for name, tc := range tests {
+		t.Run(name, func(t *testing.T) {
+			assert.Equal(t, tc.want, tc.vec.NearZero())
 		})
 	}
 }

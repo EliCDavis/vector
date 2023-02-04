@@ -284,6 +284,14 @@ func (v Vector[T]) Abs() Vector[T] {
 	)
 }
 
+func (v Vector[T]) Clamp(min, max T) Vector[T] {
+	return Vector[T]{
+		x: T(math.Max(math.Min(float64(v.x), float64(max)), float64(min))),
+		y: T(math.Max(math.Min(float64(v.y), float64(max)), float64(min))),
+		z: T(math.Max(math.Min(float64(v.z), float64(max)), float64(min))),
+	}
+}
+
 // Add takes each component of our vector and adds them to the vector passed
 // in, returning a resulting vector
 func (v Vector[T]) Add(other Vector[T]) Vector[T] {
@@ -327,17 +335,29 @@ func Rand() Vector[float64] {
 	}
 }
 
-// RandInUnitSphere returns a randomly sampled point in or on the unit
-func RandInUnitSphere() Vector[float64] {
-	return Vector[float64]{
-		x: -1. + (rand.Float64() * 2.),
-		y: -1. + (rand.Float64() * 2.),
-		z: -1. + (rand.Float64() * 2.),
+// RandRange returns a vector where each component is a random value that falls
+// within the values of min and max
+func RandRange[T vector.Number](min, max T) Vector[T] {
+	dist := float64(max - min)
+	return Vector[T]{
+		x: T(rand.Float64()*dist) + min,
+		y: T(rand.Float64()*dist) + min,
+		z: T(rand.Float64()*dist) + min,
 	}
 }
 
-// RandOnUnitSphere returns a randomly sampled point on the unit sphere
-func RandOnUnitSphere() Vector[float64] {
+// RandInUnitSphere returns a randomly sampled point in or on the unit
+func RandInUnitSphere() Vector[float64] {
+	for {
+		p := RandRange(-1., 1.)
+		if p.LengthSquared() < 1 {
+			return p
+		}
+	}
+}
+
+// RandNormal returns a random normal
+func RandNormal() Vector[float64] {
 	return Vector[float64]{
 		x: -1. + (rand.Float64() * 2.),
 		y: -1. + (rand.Float64() * 2.),
@@ -351,6 +371,17 @@ func (v Vector[T]) Scale(t float64) Vector[T] {
 		y: T(float64(v.y) * t),
 		z: T(float64(v.z) * t),
 	}
+}
+
+func (v Vector[T]) Reflect(normal Vector[T]) Vector[T] {
+	return v.Sub(normal.Scale(2. * v.Dot(normal)))
+}
+
+func (v Vector[T]) Refract(normal Vector[T], etaiOverEtat float64) Vector[T] {
+	cos_theta := math.Min(v.Scale(-1).Dot(normal), 1.0)
+	r_out_perp := v.Add(normal.Scale(cos_theta)).Scale(etaiOverEtat)
+	r_out_parallel := normal.Scale(-math.Sqrt(math.Abs(1.0 - r_out_perp.LengthSquared())))
+	return r_out_perp.Add(r_out_parallel)
 }
 
 // MultByVector is component wise multiplication, also known as Hadamard product.
@@ -391,4 +422,9 @@ func (v Vector[T]) Angle(other Vector[T]) float64 {
 		return 0.
 	}
 	return math.Acos(clamp(v.Dot(other)/denominator, -1., 1.))
+}
+
+func (v Vector[T]) NearZero() bool {
+	const s = 1e-8
+	return (math.Abs(float64(v.X())) < s) && (math.Abs(float64(v.Y())) < s) && (math.Abs(float64(v.Z())) < s)
 }

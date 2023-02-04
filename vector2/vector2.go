@@ -116,6 +116,13 @@ func (v Vector[T]) ToFloat64() Vector[float64] {
 	}
 }
 
+func (v Vector[T]) Clamp(min, max T) Vector[T] {
+	return Vector[T]{
+		x: T(math.Max(math.Min(float64(v.x), float64(max)), float64(min))),
+		y: T(math.Max(math.Min(float64(v.y), float64(max)), float64(min))),
+	}
+}
+
 func (v Vector[T]) ToFloat32() Vector[float32] {
 	return Vector[float32]{
 		x: float32(v.x),
@@ -196,9 +203,6 @@ func (v Vector[T]) LengthSquared() float64 {
 }
 
 func (v Vector[T]) Normalized() Vector[T] {
-	if v.Length() == 0 {
-		return New(v.x, v.y)
-	}
 	return v.DivByConstant(v.Length())
 }
 
@@ -288,4 +292,9 @@ func (v Vector[T]) Abs() Vector[T] {
 		x: T(math.Abs(float64(v.x))),
 		y: T(math.Abs(float64(v.y))),
 	}
+}
+
+func (v Vector[T]) NearZero() bool {
+	const s = 1e-8
+	return (math.Abs(float64(v.X())) < s) && (math.Abs(float64(v.Y())) < s)
 }
