@@ -1,6 +1,7 @@
 package vector3
 
 import (
+	"encoding/json"
 	"math"
 	"math/rand"
 
@@ -100,6 +101,37 @@ func Max[T vector.Number](a, b Vector[T]) Vector[T] {
 		T(math.Max(float64(a.y), float64(b.y))),
 		T(math.Max(float64(a.z), float64(b.z))),
 	)
+}
+
+func (v Vector[T]) MarshalJSON() ([]byte, error) {
+	return json.Marshal(&struct {
+		X float64 `json:"x"`
+		Y float64 `json:"y"`
+		Z float64 `json:"z"`
+	}{
+		X: float64(v.x),
+		Y: float64(v.y),
+		Z: float64(v.z),
+	})
+}
+
+func (v *Vector[T]) UnmarshalJSON(data []byte) error {
+	aux := &struct {
+		X float64 `json:"x"`
+		Y float64 `json:"y"`
+		Z float64 `json:"z"`
+	}{
+		X: 0,
+		Y: 0,
+		Z: 0,
+	}
+	if err := json.Unmarshal(data, &aux); err != nil {
+		return err
+	}
+	v.x = T(aux.X)
+	v.y = T(aux.Y)
+	v.z = T(aux.Z)
+	return nil
 }
 
 func (v Vector[T]) ToInt() Vector[int] {
@@ -311,7 +343,7 @@ func (v Vector[T]) Sub(other Vector[T]) Vector[T] {
 }
 
 func (v Vector[T]) Dot(other Vector[T]) float64 {
-	return float64(v.x*other.x) + float64(v.y*other.y) + float64(v.z*other.z)
+	return float64((v.x * other.x) + (v.y * other.y) + (v.z * other.z))
 }
 
 func (v Vector[T]) Cross(other Vector[T]) Vector[T] {
@@ -378,10 +410,10 @@ func (v Vector[T]) Reflect(normal Vector[T]) Vector[T] {
 }
 
 func (v Vector[T]) Refract(normal Vector[T], etaiOverEtat float64) Vector[T] {
-	cos_theta := math.Min(v.Scale(-1).Dot(normal), 1.0)
-	r_out_perp := v.Add(normal.Scale(cos_theta)).Scale(etaiOverEtat)
-	r_out_parallel := normal.Scale(-math.Sqrt(math.Abs(1.0 - r_out_perp.LengthSquared())))
-	return r_out_perp.Add(r_out_parallel)
+	cosTheta := math.Min(v.Scale(-1).Dot(normal), 1.0)
+	perpendicular := v.Add(normal.Scale(cosTheta)).Scale(etaiOverEtat)
+	parallel := normal.Scale(-math.Sqrt(math.Abs(1.0 - perpendicular.LengthSquared())))
+	return perpendicular.Add(parallel)
 }
 
 // MultByVector is component wise multiplication, also known as Hadamard product.
@@ -394,7 +426,11 @@ func (v Vector[T]) MultByVector(o Vector[T]) Vector[T] {
 }
 
 func (v Vector[T]) DivByConstant(t float64) Vector[T] {
-	return v.Scale(1.0 / t)
+	return Vector[T]{
+		x: T(float64(v.x) / t),
+		y: T(float64(v.y) / t),
+		z: T(float64(v.z) / t),
+	}
 }
 
 func (v Vector[T]) Length() float64 {
@@ -402,7 +438,7 @@ func (v Vector[T]) Length() float64 {
 }
 
 func (v Vector[T]) LengthSquared() float64 {
-	return float64(v.x*v.x) + float64(v.y*v.y) + float64(v.z*v.z)
+	return float64((v.x * v.x) + (v.y * v.y) + (v.z * v.z))
 }
 
 func (v Vector[T]) DistanceSquared(other Vector[T]) float64 {

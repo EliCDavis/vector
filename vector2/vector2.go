@@ -1,6 +1,7 @@
 package vector2
 
 import (
+	"encoding/json"
 	"math"
 	"math/rand"
 
@@ -92,6 +93,32 @@ func Rand() Vector[float64] {
 		x: rand.Float64(),
 		y: rand.Float64(),
 	}
+}
+
+func (v Vector[T]) MarshalJSON() ([]byte, error) {
+	return json.Marshal(&struct {
+		X float64 `json:"x"`
+		Y float64 `json:"y"`
+	}{
+		X: float64(v.x),
+		Y: float64(v.y),
+	})
+}
+
+func (v *Vector[T]) UnmarshalJSON(data []byte) error {
+	aux := &struct {
+		X float64 `json:"x"`
+		Y float64 `json:"y"`
+	}{
+		X: 0,
+		Y: 0,
+	}
+	if err := json.Unmarshal(data, &aux); err != nil {
+		return err
+	}
+	v.x = T(aux.X)
+	v.y = T(aux.Y)
+	return nil
 }
 
 // Sqrt applies the math.Sqrt to each component of the vector

@@ -1,6 +1,7 @@
 package vector2_test
 
 import (
+	"encoding/json"
 	"math"
 	"testing"
 
@@ -192,6 +193,20 @@ func TestNearZero(t *testing.T) {
 			assert.Equal(t, tc.want, tc.vec.NearZero())
 		})
 	}
+}
+
+func TestJSON(t *testing.T) {
+	in := vector2.New(1.2, 2.3)
+	out := vector2.New(0., 0.)
+
+	marshalledData, marshallErr := json.Marshal(in)
+	unmarshallErr := json.Unmarshal(marshalledData, &out)
+
+	assert.NoError(t, marshallErr)
+	assert.NoError(t, unmarshallErr)
+	assert.Equal(t, "{\"x\":1.2,\"y\":2.3}", string(marshalledData))
+	assert.Equal(t, 1.2, out.X())
+	assert.Equal(t, 2.3, out.Y())
 }
 
 var result float64

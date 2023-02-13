@@ -102,7 +102,7 @@ func TestArrayModify(t *testing.T) {
 
 func TestArrayStandardDeviation(t *testing.T) {
 	// ARRANGE ================================================================
-	ptCount := 10000
+	ptCount := 100000
 	pts := make([]vector3.Float64, ptCount)
 	for i := 0; i < ptCount; i++ {
 		pts[i] = vector3.

@@ -1,6 +1,7 @@
 package vector3_test
 
 import (
+	"encoding/json"
 	"math"
 	"testing"
 
@@ -266,6 +267,21 @@ func TestDefaults(t *testing.T) {
 	}
 }
 
+func TestJSON(t *testing.T) {
+	in := vector3.New(1.2, 2.3, 3.4)
+	out := vector3.New(0., 0., 0.)
+
+	marshalledData, marshallErr := json.Marshal(in)
+	unmarshallErr := json.Unmarshal(marshalledData, &out)
+
+	assert.NoError(t, marshallErr)
+	assert.NoError(t, unmarshallErr)
+	assert.Equal(t, "{\"x\":1.2,\"y\":2.3,\"z\":3.4}", string(marshalledData))
+	assert.Equal(t, 1.2, out.X())
+	assert.Equal(t, 2.3, out.Y())
+	assert.Equal(t, 3.4, out.Z())
+}
+
 var result float64
 
 func BenchmarkDistance(b *testing.B) {
@@ -274,6 +290,16 @@ func BenchmarkDistance(b *testing.B) {
 	c := vector3.New(4., 5., 6.)
 	for i := 0; i < b.N; i++ {
 		r = a.Distance(c)
+	}
+	result = r
+}
+
+func BenchmarkDot(b *testing.B) {
+	var r float64
+	a := vector3.New(1., 2., 3.)
+	c := vector3.New(4., 5., 6.)
+	for i := 0; i < b.N; i++ {
+		r = a.Dot(c)
 	}
 	result = r
 }
