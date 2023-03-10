@@ -38,6 +38,27 @@ func TestVectorOperations(t *testing.T) {
 	}
 }
 
+func TestToIntConversions(t *testing.T) {
+	start := vector3.New(1.2, -2.4, 3.7)
+
+	tests := map[string]struct {
+		want vector3.Int
+		got  vector3.Int
+	}{
+		"round to int": {want: start.RoundToInt(), got: vector3.New(1, -2, 4)},
+		"floor to int": {want: start.FloorToInt(), got: vector3.New(1, -3, 3)},
+		"ceil to int":  {want: start.CeilToInt(), got: vector3.New(2, -2, 4)},
+	}
+
+	for name, tc := range tests {
+		t.Run(name, func(t *testing.T) {
+			assert.InDelta(t, tc.want.X(), tc.got.X(), 0.000001)
+			assert.InDelta(t, tc.want.Y(), tc.got.Y(), 0.000001)
+			assert.InDelta(t, tc.want.Z(), tc.got.Z(), 0.000001)
+		})
+	}
+}
+
 func TestDistances(t *testing.T) {
 	tests := map[string]struct {
 		a    vector3.Float64
@@ -307,6 +328,24 @@ func TestJSON(t *testing.T) {
 	assert.Equal(t, 1.2, out.X())
 	assert.Equal(t, 2.3, out.Y())
 	assert.Equal(t, 3.4, out.Z())
+}
+
+func TestBadJSON(t *testing.T) {
+	out := vector3.New(0., 0., 0.)
+
+	unmarshallErr := out.UnmarshalJSON([]byte("bad json"))
+
+	assert.Error(t, unmarshallErr)
+	assert.Equal(t, 0., out.X())
+	assert.Equal(t, 0., out.Y())
+	assert.Equal(t, 0., out.Z())
+}
+
+func TestDot(t *testing.T) {
+	a := vector3.New(2, 3, 4)
+	b := vector3.New(6, 7, 8)
+
+	assert.Equal(t, 65., a.Dot(b))
 }
 
 var result float64

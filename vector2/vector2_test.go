@@ -9,7 +9,45 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestSet(t *testing.T) {
+func TestToIntConversions(t *testing.T) {
+	start := vector2.New(1.2, -2.4)
+
+	tests := map[string]struct {
+		want vector2.Int
+		got  vector2.Int
+	}{
+		"round to int": {want: start.RoundToInt(), got: vector2.New(1, -2)},
+		"floor to int": {want: start.FloorToInt(), got: vector2.New(1, -3)},
+		"ceil to int":  {want: start.CeilToInt(), got: vector2.New(2, -2)},
+	}
+
+	for name, tc := range tests {
+		t.Run(name, func(t *testing.T) {
+			assert.InDelta(t, tc.want.X(), tc.got.X(), 0.000001)
+			assert.InDelta(t, tc.want.Y(), tc.got.Y(), 0.000001)
+		})
+	}
+}
+
+func TestDistances(t *testing.T) {
+	tests := map[string]struct {
+		a    vector2.Float64
+		b    vector2.Float64
+		want float64
+	}{
+		"(0, 0), (0, 0)":  {a: vector2.Zero[float64](), b: vector2.New(0., 0.), want: 0},
+		"(0, 0), (0, 1)":  {a: vector2.Zero[float64](), b: vector2.New(0., 1.), want: 1},
+		"(0, -1), (0, 1)": {a: vector2.New(0., -1.), b: vector2.New(0., 1.), want: 2},
+	}
+
+	for name, tc := range tests {
+		t.Run(name, func(t *testing.T) {
+			assert.InDelta(t, tc.want, tc.a.Distance(tc.b), 0.000001)
+		})
+	}
+}
+
+func TestOperations(t *testing.T) {
 	start := vector2.New(1.2, -2.4)
 
 	tests := map[string]struct {
@@ -26,6 +64,7 @@ func TestSet(t *testing.T) {
 		"clamp":         {want: start.Clamp(1, 2), got: vector2.New(1.2, 1.)},
 		"perpendicular": {want: start.Perpendicular(), got: vector2.New(-2.4, -1.2)},
 		"normalized":    {want: start.Normalized(), got: vector2.New(0.447213, -.894427)},
+		"mult by vec":   {want: start.MultByVector(vector2.New(2., 4.)), got: vector2.New(2.4, -9.6)},
 	}
 
 	for name, tc := range tests {
@@ -207,6 +246,51 @@ func TestJSON(t *testing.T) {
 	assert.Equal(t, "{\"x\":1.2,\"y\":2.3}", string(marshalledData))
 	assert.Equal(t, 1.2, out.X())
 	assert.Equal(t, 2.3, out.Y())
+}
+
+func TestBadJSON(t *testing.T) {
+	out := vector2.New(0., 0.)
+
+	unmarshallErr := out.UnmarshalJSON([]byte("bad json"))
+
+	assert.Error(t, unmarshallErr)
+	assert.Equal(t, 0., out.X())
+	assert.Equal(t, 0., out.Y())
+}
+
+func TestDot(t *testing.T) {
+	a := vector2.New(2, 3)
+	b := vector2.New(6, 7)
+
+	assert.Equal(t, 33., a.Dot(b))
+}
+
+func TestToInt(t *testing.T) {
+	in := vector2.New(1.2, 2.3)
+	out := in.ToInt()
+	assert.Equal(t, 1, out.X())
+	assert.Equal(t, 2, out.Y())
+}
+
+func TestToInt64(t *testing.T) {
+	in := vector2.New(1.2, 2.3)
+	out := in.ToInt64()
+	assert.Equal(t, int64(1), out.X())
+	assert.Equal(t, int64(2), out.Y())
+}
+
+func TestToFloat32(t *testing.T) {
+	in := vector2.New(1.2, 2.3)
+	out := in.ToFloat32()
+	assert.Equal(t, float32(1.2), out.X())
+	assert.Equal(t, float32(2.3), out.Y())
+}
+
+func TestToFloat64(t *testing.T) {
+	in := vector2.New(1, 2)
+	out := in.ToFloat64()
+	assert.Equal(t, float64(1), out.X())
+	assert.Equal(t, float64(2), out.Y())
 }
 
 var result float64

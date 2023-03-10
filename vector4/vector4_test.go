@@ -92,6 +92,27 @@ func TestJSON(t *testing.T) {
 	assert.Equal(t, 5.6, out.W())
 }
 
+func TestBadJSON(t *testing.T) {
+	out := vector4.New(0., 0., 0., 0.)
+
+	unmarshallErr := out.UnmarshalJSON([]byte("bad json"))
+
+	assert.Error(t, unmarshallErr)
+	assert.Equal(t, 0., out.X())
+	assert.Equal(t, 0., out.Y())
+	assert.Equal(t, 0., out.Z())
+	assert.Equal(t, 0., out.W())
+}
+
+
+func TestDot(t *testing.T) {
+	a := vector4.New(2, 3, 4, 5)
+	b := vector4.New(6, 7, 8, 9)
+
+	assert.Equal(t, 110., a.Dot(b))
+}
+
+
 func TestAverage(t *testing.T) {
 	// ASSIGN =================================================================
 	vals := []vector4.Float64{
