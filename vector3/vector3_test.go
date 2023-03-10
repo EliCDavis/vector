@@ -26,6 +26,7 @@ func TestVectorOperations(t *testing.T) {
 		"multByVector": {want: start.MultByVector(vector3.New(2., 4., 6.)), got: vector3.New(2.4, -9.6, 22.2)},
 		"sqrt":         {want: start.Sqrt(), got: vector3.New(1.0954451, math.NaN(), 1.923538)},
 		"clamp":        {want: start.Clamp(1, 2), got: vector3.New(1.2, 1., 2.)},
+		"cross":        {want: start.Cross(vector3.New(2., 3., 4.)), got: vector3.New(-20.7, 2.6, 8.4)},
 	}
 
 	for name, tc := range tests {
@@ -53,6 +54,23 @@ func TestDistances(t *testing.T) {
 			assert.InDelta(t, tc.want, tc.a.Distance(tc.b), 0.000001)
 		})
 	}
+}
+
+func TestAverage(t *testing.T) {
+	// ASSIGN =================================================================
+	vals := []vector3.Float64{
+		vector3.New(1., 2., 3.),
+		vector3.New(1., 2., 3.),
+		vector3.New(1., 2., 3.),
+	}
+
+	// ACT ====================================================================
+	avg := vector3.Average(vals)
+
+	// ASSERT =================================================================
+	assert.InDelta(t, 1., avg.X(), 0.000001)
+	assert.InDelta(t, 2., avg.Y(), 0.000001)
+	assert.InDelta(t, 3., avg.Z(), 0.000001)
 }
 
 func TestAdd(t *testing.T) {
@@ -226,6 +244,15 @@ func TestScaleVecInt(t *testing.T) {
 	}
 }
 
+func TestToArray(t *testing.T) {
+	v := vector3.New(1., 2., 3.)
+	arr := v.ToArr()
+	assert.Len(t, arr, 3)
+	assert.Equal(t, 1., arr[0])
+	assert.Equal(t, 2., arr[1])
+	assert.Equal(t, 3., arr[2])
+}
+
 func TestNearZero(t *testing.T) {
 	tests := map[string]struct {
 		vec  vector3.Float64
@@ -302,4 +329,36 @@ func BenchmarkDot(b *testing.B) {
 		r = a.Dot(c)
 	}
 	result = r
+}
+
+func TestToInt(t *testing.T) {
+	in := vector3.New(1.2, 2.3, 3.4)
+	out := in.ToInt()
+	assert.Equal(t, 1, out.X())
+	assert.Equal(t, 2, out.Y())
+	assert.Equal(t, 3, out.Z())
+}
+
+func TestToInt64(t *testing.T) {
+	in := vector3.New(1.2, 2.3, 3.4)
+	out := in.ToInt64()
+	assert.Equal(t, int64(1), out.X())
+	assert.Equal(t, int64(2), out.Y())
+	assert.Equal(t, int64(3), out.Z())
+}
+
+func TestToFloat32(t *testing.T) {
+	in := vector3.New(1.2, 2.3, 3.4)
+	out := in.ToFloat32()
+	assert.Equal(t, float32(1.2), out.X())
+	assert.Equal(t, float32(2.3), out.Y())
+	assert.Equal(t, float32(3.4), out.Z())
+}
+
+func TestToFloat64(t *testing.T) {
+	in := vector3.New(1, 2, 3)
+	out := in.ToFloat64()
+	assert.Equal(t, float64(1), out.X())
+	assert.Equal(t, float64(2), out.Y())
+	assert.Equal(t, float64(3), out.Z())
 }

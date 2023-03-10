@@ -103,6 +103,10 @@ func Max[T vector.Number](a, b Vector[T]) Vector[T] {
 	)
 }
 
+func (v Vector[T]) ToArr() []T {
+	return []T{v.x, v.y, v.z}
+}
+
 func (v Vector[T]) MarshalJSON() ([]byte, error) {
 	return json.Marshal(&struct {
 		X float64 `json:"x"`
@@ -185,7 +189,7 @@ func (v Vector[T]) Y() T {
 	return v.y
 }
 
-// SetX changes the x component of the vector
+// SetY changes the y component of the vector
 func (v Vector[T]) SetY(newY T) Vector[T] {
 	return Vector[T]{
 		x: v.x,
@@ -199,7 +203,7 @@ func (v Vector[T]) Z() T {
 	return v.z
 }
 
-// SetZ changes the x component of the vector
+// SetZ changes the z component of the vector
 func (v Vector[T]) SetZ(newZ T) Vector[T] {
 	return Vector[T]{
 		x: v.x,
