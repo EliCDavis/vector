@@ -93,6 +93,28 @@ func Max[T vector.Number](a, b Vector[T]) Vector[T] {
 	)
 }
 
+func FromArray[T vector.Number](data []T) Vector[T] {
+	v := Vector[T]{}
+
+	if len(data) > 0 {
+		v.x = data[0]
+	}
+
+	if len(data) > 1 {
+		v.y = data[1]
+	}
+
+	if len(data) > 2 {
+		v.z = data[2]
+	}
+
+	if len(data) > 3 {
+		v.w = data[3]
+	}
+
+	return v
+}
+
 func (v Vector[T]) MarshalJSON() ([]byte, error) {
 	return json.Marshal(&struct {
 		X float64 `json:"x"`

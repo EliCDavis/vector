@@ -5,6 +5,7 @@ import (
 	"math"
 	"testing"
 
+	"github.com/EliCDavis/vector/vector2"
 	"github.com/EliCDavis/vector/vector3"
 	"github.com/stretchr/testify/assert"
 )
@@ -34,6 +35,26 @@ func TestVectorOperations(t *testing.T) {
 			assert.InDelta(t, tc.want.X(), tc.got.X(), 0.000001)
 			assert.InDelta(t, tc.want.Y(), tc.got.Y(), 0.000001)
 			assert.InDelta(t, tc.want.Z(), tc.got.Z(), 0.000001)
+		})
+	}
+}
+
+func TestToVector2(t *testing.T) {
+	start := vector3.New(1.2, -2.4, 3.7)
+
+	tests := map[string]struct {
+		got  vector2.Float64
+		want vector2.Float64
+	}{
+		"xy": {got: start.XY(), want: vector2.New(1.2, -2.4)},
+		"yz": {got: start.YZ(), want: vector2.New(-2.4, 3.7)},
+		"xz": {got: start.XZ(), want: vector2.New(1.2, 3.7)},
+	}
+
+	for name, tc := range tests {
+		t.Run(name, func(t *testing.T) {
+			assert.InDelta(t, tc.want.X(), tc.got.X(), 0.000001)
+			assert.InDelta(t, tc.want.Y(), tc.got.Y(), 0.000001)
 		})
 	}
 }
@@ -73,6 +94,28 @@ func TestDistances(t *testing.T) {
 	for name, tc := range tests {
 		t.Run(name, func(t *testing.T) {
 			assert.InDelta(t, tc.want, tc.a.Distance(tc.b), 0.000001)
+		})
+	}
+}
+
+func TestFromArray(t *testing.T) {
+	tests := map[string]struct {
+		arr  []float64
+		want vector3.Float64
+	}{
+		"nil => (0, 0, 0)":       {arr: nil, want: vector3.Zero[float64]()},
+		"[] => (0, 0, 0)":        {arr: []float64{}, want: vector3.Zero[float64]()},
+		"[1] => (1, 0, 0)":       {arr: []float64{1}, want: vector3.New(1., 0., 0.)},
+		"[1, 2] => (1, 2, 0)":    {arr: []float64{1, 2}, want: vector3.New(1., 2., 0.)},
+		"[1, 2, 3] => (1, 2, 3)": {arr: []float64{1, 2, 3}, want: vector3.New(1., 2., 3.)},
+	}
+
+	for name, tc := range tests {
+		t.Run(name, func(t *testing.T) {
+			got := vector3.FromArray(tc.arr)
+			assert.InDelta(t, tc.want.X(), got.X(), 0.000001)
+			assert.InDelta(t, tc.want.Y(), got.Y(), 0.000001)
+			assert.InDelta(t, tc.want.Z(), got.Z(), 0.000001)
 		})
 	}
 }
@@ -348,28 +391,6 @@ func TestDot(t *testing.T) {
 	assert.Equal(t, 65., a.Dot(b))
 }
 
-var result float64
-
-func BenchmarkDistance(b *testing.B) {
-	var r float64
-	a := vector3.New(1., 2., 3.)
-	c := vector3.New(4., 5., 6.)
-	for i := 0; i < b.N; i++ {
-		r = a.Distance(c)
-	}
-	result = r
-}
-
-func BenchmarkDot(b *testing.B) {
-	var r float64
-	a := vector3.New(1., 2., 3.)
-	c := vector3.New(4., 5., 6.)
-	for i := 0; i < b.N; i++ {
-		r = a.Dot(c)
-	}
-	result = r
-}
-
 func TestToInt(t *testing.T) {
 	in := vector3.New(1.2, 2.3, 3.4)
 	out := in.ToInt()
@@ -400,4 +421,26 @@ func TestToFloat64(t *testing.T) {
 	assert.Equal(t, float64(1), out.X())
 	assert.Equal(t, float64(2), out.Y())
 	assert.Equal(t, float64(3), out.Z())
+}
+
+var result float64
+
+func BenchmarkDistance(b *testing.B) {
+	var r float64
+	a := vector3.New(1., 2., 3.)
+	c := vector3.New(4., 5., 6.)
+	for i := 0; i < b.N; i++ {
+		r = a.Distance(c)
+	}
+	result = r
+}
+
+func BenchmarkDot(b *testing.B) {
+	var r float64
+	a := vector3.New(1., 2., 3.)
+	c := vector3.New(4., 5., 6.)
+	for i := 0; i < b.N; i++ {
+		r = a.Dot(c)
+	}
+	result = r
 }

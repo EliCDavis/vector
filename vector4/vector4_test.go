@@ -104,7 +104,6 @@ func TestBadJSON(t *testing.T) {
 	assert.Equal(t, 0., out.W())
 }
 
-
 func TestDot(t *testing.T) {
 	a := vector4.New(2, 3, 4, 5)
 	b := vector4.New(6, 7, 8, 9)
@@ -112,6 +111,29 @@ func TestDot(t *testing.T) {
 	assert.Equal(t, 110., a.Dot(b))
 }
 
+func TestFromArray(t *testing.T) {
+	tests := map[string]struct {
+		arr  []float64
+		want vector4.Float64
+	}{
+		"nil => (0, 0, 0, 0)":          {arr: nil, want: vector4.Zero[float64]()},
+		"[] => (0, 0, 0, 0)":           {arr: []float64{}, want: vector4.Zero[float64]()},
+		"[1] => (1, 0, 0, 0)":          {arr: []float64{1}, want: vector4.New(1., 0., 0., 0.)},
+		"[1, 2] => (1, 2, 0, 0)":       {arr: []float64{1, 2}, want: vector4.New(1., 2., 0., 0.)},
+		"[1, 2, 3] => (1, 2, 3, 0)":    {arr: []float64{1, 2, 3}, want: vector4.New(1., 2., 3., 0.)},
+		"[1, 2, 3, 4] => (1, 2, 3, 4)": {arr: []float64{1, 2, 3, 4}, want: vector4.New(1., 2., 3., 4.)},
+	}
+
+	for name, tc := range tests {
+		t.Run(name, func(t *testing.T) {
+			got := vector4.FromArray(tc.arr)
+			assert.InDelta(t, tc.want.X(), got.X(), 0.000001)
+			assert.InDelta(t, tc.want.Y(), got.Y(), 0.000001)
+			assert.InDelta(t, tc.want.Z(), got.Z(), 0.000001)
+			assert.InDelta(t, tc.want.W(), got.W(), 0.000001)
+		})
+	}
+}
 
 func TestAverage(t *testing.T) {
 	// ASSIGN =================================================================

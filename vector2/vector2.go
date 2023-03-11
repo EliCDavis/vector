@@ -88,6 +88,20 @@ func Max[T vector.Number](a, b Vector[T]) Vector[T] {
 	)
 }
 
+func FromArray[T vector.Number](data []T) Vector[T] {
+	v := Vector[T]{}
+
+	if len(data) > 0 {
+		v.x = data[0]
+	}
+
+	if len(data) > 1 {
+		v.y = data[1]
+	}
+
+	return v
+}
+
 func Rand() Vector[float64] {
 	return Vector[float64]{
 		x: rand.Float64(),

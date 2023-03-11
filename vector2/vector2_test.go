@@ -265,6 +265,26 @@ func TestDot(t *testing.T) {
 	assert.Equal(t, 33., a.Dot(b))
 }
 
+func TestFromArray(t *testing.T) {
+	tests := map[string]struct {
+		arr  []float64
+		want vector2.Float64
+	}{
+		"nil => (0, 0, 0)":    {arr: nil, want: vector2.Zero[float64]()},
+		"[] => (0, 0, 0)":     {arr: []float64{}, want: vector2.Zero[float64]()},
+		"[1] => (1, 0, 0)":    {arr: []float64{1}, want: vector2.New(1., 0.)},
+		"[1, 2] => (1, 2, 0)": {arr: []float64{1, 2}, want: vector2.New(1., 2.)},
+	}
+
+	for name, tc := range tests {
+		t.Run(name, func(t *testing.T) {
+			got := vector2.FromArray(tc.arr)
+			assert.InDelta(t, tc.want.X(), got.X(), 0.000001)
+			assert.InDelta(t, tc.want.Y(), got.Y(), 0.000001)
+		})
+	}
+}
+
 func TestToInt(t *testing.T) {
 	in := vector2.New(1.2, 2.3)
 	out := in.ToInt()
