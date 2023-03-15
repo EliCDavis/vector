@@ -103,6 +103,11 @@ func Max[T vector.Number](a, b Vector[T]) Vector[T] {
 	)
 }
 
+// Builds a vector from the data found from the passed in array to the best of
+// it's ability. If the length of the array is smaller than the vector itself,
+// only those values will be used to build the vector, and the remaining vector
+// components will remain the default value of the vector's data type (some
+// version of 0).
 func FromArray[T vector.Number](data []T) Vector[T] {
 	v := Vector[T]{}
 
