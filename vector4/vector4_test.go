@@ -2,6 +2,7 @@ package vector4_test
 
 import (
 	"encoding/json"
+	"math"
 	"testing"
 
 	"github.com/EliCDavis/vector/vector4"
@@ -34,13 +35,42 @@ func TestVectorOperations(t *testing.T) {
 		want vector4.Float64
 		got  vector4.Float64
 	}{
-		"x":   {want: start.SetX(4), got: vector4.New(4., -2.4, 3.7, 4.9)},
-		"y":   {want: start.SetY(4), got: vector4.New(1.2, 4., 3.7, 4.9)},
-		"z":   {want: start.SetZ(4), got: vector4.New(1.2, -2.4, 4., 4.9)},
-		"w":   {want: start.SetW(4), got: vector4.New(1.2, -2.4, 3.7, 4.)},
-		"add": {want: start.Add(vector4.New(1., -2., 3., 4.)), got: vector4.New(2.2, -4.4, 6.7, 8.9)},
-		"sub": {want: start.Sub(vector4.New(1., -2., 3., 4.)), got: vector4.New(0.2, -0.4, 0.7, 0.9)},
-		"div": {want: start.DivByConstant(2), got: vector4.New(0.6, -1.2, 1.85, 2.45)},
+		"x":            {want: start.SetX(4), got: vector4.New(4., -2.4, 3.7, 4.9)},
+		"y":            {want: start.SetY(4), got: vector4.New(1.2, 4., 3.7, 4.9)},
+		"z":            {want: start.SetZ(4), got: vector4.New(1.2, -2.4, 4., 4.9)},
+		"w":            {want: start.SetW(4), got: vector4.New(1.2, -2.4, 3.7, 4.)},
+		"add":          {want: start.Add(vector4.New(1., -2., 3., 4.)), got: vector4.New(2.2, -4.4, 6.7, 8.9)},
+		"sub":          {want: start.Sub(vector4.New(1., -2., 3., 4.)), got: vector4.New(0.2, -0.4, 0.7, 0.9)},
+		"div":          {want: start.DivByConstant(2), got: vector4.New(0.6, -1.2, 1.85, 2.45)},
+		"abs":          {want: start.Abs(), got: vector4.New(1.2, 2.4, 3.7, 4.9)},
+		"floor":        {want: start.Floor(), got: vector4.New(1., -3., 3., 4.)},
+		"ceil":         {want: start.Ceil(), got: vector4.New(2., -2., 4., 5.)},
+		"round":        {want: start.Round(), got: vector4.New(1., -2., 4., 5.)},
+		"multByVector": {want: start.MultByVector(vector4.New(2., 4., 6., 7.)), got: vector4.New(2.4, -9.6, 22.2, 34.3)},
+		"sqrt":         {want: start.Sqrt(), got: vector4.New(1.0954451, math.NaN(), 1.923538, 2.213594)},
+		"clamp":        {want: start.Clamp(1, 2), got: vector4.New(1.2, 1., 2., 2.)},
+	}
+
+	for name, tc := range tests {
+		t.Run(name, func(t *testing.T) {
+			assert.InDelta(t, tc.want.X(), tc.got.X(), 0.000001)
+			assert.InDelta(t, tc.want.Y(), tc.got.Y(), 0.000001)
+			assert.InDelta(t, tc.want.Z(), tc.got.Z(), 0.000001)
+			assert.InDelta(t, tc.want.W(), tc.got.W(), 0.000001)
+		})
+	}
+}
+
+func TestToIntConversions(t *testing.T) {
+	start := vector4.New(1.2, -2.4, 3.7, 4.9)
+
+	tests := map[string]struct {
+		want vector4.Int
+		got  vector4.Int
+	}{
+		"round to int": {want: start.RoundToInt(), got: vector4.New(1, -2, 4, 5)},
+		"floor to int": {want: start.FloorToInt(), got: vector4.New(1, -3, 3, 4)},
+		"ceil to int":  {want: start.CeilToInt(), got: vector4.New(2, -2, 4, 5)},
 	}
 
 	for name, tc := range tests {

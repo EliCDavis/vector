@@ -42,7 +42,7 @@ func One[T vector.Number]() Vector[T] {
 	return New[T](1, 1, 1, 1)
 }
 
-// Average sums all vector3's components together and divides each
+// Average sums all vector4's components together and divides each
 // component by the number of vectors added
 func Average[T vector.Number](vectors []Vector[T]) Vector[T] {
 	var center Vector[T]
@@ -274,4 +274,107 @@ func (v Vector[T]) Sub(other Vector[T]) Vector[T] {
 
 func (v Vector[T]) Dot(other Vector[T]) float64 {
 	return float64((v.x * other.x) + (v.y * other.y) + (v.z * other.z) + (v.w * other.w))
+}
+
+// Sqrt applies the math.Sqrt to each component of the vector
+func (v Vector[T]) Sqrt() Vector[T] {
+	return New(
+		T(math.Sqrt(float64(v.x))),
+		T(math.Sqrt(float64(v.y))),
+		T(math.Sqrt(float64(v.z))),
+		T(math.Sqrt(float64(v.w))),
+	)
+}
+
+// Abs applies the Abs math operation to each component of the vector
+func (v Vector[T]) Abs() Vector[T] {
+	return New(
+		T(math.Abs(float64(v.x))),
+		T(math.Abs(float64(v.y))),
+		T(math.Abs(float64(v.z))),
+		T(math.Abs(float64(v.w))),
+	)
+}
+
+func (v Vector[T]) Clamp(min, max T) Vector[T] {
+	return Vector[T]{
+		x: T(math.Max(math.Min(float64(v.x), float64(max)), float64(min))),
+		y: T(math.Max(math.Min(float64(v.y), float64(max)), float64(min))),
+		z: T(math.Max(math.Min(float64(v.z), float64(max)), float64(min))),
+		w: T(math.Max(math.Min(float64(v.w), float64(max)), float64(min))),
+	}
+}
+
+// Round takes each component of the vector and rounds it to the nearest whole
+// number
+func (v Vector[T]) Round() Vector[T] {
+	return New(
+		T(math.Round(float64(v.x))),
+		T(math.Round(float64(v.y))),
+		T(math.Round(float64(v.z))),
+		T(math.Round(float64(v.w))),
+	)
+}
+
+// RoundToInt takes each component of the vector and rounds it to the nearest
+// whole number, and then casts it to a int
+func (v Vector[T]) RoundToInt() Vector[int] {
+	return New(
+		int(math.Round(float64(v.x))),
+		int(math.Round(float64(v.y))),
+		int(math.Round(float64(v.z))),
+		int(math.Round(float64(v.w))),
+	)
+}
+
+// Floor applies the floor math operation to each component of the vector
+func (v Vector[T]) Floor() Vector[T] {
+	return New(
+		T(math.Floor(float64(v.x))),
+		T(math.Floor(float64(v.y))),
+		T(math.Floor(float64(v.z))),
+		T(math.Floor(float64(v.w))),
+	)
+}
+
+// FloorToInt applies the floor math operation to each component of the vector,
+// and then casts it to a int
+func (v Vector[T]) FloorToInt() Vector[int] {
+	return New(
+		int(math.Floor(float64(v.x))),
+		int(math.Floor(float64(v.y))),
+		int(math.Floor(float64(v.z))),
+		int(math.Floor(float64(v.w))),
+	)
+}
+
+// Ceil applies the ceil math operation to each component of the vector
+func (v Vector[T]) Ceil() Vector[T] {
+	return New(
+		T(math.Ceil(float64(v.x))),
+		T(math.Ceil(float64(v.y))),
+		T(math.Ceil(float64(v.z))),
+		T(math.Ceil(float64(v.w))),
+	)
+}
+
+// CeilToInt applies the ceil math operation to each component of the vector,
+// and then casts it to a int
+func (v Vector[T]) CeilToInt() Vector[int] {
+	return New(
+		int(math.Ceil(float64(v.x))),
+		int(math.Ceil(float64(v.y))),
+		int(math.Ceil(float64(v.z))),
+		int(math.Ceil(float64(v.w))),
+	)
+}
+
+// MultByVector is component wise multiplication, also known as Hadamard product.
+func (v Vector[T]) MultByVector(o Vector[T]) Vector[T] {
+	return Vector[T]{
+		x: v.x * o.x,
+		y: v.y * o.y,
+		z: v.z * o.z,
+		w: v.w * o.w,
+	}
 }
