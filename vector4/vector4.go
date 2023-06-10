@@ -180,6 +180,14 @@ func (v *Vector[T]) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (v Vector[T]) MinComponent() T {
+	return T(math.Min(math.Min(float64(v.x), float64(v.y)), math.Min(float64(v.z), float64(v.w))))
+}
+
+func (v Vector[T]) MaxComponent() T {
+	return T(math.Max(math.Max(float64(v.x), float64(v.y)), math.Max(float64(v.z), float64(v.w))))
+}
+
 func (v Vector[T]) ToInt() Vector[int] {
 	return Vector[int]{
 		x: int(v.x),

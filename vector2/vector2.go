@@ -130,6 +130,14 @@ func Rand() Vector[float64] {
 	}
 }
 
+func (v Vector[T]) MinComponent() T {
+	return T(math.Min(float64(v.x), float64(v.y)))
+}
+
+func (v Vector[T]) MaxComponent() T {
+	return T(math.Max(float64(v.x), float64(v.y)))
+}
+
 func (v Vector[T]) MarshalJSON() ([]byte, error) {
 	return json.Marshal(&struct {
 		X float64 `json:"x"`

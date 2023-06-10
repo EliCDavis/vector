@@ -304,3 +304,11 @@ func TestToFloat64(t *testing.T) {
 	assert.Equal(t, float64(3), out.Z())
 	assert.Equal(t, float64(5), out.W())
 }
+
+func TestMaxComponent(t *testing.T) {
+	assert.Equal(t, 4., vector4.New(-2., 3., 4., -1.).MaxComponent())
+}
+
+func TestMinComponent(t *testing.T) {
+	assert.Equal(t, -2., vector4.New(-2., 3., 4., -1.).MinComponent())
+}

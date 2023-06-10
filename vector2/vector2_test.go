@@ -321,6 +321,14 @@ func TestToFloat64(t *testing.T) {
 	assert.Equal(t, float64(2), out.Y())
 }
 
+func TestMaxComponent(t *testing.T) {
+	assert.Equal(t, 4., vector2.New(-2., 4.).MaxComponent())
+}
+
+func TestMinComponent(t *testing.T) {
+	assert.Equal(t, -2., vector2.New(-2., 4.).MinComponent())
+}
+
 var result float64
 
 func BenchmarkDistance(b *testing.B) {

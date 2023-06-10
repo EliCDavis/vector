@@ -184,6 +184,14 @@ func (v *Vector[T]) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (v Vector[T]) MinComponent() T {
+	return T(math.Min(float64(v.x), math.Min(float64(v.y), float64(v.z))))
+}
+
+func (v Vector[T]) MaxComponent() T {
+	return T(math.Max(float64(v.x), math.Max(float64(v.y), float64(v.z))))
+}
+
 func (v Vector[T]) ToInt() Vector[int] {
 	return Vector[int]{
 		x: int(v.x),
