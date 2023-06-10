@@ -2,6 +2,7 @@ package vector3_test
 
 import (
 	"encoding/json"
+	"image/color"
 	"math"
 	"testing"
 
@@ -28,6 +29,10 @@ func TestVectorOperations(t *testing.T) {
 		"sqrt":         {want: start.Sqrt(), got: vector3.New(1.0954451, math.NaN(), 1.923538)},
 		"clamp":        {want: start.Clamp(1, 2), got: vector3.New(1.2, 1., 2.)},
 		"cross":        {want: start.Cross(vector3.New(2., 3., 4.)), got: vector3.New(-20.7, 2.6, 8.4)},
+		"center":       {want: vector3.Midpoint(start, vector3.New(2.4, 2.4, 4.7)), got: vector3.New(1.8, 0., 4.2)},
+		"fill":         {want: vector3.Fill(9.3), got: vector3.New(9.3, 9.3, 9.3)},
+		"color black":  {want: vector3.FromColor(color.Black), got: vector3.New(0., 0., 0.)},
+		"color white":  {want: vector3.FromColor(color.White), got: vector3.New(1., 1., 1.)},
 	}
 
 	for name, tc := range tests {

@@ -65,6 +65,8 @@ func TestOperations(t *testing.T) {
 		"perpendicular": {want: start.Perpendicular(), got: vector2.New(-2.4, -1.2)},
 		"normalized":    {want: start.Normalized(), got: vector2.New(0.447213, -.894427)},
 		"mult by vec":   {want: start.MultByVector(vector2.New(2., 4.)), got: vector2.New(2.4, -9.6)},
+		"center":        {want: vector2.Midpoint(start, vector2.New(2.4, 2.4)), got: vector2.New(1.8, 0.)},
+		"fill":          {want: vector2.Fill(9.3), got: vector2.New(9.3, 9.3)},
 	}
 
 	for name, tc := range tests {
@@ -263,6 +265,12 @@ func TestDot(t *testing.T) {
 	b := vector2.New(6, 7)
 
 	assert.Equal(t, 33., a.Dot(b))
+}
+
+func TestLengthSquared(t *testing.T) {
+	a := vector2.New(2, 3)
+
+	assert.Equal(t, 13., a.LengthSquared())
 }
 
 func TestFromArray(t *testing.T) {

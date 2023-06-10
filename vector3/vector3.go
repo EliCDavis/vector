@@ -2,6 +2,7 @@ package vector3
 
 import (
 	"encoding/json"
+	"image/color"
 	"math"
 	"math/rand"
 
@@ -29,6 +30,15 @@ func New[T vector.Number](x T, y T, z T) Vector[T] {
 		x: x,
 		y: y,
 		z: z,
+	}
+}
+
+// Fill creates a vector where each component is equal to v
+func Fill[T vector.Number](v T) Vector[T] {
+	return Vector[T]{
+		x: v,
+		y: v,
+		z: v,
 	}
 }
 
@@ -72,6 +82,11 @@ func One[T vector.Number]() Vector[T] {
 	return New[T](1, 1, 1)
 }
 
+func FromColor(c color.Color) Float64 {
+	r, g, b, _ := c.RGBA()
+	return New(float64(r)/0xffff, float64(g)/0xffff, float64(b)/0xffff)
+}
+
 // Average sums all vector3's components together and divides each
 // component by the number of vectors added
 func Average[T vector.Number](vectors []Vector[T]) Vector[T] {
@@ -101,6 +116,14 @@ func Max[T vector.Number](a, b Vector[T]) Vector[T] {
 		T(math.Max(float64(a.y), float64(b.y))),
 		T(math.Max(float64(a.z), float64(b.z))),
 	)
+}
+
+func Midpoint[T vector.Number](a, b Vector[T]) Vector[T] {
+	// center = (b - a)0.5 + a
+	// center = b0.5 - a0.5 + a
+	// center = b0.5 + a0.5
+	// center = 0.5(b + a)
+	return b.Add(a).Scale(0.5)
 }
 
 // Builds a vector from the data found from the passed in array to the best of

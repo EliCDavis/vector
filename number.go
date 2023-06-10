@@ -1,5 +1,5 @@
 package vector
 
 type Number interface {
-	int64 | float64 | int | float32
+	int8 | int16 | int | int32 | int64 | float32 | float64
 }

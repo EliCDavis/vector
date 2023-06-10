@@ -2,6 +2,7 @@ package vector4_test
 
 import (
 	"encoding/json"
+	"image/color"
 	"math"
 	"testing"
 
@@ -49,6 +50,10 @@ func TestVectorOperations(t *testing.T) {
 		"multByVector": {want: start.MultByVector(vector4.New(2., 4., 6., 7.)), got: vector4.New(2.4, -9.6, 22.2, 34.3)},
 		"sqrt":         {want: start.Sqrt(), got: vector4.New(1.0954451, math.NaN(), 1.923538, 2.213594)},
 		"clamp":        {want: start.Clamp(1, 2), got: vector4.New(1.2, 1., 2., 2.)},
+		"center":       {want: vector4.Midpoint(start, vector4.New(2.4, 2.4, 4.7, 4.7)), got: vector4.New(1.8, 0., 4.2, 4.8)},
+		"fill":         {want: vector4.Fill(9.3), got: vector4.New(9.3, 9.3, 9.3, 9.3)},
+		"color black":  {want: vector4.FromColor(color.Black), got: vector4.New(0., 0., 0., 1.)},
+		"color white":  {want: vector4.FromColor(color.White), got: vector4.New(1., 1., 1., 1.)},
 	}
 
 	for name, tc := range tests {

@@ -27,6 +27,14 @@ func New[T vector.Number](x T, y T) Vector[T] {
 	}
 }
 
+// Fill creates a vector where each component is equal to v
+func Fill[T vector.Number](v T) Vector[T] {
+	return Vector[T]{
+		x: v,
+		y: v,
+	}
+}
+
 func Zero[T vector.Number]() Vector[T] {
 	return Vector[T]{
 		x: 0,
@@ -86,6 +94,14 @@ func Max[T vector.Number](a, b Vector[T]) Vector[T] {
 		T(math.Max(float64(a.x), float64(b.x))),
 		T(math.Max(float64(a.y), float64(b.y))),
 	)
+}
+
+func Midpoint[T vector.Number](a, b Vector[T]) Vector[T] {
+	// center = (b - a)0.5 + a
+	// center = b0.5 - a0.5 + a
+	// center = b0.5 + a0.5
+	// center = 0.5(b + a)
+	return b.Add(a).Scale(0.5)
 }
 
 // Builds a vector from the data found from the passed in array to the best of
