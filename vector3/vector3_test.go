@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"image/color"
 	"math"
+	"math/rand"
 	"testing"
 
 	"github.com/EliCDavis/vector/vector2"
@@ -14,25 +15,42 @@ import (
 func TestVectorOperations(t *testing.T) {
 	start := vector3.New(1.2, -2.4, 3.7)
 
+	randSource := rand.NewSource(42)
+	r := rand.New(randSource)
+
 	tests := map[string]struct {
-		want vector3.Float64
 		got  vector3.Float64
+		want vector3.Float64
 	}{
-		"x":            {want: start.SetX(4), got: vector3.New(4., -2.4, 3.7)},
-		"y":            {want: start.SetY(4), got: vector3.New(1.2, 4., 3.7)},
-		"z":            {want: start.SetZ(4), got: vector3.New(1.2, -2.4, 4.)},
-		"abs":          {want: start.Abs(), got: vector3.New(1.2, 2.4, 3.7)},
-		"floor":        {want: start.Floor(), got: vector3.New(1., -3., 3.)},
-		"ceil":         {want: start.Ceil(), got: vector3.New(2., -2., 4.)},
-		"round":        {want: start.Round(), got: vector3.New(1., -2., 4.)},
-		"multByVector": {want: start.MultByVector(vector3.New(2., 4., 6.)), got: vector3.New(2.4, -9.6, 22.2)},
-		"sqrt":         {want: start.Sqrt(), got: vector3.New(1.0954451, math.NaN(), 1.923538)},
-		"clamp":        {want: start.Clamp(1, 2), got: vector3.New(1.2, 1., 2.)},
-		"cross":        {want: start.Cross(vector3.New(2., 3., 4.)), got: vector3.New(-20.7, 2.6, 8.4)},
-		"center":       {want: vector3.Midpoint(start, vector3.New(2.4, 2.4, 4.7)), got: vector3.New(1.8, 0., 4.2)},
-		"fill":         {want: vector3.Fill(9.3), got: vector3.New(9.3, 9.3, 9.3)},
-		"color black":  {want: vector3.FromColor(color.Black), got: vector3.New(0., 0., 0.)},
-		"color white":  {want: vector3.FromColor(color.White), got: vector3.New(1., 1., 1.)},
+		"x":            {got: start.SetX(4), want: vector3.New(4., -2.4, 3.7)},
+		"y":            {got: start.SetY(4), want: vector3.New(1.2, 4., 3.7)},
+		"z":            {got: start.SetZ(4), want: vector3.New(1.2, -2.4, 4.)},
+		"abs":          {got: start.Abs(), want: vector3.New(1.2, 2.4, 3.7)},
+		"floor":        {got: start.Floor(), want: vector3.New(1., -3., 3.)},
+		"ceil":         {got: start.Ceil(), want: vector3.New(2., -2., 4.)},
+		"round":        {got: start.Round(), want: vector3.New(1., -2., 4.)},
+		"multByVector": {got: start.MultByVector(vector3.New(2., 4., 6.)), want: vector3.New(2.4, -9.6, 22.2)},
+		"sqrt":         {got: start.Sqrt(), want: vector3.New(1.0954451, math.NaN(), 1.923538)},
+		"clamp":        {got: start.Clamp(1, 2), want: vector3.New(1.2, 1., 2.)},
+		"cross":        {got: start.Cross(vector3.New(2., 3., 4.)), want: vector3.New(-20.7, 2.6, 8.4)},
+		"center":       {got: vector3.Midpoint(start, vector3.New(2.4, 2.4, 4.7)), want: vector3.New(1.8, 0., 4.2)},
+		"fill":         {got: vector3.Fill(9.3), want: vector3.New(9.3, 9.3, 9.3)},
+		"color black":  {got: vector3.FromColor(color.Black), want: vector3.New(0., 0., 0.)},
+		"color white":  {got: vector3.FromColor(color.White), want: vector3.New(1., 1., 1.)},
+		"xzy":          {got: start.XZY(), want: vector3.New(1.2, 3.7, -2.4)},
+		"zxy":          {got: start.ZXY(), want: vector3.New(3.7, 1.2, -2.4)},
+		"zyx":          {got: start.ZYX(), want: vector3.New(3.7, -2.4, 1.2)},
+		"yzx":          {got: start.YZX(), want: vector3.New(-2.4, 3.7, 1.2)},
+		"yxz":          {got: start.YXZ(), want: vector3.New(-2.4, 1.2, 3.7)},
+		"random":       {got: vector3.Rand(r), want: vector3.New(.373028361, 0.066000496, 0.604093851)},
+		"random range": {
+			got:  vector3.RandRange(r, -2., 4.),
+			want: vector3.New(-0.7470877, -1.737089, 0.299159),
+		},
+		"random normal": {
+			got:  vector3.RandNormal(r),
+			want: vector3.New(0.8852213, -0.326936, -0.330901),
+		},
 	}
 
 	for name, tc := range tests {

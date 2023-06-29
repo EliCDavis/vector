@@ -3,6 +3,7 @@ package vector2_test
 import (
 	"encoding/json"
 	"math"
+	"math/rand"
 	"testing"
 
 	"github.com/EliCDavis/vector/vector2"
@@ -50,6 +51,9 @@ func TestDistances(t *testing.T) {
 func TestOperations(t *testing.T) {
 	start := vector2.New(1.2, -2.4)
 
+	randSource := rand.NewSource(42)
+	r := rand.New(randSource)
+
 	tests := map[string]struct {
 		want vector2.Float64
 		got  vector2.Float64
@@ -67,6 +71,8 @@ func TestOperations(t *testing.T) {
 		"mult by vec":   {want: start.MultByVector(vector2.New(2., 4.)), got: vector2.New(2.4, -9.6)},
 		"center":        {want: vector2.Midpoint(start, vector2.New(2.4, 2.4)), got: vector2.New(1.8, 0.)},
 		"fill":          {want: vector2.Fill(9.3), got: vector2.New(9.3, 9.3)},
+		"yx":            {want: start.YX(), got: vector2.New(-2.4, 1.2)},
+		"random":        {want: vector2.Rand(r), got: vector2.New(.373028361, 0.066000496)},
 	}
 
 	for name, tc := range tests {

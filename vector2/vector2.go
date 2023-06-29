@@ -123,10 +123,10 @@ func FromArray[T vector.Number](data []T) Vector[T] {
 	return v
 }
 
-func Rand() Vector[float64] {
+func Rand(r *rand.Rand) Vector[float64] {
 	return Vector[float64]{
-		x: rand.Float64(),
-		y: rand.Float64(),
+		x: r.Float64(),
+		y: r.Float64(),
 	}
 }
 
@@ -228,6 +228,13 @@ func (v Vector[T]) SetY(newY T) Vector[T] {
 	return Vector[T]{
 		x: v.x,
 		y: newY,
+	}
+}
+
+func (v Vector[T]) YX() Vector[T] {
+	return Vector[T]{
+		x: v.y,
+		y: v.x,
 	}
 }
 

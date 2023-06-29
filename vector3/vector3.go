@@ -266,6 +266,46 @@ func (v Vector[T]) SetZ(newZ T) Vector[T] {
 	}
 }
 
+func (v Vector[T]) XZY() Vector[T] {
+	return Vector[T]{
+		x: v.x,
+		y: v.z,
+		z: v.y,
+	}
+}
+
+func (v Vector[T]) ZXY() Vector[T] {
+	return Vector[T]{
+		x: v.z,
+		y: v.x,
+		z: v.y,
+	}
+}
+
+func (v Vector[T]) ZYX() Vector[T] {
+	return Vector[T]{
+		x: v.z,
+		y: v.y,
+		z: v.x,
+	}
+}
+
+func (v Vector[T]) YXZ() Vector[T] {
+	return Vector[T]{
+		x: v.y,
+		y: v.x,
+		z: v.z,
+	}
+}
+
+func (v Vector[T]) YZX() Vector[T] {
+	return Vector[T]{
+		x: v.y,
+		y: v.z,
+		z: v.x,
+	}
+}
+
 // XY returns vector2 with the x and y components
 func (v Vector[T]) XY() vector2.Vector[T] {
 	return vector2.New(v.x, v.y)
@@ -417,29 +457,29 @@ func (v Vector[T]) Normalized() Vector[T] {
 }
 
 // Rand returns a vector with each component being a random value between [0.0, 1.0)
-func Rand() Vector[float64] {
+func Rand(r *rand.Rand) Vector[float64] {
 	return Vector[float64]{
-		x: rand.Float64(),
-		y: rand.Float64(),
-		z: rand.Float64(),
+		x: r.Float64(),
+		y: r.Float64(),
+		z: r.Float64(),
 	}
 }
 
 // RandRange returns a vector where each component is a random value that falls
 // within the values of min and max
-func RandRange[T vector.Number](min, max T) Vector[T] {
+func RandRange[T vector.Number](r *rand.Rand, min, max T) Vector[T] {
 	dist := float64(max - min)
 	return Vector[T]{
-		x: T(rand.Float64()*dist) + min,
-		y: T(rand.Float64()*dist) + min,
-		z: T(rand.Float64()*dist) + min,
+		x: T(r.Float64()*dist) + min,
+		y: T(r.Float64()*dist) + min,
+		z: T(r.Float64()*dist) + min,
 	}
 }
 
 // RandInUnitSphere returns a randomly sampled point in or on the unit
-func RandInUnitSphere() Vector[float64] {
+func RandInUnitSphere(r *rand.Rand) Vector[float64] {
 	for {
-		p := RandRange(-1., 1.)
+		p := RandRange(r, -1., 1.)
 		if p.LengthSquared() < 1 {
 			return p
 		}
@@ -447,11 +487,11 @@ func RandInUnitSphere() Vector[float64] {
 }
 
 // RandNormal returns a random normal
-func RandNormal() Vector[float64] {
+func RandNormal(r *rand.Rand) Vector[float64] {
 	return Vector[float64]{
-		x: -1. + (rand.Float64() * 2.),
-		y: -1. + (rand.Float64() * 2.),
-		z: -1. + (rand.Float64() * 2.),
+		x: -1. + (r.Float64() * 2.),
+		y: -1. + (r.Float64() * 2.),
+		z: -1. + (r.Float64() * 2.),
 	}.Normalized()
 }
 

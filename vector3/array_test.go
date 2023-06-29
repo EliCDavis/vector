@@ -1,6 +1,7 @@
 package vector3_test
 
 import (
+	"math/rand"
 	"testing"
 
 	"github.com/EliCDavis/vector/vector3"
@@ -64,8 +65,9 @@ func TestArrayNormalizedAndScaleAndDiv(t *testing.T) {
 	// ARRANGE ================================================================
 	ptCount := 1000
 	pts := make([]vector3.Float64, ptCount)
+	r := rand.New(rand.NewSource(42))
 	for i := 0; i < ptCount; i++ {
-		pts[i] = vector3.Rand()
+		pts[i] = vector3.Rand(r)
 	}
 
 	// ACT ====================================================================
@@ -84,8 +86,9 @@ func TestArrayModify(t *testing.T) {
 	// ARRANGE ================================================================
 	ptCount := 1000
 	pts := make([]vector3.Float64, ptCount)
+	r := rand.New(rand.NewSource(42))
 	for i := 0; i < ptCount; i++ {
-		pts[i] = vector3.Rand()
+		pts[i] = vector3.Rand(r)
 	}
 
 	// ACT ====================================================================
@@ -104,9 +107,11 @@ func TestArrayStandardDeviation(t *testing.T) {
 	// ARRANGE ================================================================
 	ptCount := 100000
 	pts := make([]vector3.Float64, ptCount)
+	r := rand.New(rand.NewSource(42))
+
 	for i := 0; i < ptCount; i++ {
 		pts[i] = vector3.
-			Rand().
+			Rand(r).
 			Scale(2).
 			Sub(vector3.One[float64]()).
 			Normalized()
