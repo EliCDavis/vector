@@ -18,6 +18,9 @@ type (
 	Float32 = Vector[float32]
 	Int     = Vector[int]
 	Int64   = Vector[int64]
+	Int32   = Vector[int32]
+	Int16   = Vector[int16]
+	Int8    = Vector[int8]
 )
 
 func New[T vector.Number](x T, y T) Vector[T] {
