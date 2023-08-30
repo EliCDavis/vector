@@ -312,3 +312,21 @@ func TestMaxComponent(t *testing.T) {
 func TestMinComponent(t *testing.T) {
 	assert.Equal(t, -2., vector4.New(-2., 3., 4., -1.).MinComponent())
 }
+
+func TestFormat(t *testing.T) {
+	tests := map[string]struct {
+		vec       vector4.Int
+		formatter string
+		want      string
+	}{
+		"1 2 3 4":    {vec: vector4.New(1, 2, 3, 4), formatter: "%d %d %d %d", want: "1 2 3 4"},
+		"1, 2, 3, 4": {vec: vector4.New(1, 2, 3, 4), formatter: "%d, %d, %d, %d", want: "1, 2, 3, 4"},
+	}
+
+	for name, tc := range tests {
+		t.Run(name, func(t *testing.T) {
+			got := tc.vec.Format(tc.formatter)
+			assert.Equal(t, tc.want, got)
+		})
+	}
+}

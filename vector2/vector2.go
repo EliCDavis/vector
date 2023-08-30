@@ -2,6 +2,7 @@ package vector2
 
 import (
 	"encoding/json"
+	"fmt"
 	"math"
 	"math/rand"
 
@@ -165,6 +166,10 @@ func (v *Vector[T]) UnmarshalJSON(data []byte) error {
 	v.x = T(aux.X)
 	v.y = T(aux.Y)
 	return nil
+}
+
+func (v Vector[T]) Format(format string) string {
+	return fmt.Sprintf(format, v.x, v.y)
 }
 
 // Sqrt applies the math.Sqrt to each component of the vector

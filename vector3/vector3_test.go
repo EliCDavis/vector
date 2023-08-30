@@ -475,3 +475,21 @@ func BenchmarkDot(b *testing.B) {
 	}
 	result = r
 }
+
+func TestFormat(t *testing.T) {
+	tests := map[string]struct {
+		vec       vector3.Int
+		formatter string
+		want      string
+	}{
+		"1 2 3":   {vec: vector3.New(1, 2, 3), formatter: "%d %d %d", want: "1 2 3"},
+		"1, 2, 3": {vec: vector3.New(1, 2, 3), formatter: "%d, %d, %d", want: "1, 2, 3"},
+	}
+
+	for name, tc := range tests {
+		t.Run(name, func(t *testing.T) {
+			got := tc.vec.Format(tc.formatter)
+			assert.Equal(t, tc.want, got)
+		})
+	}
+}

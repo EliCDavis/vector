@@ -2,6 +2,7 @@ package vector3
 
 import (
 	"encoding/json"
+	"fmt"
 	"image/color"
 	"math"
 	"math/rand"
@@ -185,6 +186,10 @@ func (v *Vector[T]) UnmarshalJSON(data []byte) error {
 	v.y = T(aux.Y)
 	v.z = T(aux.Z)
 	return nil
+}
+
+func (v Vector[T]) Format(format string) string {
+	return fmt.Sprintf(format, v.x, v.y, v.z)
 }
 
 func (v Vector[T]) MinComponent() T {

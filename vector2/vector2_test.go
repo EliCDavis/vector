@@ -346,3 +346,21 @@ func BenchmarkDistance(b *testing.B) {
 	}
 	result = r
 }
+
+func TestFormat(t *testing.T) {
+	tests := map[string]struct {
+		vec       vector2.Int
+		formatter string
+		want      string
+	}{
+		"1 2":  {vec: vector2.New(1, 2), formatter: "%d %d", want: "1 2"},
+		"1, 2": {vec: vector2.New(1, 2), formatter: "%d, %d", want: "1, 2"},
+	}
+
+	for name, tc := range tests {
+		t.Run(name, func(t *testing.T) {
+			got := tc.vec.Format(tc.formatter)
+			assert.Equal(t, tc.want, got)
+		})
+	}
+}
