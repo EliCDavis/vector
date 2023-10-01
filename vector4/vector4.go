@@ -418,3 +418,23 @@ func (v Vector[T]) MultByVector(o Vector[T]) Vector[T] {
 		w: v.w * o.w,
 	}
 }
+
+func (v Vector[T]) ContainsNaN() bool {
+	if math.IsNaN(float64(v.x)) {
+		return true
+	}
+
+	if math.IsNaN(float64(v.y)) {
+		return true
+	}
+
+	if math.IsNaN(float64(v.z)) {
+		return true
+	}
+
+	if math.IsNaN(float64(v.w)) {
+		return true
+	}
+
+	return false
+}

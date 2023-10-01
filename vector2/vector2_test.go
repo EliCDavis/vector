@@ -364,3 +364,20 @@ func TestFormat(t *testing.T) {
 		})
 	}
 }
+
+func TestContainsNaN(t *testing.T) {
+	tests := map[string]struct {
+		vec  vector2.Float64
+		want bool
+	}{
+		"x nan":  {vec: vector2.New(math.NaN(), 0.), want: true},
+		"y nan":  {vec: vector2.New(0., math.NaN()), want: true},
+		"no nan": {vec: vector2.New(0., 0.), want: false},
+	}
+
+	for name, tc := range tests {
+		t.Run(name, func(t *testing.T) {
+			assert.Equal(t, tc.want, tc.vec.ContainsNaN())
+		})
+	}
+}

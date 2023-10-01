@@ -383,3 +383,15 @@ func (v Vector[T]) NearZero() bool {
 	const s = 1e-8
 	return (math.Abs(float64(v.X())) < s) && (math.Abs(float64(v.Y())) < s)
 }
+
+func (v Vector[T]) ContainsNaN() bool {
+	if math.IsNaN(float64(v.x)) {
+		return true
+	}
+
+	if math.IsNaN(float64(v.y)) {
+		return true
+	}
+
+	return false
+}

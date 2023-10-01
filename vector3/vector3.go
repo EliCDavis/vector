@@ -188,6 +188,22 @@ func (v *Vector[T]) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (v Vector[T]) ContainsNaN() bool {
+	if math.IsNaN(float64(v.x)) {
+		return true
+	}
+
+	if math.IsNaN(float64(v.y)) {
+		return true
+	}
+
+	if math.IsNaN(float64(v.z)) {
+		return true
+	}
+
+	return false
+}
+
 func (v Vector[T]) Format(format string) string {
 	return fmt.Sprintf(format, v.x, v.y, v.z)
 }

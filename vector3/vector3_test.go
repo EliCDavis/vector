@@ -357,6 +357,24 @@ func TestNearZero(t *testing.T) {
 	}
 }
 
+func TestContainsNaN(t *testing.T) {
+	tests := map[string]struct {
+		vec  vector3.Float64
+		want bool
+	}{
+		"x nan":  {vec: vector3.New(math.NaN(), 0., 0.), want: true},
+		"y nan":  {vec: vector3.New(0., math.NaN(), 0.), want: true},
+		"z nan":  {vec: vector3.New(0., 0., math.NaN()), want: true},
+		"no nan": {vec: vector3.New(0., 0., 0.), want: false},
+	}
+
+	for name, tc := range tests {
+		t.Run(name, func(t *testing.T) {
+			assert.Equal(t, tc.want, tc.vec.ContainsNaN())
+		})
+	}
+}
+
 func TestDefaults(t *testing.T) {
 	tests := map[string]struct {
 		got  vector3.Float64
