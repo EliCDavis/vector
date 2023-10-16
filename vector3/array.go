@@ -19,7 +19,25 @@ func (v3a Array[T]) Add(other Vector[T]) (out Array[T]) {
 	out = make(Array[T], len(v3a))
 
 	for i, v := range v3a {
-		out[i] = v.Add(other)
+		out[i] = Vector[T]{
+			v.x + other.x,
+			v.y + other.y,
+			v.z + other.z,
+		}
+	}
+
+	return
+}
+
+func (v3a Array[T]) Sub(other Vector[T]) (out Array[T]) {
+	out = make(Array[T], len(v3a))
+
+	for i, v := range v3a {
+		out[i] = Vector[T]{
+			v.x - other.x,
+			v.y - other.y,
+			v.z - other.z,
+		}
 	}
 
 	return
@@ -64,6 +82,25 @@ func (v3a Array[T]) Normalized() (out Array[T]) {
 	}
 
 	return
+}
+
+func (v3a Array[T]) ContainsNaN() bool {
+	for _, v := range v3a {
+		if v.ContainsNaN() {
+			return true
+		}
+	}
+	return false
+}
+
+func (v3a Array[T]) MaxLength() float64 {
+	max := 0.
+
+	for _, v := range v3a {
+		max = math.Max(max, v.Length())
+	}
+
+	return max
 }
 
 func (v3a Array[T]) Sum() (sum Vector[T]) {

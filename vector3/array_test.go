@@ -1,6 +1,7 @@
 package vector3_test
 
 import (
+	"math"
 	"math/rand"
 	"testing"
 
@@ -128,4 +129,93 @@ func TestArrayStandardDeviation(t *testing.T) {
 	assert.InDelta(t, 0.5, deviation.X(), 0.1)
 	assert.InDelta(t, 0.5, deviation.Y(), 0.1)
 	assert.InDelta(t, 0.5, deviation.Z(), 0.1)
+}
+
+func TestArray_Add(t *testing.T) {
+	// ARRANGE ================================================================
+	arr := vector3.Float64Array([]vector3.Float64{
+		vector3.New(0., 0., 0.),
+		vector3.New(1., 0., 0.),
+		vector3.New(2., 0., 0.),
+	})
+	add := vector3.New(1., 2., 3.)
+
+	// ACT ====================================================================
+	added := arr.Add(add)
+
+	// ASSERT =================================================================
+	for i, v := range added {
+		assert.Equal(t, arr[i].Add(add), v)
+	}
+}
+
+func TestArray_Sub(t *testing.T) {
+	// ARRANGE ================================================================
+	arr := vector3.Float64Array([]vector3.Float64{
+		vector3.New(0., 0., 0.),
+		vector3.New(1., 0., 0.),
+		vector3.New(2., 0., 0.),
+	})
+	sub := vector3.New(1., 2., 3.)
+
+	// ACT ====================================================================
+	added := arr.Sub(sub)
+
+	// ASSERT =================================================================
+	for i, v := range added {
+		assert.Equal(t, arr[i].Sub(sub), v)
+	}
+}
+
+func TestArray_ContainsNaN_True(t *testing.T) {
+	// ARRANGE ================================================================
+	arr := vector3.Float64Array([]vector3.Float64{
+		vector3.New(0., 0., 0.),
+		vector3.New(1., 0., 0.),
+		vector3.New(2., math.NaN(), 0.),
+	})
+
+	// ACT ====================================================================
+	assert.True(t, arr.ContainsNaN())
+}
+
+func TestArray_ContainsNaN_False(t *testing.T) {
+	// ARRANGE ================================================================
+	arr := vector3.Float64Array([]vector3.Float64{
+		vector3.New(0., 0., 0.),
+		vector3.New(1., 0., 0.),
+		vector3.New(2., 0., 0.),
+	})
+
+	// ACT ====================================================================
+	assert.False(t, arr.ContainsNaN())
+}
+
+func TestArray_MaxLength(t *testing.T) {
+	// ARRANGE ================================================================
+	arr := vector3.Float64Array([]vector3.Float64{
+		vector3.New(0., 0., 0.),
+		vector3.New(1., 0., 0.),
+		vector3.New(2., 0., 0.),
+	})
+
+	// ACT ====================================================================
+	assert.Equal(t, 2., arr.MaxLength())
+}
+
+func TestArray_Sum(t *testing.T) {
+	// ARRANGE ================================================================
+	arr := vector3.Float64Array([]vector3.Float64{
+		vector3.New(0., 1., 2.),
+		vector3.New(3., 4., 5.),
+		vector3.New(6., 7., 8.),
+	})
+
+	// ACT ====================================================================
+	sum := arr.Sum()
+
+	// ASSERT =================================================================
+	assert.Equal(t, 9., sum.X())
+	assert.Equal(t, 12., sum.Y())
+	assert.Equal(t, 15., sum.Z())
 }

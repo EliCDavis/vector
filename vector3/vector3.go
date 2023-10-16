@@ -440,9 +440,9 @@ func (v Vector[T]) Abs() Vector[T] {
 
 func (v Vector[T]) Clamp(min, max T) Vector[T] {
 	return Vector[T]{
-		x: T(math.Max(math.Min(float64(v.x), float64(max)), float64(min))),
-		y: T(math.Max(math.Min(float64(v.y), float64(max)), float64(min))),
-		z: T(math.Max(math.Min(float64(v.z), float64(max)), float64(min))),
+		x: T(clamp(float64(v.x), float64(min), float64(max))),
+		y: T(clamp(float64(v.y), float64(min), float64(max))),
+		z: T(clamp(float64(v.z), float64(min), float64(max))),
 	}
 }
 
