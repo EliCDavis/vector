@@ -43,6 +43,10 @@ func TestVectorOperations(t *testing.T) {
 		"yzx":          {got: start.YZX(), want: vector3.New(-2.4, 3.7, 1.2)},
 		"yxz":          {got: start.YXZ(), want: vector3.New(-2.4, 1.2, 3.7)},
 		"random":       {got: vector3.Rand(r), want: vector3.New(.373028361, 0.066000496, 0.604093851)},
+		"flip":         {got: start.Flip(), want: vector3.New(-1.2, 2.4, -3.7)},
+		"flipX":        {got: start.FlipX(), want: vector3.New(-1.2, -2.4, 3.7)},
+		"flipY":        {got: start.FlipY(), want: vector3.New(1.2, 2.4, 3.7)},
+		"flipZ":        {got: start.FlipZ(), want: vector3.New(1.2, -2.4, -3.7)},
 		"random range": {
 			got:  vector3.RandRange(r, -2., 4.),
 			want: vector3.New(-0.7470877, -1.737089, 0.299159),

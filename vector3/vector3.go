@@ -586,3 +586,35 @@ func (v Vector[T]) NearZero() bool {
 	const s = 1e-8
 	return (math.Abs(float64(v.X())) < s) && (math.Abs(float64(v.Y())) < s) && (math.Abs(float64(v.Z())) < s)
 }
+
+func (v Vector[T]) Flip() Vector[T] {
+	return Vector[T]{
+		x: v.x * -1,
+		y: v.y * -1,
+		z: v.z * -1,
+	}
+}
+
+func (v Vector[T]) FlipX() Vector[T] {
+	return Vector[T]{
+		x: v.x * -1,
+		y: v.y,
+		z: v.z,
+	}
+}
+
+func (v Vector[T]) FlipY() Vector[T] {
+	return Vector[T]{
+		x: v.x,
+		y: v.y * -1,
+		z: v.z,
+	}
+}
+
+func (v Vector[T]) FlipZ() Vector[T] {
+	return Vector[T]{
+		x: v.x,
+		y: v.y,
+		z: v.z * -1,
+	}
+}

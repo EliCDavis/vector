@@ -73,6 +73,9 @@ func TestOperations(t *testing.T) {
 		"fill":          {want: vector2.Fill(9.3), got: vector2.New(9.3, 9.3)},
 		"yx":            {want: start.YX(), got: vector2.New(-2.4, 1.2)},
 		"random":        {want: vector2.Rand(r), got: vector2.New(.373028361, 0.066000496)},
+		"flip":          {got: start.Flip(), want: vector2.New(-1.2, 2.4)},
+		"flipX":         {got: start.FlipX(), want: vector2.New(-1.2, -2.4)},
+		"flipY":         {got: start.FlipY(), want: vector2.New(1.2, 2.4)},
 	}
 
 	for name, tc := range tests {

@@ -395,3 +395,24 @@ func (v Vector[T]) ContainsNaN() bool {
 
 	return false
 }
+
+func (v Vector[T]) Flip() Vector[T] {
+	return Vector[T]{
+		x: v.x * -1,
+		y: v.y * -1,
+	}
+}
+
+func (v Vector[T]) FlipX() Vector[T] {
+	return Vector[T]{
+		x: v.x * -1,
+		y: v.y,
+	}
+}
+
+func (v Vector[T]) FlipY() Vector[T] {
+	return Vector[T]{
+		x: v.x,
+		y: v.y * -1,
+	}
+}
