@@ -54,6 +54,11 @@ func TestVectorOperations(t *testing.T) {
 		"fill":         {want: vector4.Fill(9.3), got: vector4.New(9.3, 9.3, 9.3, 9.3)},
 		"color black":  {want: vector4.FromColor(color.Black), got: vector4.New(0., 0., 0., 1.)},
 		"color white":  {want: vector4.FromColor(color.White), got: vector4.New(1., 1., 1., 1.)},
+		"flip":         {got: start.Flip(), want: vector4.New(-1.2, 2.4, -3.7, -4.9)},
+		"flipX":        {got: start.FlipX(), want: vector4.New(-1.2, -2.4, 3.7, 4.9)},
+		"flipY":        {got: start.FlipY(), want: vector4.New(1.2, 2.4, 3.7, 4.9)},
+		"flipZ":        {got: start.FlipZ(), want: vector4.New(1.2, -2.4, -3.7, 4.9)},
+		"flipW":        {got: start.FlipW(), want: vector4.New(1.2, -2.4, 3.7, -4.9)},
 	}
 
 	for name, tc := range tests {

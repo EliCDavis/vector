@@ -438,3 +438,48 @@ func (v Vector[T]) ContainsNaN() bool {
 
 	return false
 }
+
+func (v Vector[T]) Flip() Vector[T] {
+	return Vector[T]{
+		x: v.x * -1,
+		y: v.y * -1,
+		z: v.z * -1,
+		w: v.w * -1,
+	}
+}
+
+func (v Vector[T]) FlipX() Vector[T] {
+	return Vector[T]{
+		x: v.x * -1,
+		y: v.y,
+		z: v.z,
+		w: v.w,
+	}
+}
+
+func (v Vector[T]) FlipY() Vector[T] {
+	return Vector[T]{
+		x: v.x,
+		y: v.y * -1,
+		z: v.z,
+		w: v.w,
+	}
+}
+
+func (v Vector[T]) FlipZ() Vector[T] {
+	return Vector[T]{
+		x: v.x,
+		y: v.y,
+		z: v.z * -1,
+		w: v.w,
+	}
+}
+
+func (v Vector[T]) FlipW() Vector[T] {
+	return Vector[T]{
+		x: v.x,
+		y: v.y,
+		z: v.z,
+		w: v.w * -1,
+	}
+}
