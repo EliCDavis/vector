@@ -10,26 +10,36 @@ Collection of **generic, immutable** vector math functions I've written overtime
 
 | Function      | Vector2 | Vector3 | Vector4 | Description                                            |
 |---------------|---------|---------|---------|--------------------------------------------------------|
-| Abs           | ✅      | ✅     | ✅      | Returns a vector with each component's absolute value |
-| Add           | ✅      | ✅     | ✅      | Component Wise Addition                               |
+| Abs           | ✅      | ✅     | ✅      | Returns a vector with each component's absolute value  |
+| Add           | ✅      | ✅     | ✅      | Component Wise Addition                                |
 | Angle         | ✅      | ✅     |         | Returns the angle between two vectors                  |
-| Ceil          | ✅      | ✅     | ✅      | Ceils each vectors component to the nearest integer   |
-| Clamp         | ✅      | ✅     | ✅      | Clamps each component between two values              |
-| Cross         |         | ✅     |          | Returns the cross product between two vectors         |
-| Dot           | ✅      | ✅     | ✅      | Returns the dot product between two vectors           |
-| Flip          | ✅      | ✅     | ✅      | Scales the vector by -1                               |
-| Floor         | ✅      | ✅     | ✅      | Floors each vectors component                         |
-| Format        | ✅      | ✅     | ✅      | Build a string with vector data                       |
-| Length        | ✅      | ✅     | ✅      | Returns the length of the vector                      |
-| LengthSquared | ✅      | ✅     | ✅      | Returns the squared length of the vector              |
-| MaxComponent  | ✅      | ✅     | ✅      | Returns the vectors largest component                 |
-| Midpoint      | ✅      | ✅     | ✅      | Finds the mid point between two vectors               |
-| MinComponent  | ✅      | ✅     | ✅      | Returns the vectors smallest component                |
-| Normalized    | ✅      | ✅     | ✅      | Returns the normalized vector                         |
-| Round         | ✅      | ✅     | ✅      | Rounds each vectors component to the nearest integer  |
-| Scale         | ✅      | ✅     | ✅      | Scales the vector by some constant                    |
-| Sqrt          | ✅      | ✅     | ✅      | Returns a vector with each component's square root    |
-| Sub           | ✅      | ✅     | ✅      | Component Wise Subtraction                            |
+| Ceil          | ✅      | ✅     | ✅      | Ceils each vectors component to the nearest integer    |
+| Clamp         | ✅      | ✅     | ✅      | Clamps each component between two values               |
+| ContainsNaN   | ✅      | ✅     | ✅      | Returns true if any component of the vector is NaN     |
+| Cross         |         | ✅     |          | Returns the cross product between two vectors          |
+| Dot           | ✅      | ✅     | ✅      | Returns the dot product between two vectors            |
+| Flip          | ✅      | ✅     | ✅      | Scales the vector by -1                                |
+| FlipX         | ✅      | ✅     | ✅      | Returns a vector with the X component multiplied by -1 |
+| FlipY         | ✅      | ✅     | ✅      | Returns a vector with the Y component multiplied by -1 |
+| FlipZ         |         | ✅     | ✅      | Returns a vector with the Z component multiplied by -1 |
+| FlipW         |         |         | ✅      | Returns a vector with the W component multiplied by -1 |
+| Floor         | ✅      | ✅     | ✅      | Floors each vectors component                          |
+| Format        | ✅      | ✅     | ✅      | Build a string with vector data                        |
+| Length        | ✅      | ✅     | ✅      | Returns the length of the vector                       |
+| LengthSquared | ✅      | ✅     | ✅      | Returns the squared length of the vector               |
+| MaxComponent  | ✅      | ✅     | ✅      | Returns the vectors largest component                  |
+| Midpoint      | ✅      | ✅     | ✅      | Finds the mid point between two vectors                |
+| MinComponent  | ✅      | ✅     | ✅      | Returns the vectors smallest component                 |
+| Normalized    | ✅      | ✅     | ✅      | Returns the normalized vector                          |
+| Round         | ✅      | ✅     | ✅      | Rounds each vectors component to the nearest integer   |
+| Scale         | ✅      | ✅     | ✅      | Scales the vector by some constant                     |
+| Sqrt          | ✅      | ✅     | ✅      | Returns a vector with each component's square root     |
+| Sub           | ✅      | ✅     | ✅      | Component Wise Subtraction                             |
+| X             | ✅      | ✅     | ✅      | Returns the x component of the vector                  |
+| Y             | ✅      | ✅     | ✅      | Returns the y component of the vector                  |
+| Z             |         | ✅     | ✅      | Returns the z component of the vector                  |
+| W             |         |         | ✅      | Returns the w component of the vector                  |
+
 
 ## Example
 
