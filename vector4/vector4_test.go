@@ -139,7 +139,7 @@ func TestSwizzle_Vector3(t *testing.T) {
 }
 
 func TestSwizzle_Vector2(t *testing.T) {
-	start := vector4.New(1.2, -2.4, 3.7, 12)
+	start := vector4.New(1.2, -2.4, 3.7, 12.)
 
 	tests := map[string]struct {
 		got  vector2.Float64
