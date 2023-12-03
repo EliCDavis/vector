@@ -59,6 +59,7 @@ func TestVectorOperations(t *testing.T) {
 		"flipY":        {got: start.FlipY(), want: vector4.New(1.2, 2.4, 3.7, 4.9)},
 		"flipZ":        {got: start.FlipZ(), want: vector4.New(1.2, -2.4, -3.7, 4.9)},
 		"flipW":        {got: start.FlipW(), want: vector4.New(1.2, -2.4, 3.7, -4.9)},
+		"normalize":    {got: start.Normalized(), want: vector4.New(0.1790845316, -0.35816906, 0.5521773, 0.73126183)},
 	}
 
 	for name, tc := range tests {

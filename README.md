@@ -6,8 +6,6 @@
 
 Collection of **generic, immutable** vector math functions I've written overtime for different hobby projects.
 
-Has support for both Vector2 (x, y), Vector3 (x, y, z), and Vector4 (x, y, z, w) functions.
-
 ## API
 
 | Function      | Vector2 | Vector3 | Vector4 | Description                                            |
@@ -27,7 +25,7 @@ Has support for both Vector2 (x, y), Vector3 (x, y, z), and Vector4 (x, y, z, w)
 | MaxComponent  | ✅      | ✅     | ✅      | Returns the vectors largest component                 |
 | Midpoint      | ✅      | ✅     | ✅      | Finds the mid point between two vectors               |
 | MinComponent  | ✅      | ✅     | ✅      | Returns the vectors smallest component                |
-| Normalize     | ✅      | ✅     | ✅      | Returns the normalized vector                         |
+| Normalized    | ✅      | ✅     | ✅      | Returns the normalized vector                         |
 | Round         | ✅      | ✅     | ✅      | Rounds each vectors component to the nearest integer  |
 | Scale         | ✅      | ✅     | ✅      | Scales the vector by some constant                    |
 | Sqrt          | ✅      | ✅     | ✅      | Returns a vector with each component's square root    |

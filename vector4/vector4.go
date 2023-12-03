@@ -316,6 +316,18 @@ func (v Vector[T]) Dot(other Vector[T]) float64 {
 	return float64((v.x * other.x) + (v.y * other.y) + (v.z * other.z) + (v.w * other.w))
 }
 
+func (v Vector[T]) Normalized() Vector[T] {
+	return v.DivByConstant(v.Length())
+}
+
+func (v Vector[T]) Length() float64 {
+	return math.Sqrt(v.LengthSquared())
+}
+
+func (v Vector[T]) LengthSquared() float64 {
+	return float64((v.x * v.x) + (v.y * v.y) + (v.z * v.z) + (v.w * v.w))
+}
+
 // Sqrt applies the math.Sqrt to each component of the vector
 func (v Vector[T]) Sqrt() Vector[T] {
 	return New(
