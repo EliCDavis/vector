@@ -8,6 +8,31 @@ Collection of **generic, immutable** vector math functions I've written overtime
 
 Has support for both Vector2 (x, y), Vector3 (x, y, z), and Vector4 (x, y, z, w) functions.
 
+## API
+
+| Function      | Vector2 | Vector3 | Vector4 | Description                                            |
+|---------------|---------|---------|---------|--------------------------------------------------------|
+| Abs           | ✅      | ✅     | ✅      | Returns a vector with each component's absolute value |
+| Add           | ✅      | ✅     | ✅      | Component Wise Addition                               |
+| Angle         | ✅      | ✅     |         | Returns the angle between two vectors                  |
+| Ceil          | ✅      | ✅     | ✅      | Ceils each vectors component to the nearest integer   |
+| Clamp         | ✅      | ✅     | ✅      | Clamps each component between two values              |
+| Cross         |         | ✅     |          | Returns the cross product between two vectors         |
+| Dot           | ✅      | ✅     | ✅      | Returns the dot product between two vectors           |
+| Flip          | ✅      | ✅     | ✅      | Scales the vector by -1                               |
+| Floor         | ✅      | ✅     | ✅      | Floors each vectors component                         |
+| Format        | ✅      | ✅     | ✅      | Build a string with vector data                       |
+| Length        | ✅      | ✅     | ✅      | Returns the length of the vector                      |
+| LengthSquared | ✅      | ✅     | ✅      | Returns the squared length of the vector              |
+| MaxComponent  | ✅      | ✅     | ✅      | Returns the vectors largest component                 |
+| Midpoint      | ✅      | ✅     | ✅      | Finds the mid point between two vectors               |
+| MinComponent  | ✅      | ✅     | ✅      | Returns the vectors smallest component                |
+| Normalize     | ✅      | ✅     | ✅      | Returns the normalized vector                         |
+| Round         | ✅      | ✅     | ✅      | Rounds each vectors component to the nearest integer  |
+| Scale         | ✅      | ✅     | ✅      | Scales the vector by some constant                    |
+| Sqrt          | ✅      | ✅     | ✅      | Returns a vector with each component's square root    |
+| Sub           | ✅      | ✅     | ✅      | Component Wise Subtraction                            |
+
 ## Example
 
 Below is an example on how to implement the different sign distance field functions in a generic fashion to work for both int, int64, float32, and float64.
@@ -34,7 +59,7 @@ func Box[T vector.Number](pos vector3.Vector[T], bounds vector3.Vector[T]) Field
 	// https://www.youtube.com/watch?v=62-pRVZuS5c
 	return func(v vector3.Vector[T]) float64 {
 		q := v.Sub(pos).Abs().Sub(halfBounds)
-		inside := math.Min(math.Max(q.X(), math.Max(q.Y(), q.Z())), 0)
+		inside := math.Min(float64(q.MaxComponent()), 0)
 		return vector3.Max(q, vector3.Zero[T]()).Length() + inside
 	}
 }

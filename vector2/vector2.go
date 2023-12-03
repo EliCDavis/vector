@@ -246,6 +246,14 @@ func (v Vector[T]) YX() Vector[T] {
 	}
 }
 
+func (v Vector[T]) Angle(other Vector[T]) float64 {
+	denominator := math.Sqrt(v.LengthSquared() * other.LengthSquared())
+	if denominator < 1e-15 {
+		return 0.
+	}
+	return math.Acos(vector.Clamp(v.Dot(other)/denominator, -1., 1.))
+}
+
 // Midpoint returns the midpoint between this vector and the vector passed in.
 func (v Vector[T]) Midpoint(o Vector[T]) Vector[T] {
 	return o.Add(v).Scale(0.5)

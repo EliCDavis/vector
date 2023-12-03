@@ -384,3 +384,28 @@ func TestContainsNaN(t *testing.T) {
 		})
 	}
 }
+
+func TestAngle(t *testing.T) {
+	tests := map[string]struct {
+		a     vector2.Float64
+		b     vector2.Float64
+		angle float64
+	}{
+		"up => down: Pi": {
+			a:     vector2.Up[float64](),
+			b:     vector2.Down[float64](),
+			angle: math.Pi,
+		},
+		"up => right: Pi": {
+			a:     vector2.Up[float64](),
+			b:     vector2.Right[float64](),
+			angle: math.Pi / 2,
+		},
+	}
+
+	for name, tc := range tests {
+		t.Run(name, func(t *testing.T) {
+			assert.InDelta(t, tc.angle, tc.a.Angle(tc.b), 0.000001)
+		})
+	}
+}

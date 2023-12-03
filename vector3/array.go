@@ -29,6 +29,17 @@ func (v3a Array[T]) Add(other Vector[T]) (out Array[T]) {
 	return
 }
 
+func (v3a Array[T]) AddInplace(other Vector[T]) Array[T] {
+	for i, v := range v3a {
+		v3a[i] = Vector[T]{
+			v.x + other.x,
+			v.y + other.y,
+			v.z + other.z,
+		}
+	}
+	return v3a
+}
+
 func (v3a Array[T]) Sub(other Vector[T]) (out Array[T]) {
 	out = make(Array[T], len(v3a))
 
@@ -43,25 +54,50 @@ func (v3a Array[T]) Sub(other Vector[T]) (out Array[T]) {
 	return
 }
 
-func (v3a Array[T]) Distance() float64 {
-	if len(v3a) < 2 {
-		return 0
+func (v3a Array[T]) SubInplace(other Vector[T]) Array[T] {
+	for i, v := range v3a {
+		v3a[i] = Vector[T]{
+			v.x - other.x,
+			v.y - other.y,
+			v.z - other.z,
+		}
 	}
-	total := 0.
+	return v3a
+}
+
+func (v3a Array[T]) Distance() (total float64) {
+	if len(v3a) < 2 {
+		return
+	}
 	for i := 1; i < len(v3a); i++ {
 		total += v3a[i].Distance(v3a[i-1])
 	}
-	return total
+	return
 }
 
 func (v3a Array[T]) Scale(t float64) (out Array[T]) {
 	out = make(Array[T], len(v3a))
 
 	for i, v := range v3a {
-		out[i] = v.Scale(t)
+		out[i] = Vector[T]{
+			x: T(float64(v.x) * t),
+			y: T(float64(v.y) * t),
+			z: T(float64(v.z) * t),
+		}
 	}
 
 	return
+}
+
+func (v3a Array[T]) ScaleInplace(t float64) Array[T] {
+	for i, v := range v3a {
+		v3a[i] = Vector[T]{
+			x: T(float64(v.x) * t),
+			y: T(float64(v.y) * t),
+			z: T(float64(v.z) * t),
+		}
+	}
+	return v3a
 }
 
 func (v3a Array[T]) DivByConstant(t float64) (out Array[T]) {

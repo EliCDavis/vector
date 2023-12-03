@@ -468,6 +468,31 @@ func TestToFloat64(t *testing.T) {
 	assert.Equal(t, float64(3), out.Z())
 }
 
+func TestAngle(t *testing.T) {
+	tests := map[string]struct {
+		a     vector3.Float64
+		b     vector3.Float64
+		angle float64
+	}{
+		"up => down: Pi": {
+			a:     vector3.Up[float64](),
+			b:     vector3.Down[float64](),
+			angle: math.Pi,
+		},
+		"up => right: Pi": {
+			a:     vector3.Up[float64](),
+			b:     vector3.Right[float64](),
+			angle: math.Pi / 2,
+		},
+	}
+
+	for name, tc := range tests {
+		t.Run(name, func(t *testing.T) {
+			assert.InDelta(t, tc.angle, tc.a.Angle(tc.b), 0.000001)
+		})
+	}
+}
+
 func TestMaxComponent(t *testing.T) {
 	assert.Equal(t, 4., vector3.New(-2., 3., 4.).MaxComponent())
 }

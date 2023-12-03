@@ -440,9 +440,9 @@ func (v Vector[T]) Abs() Vector[T] {
 
 func (v Vector[T]) Clamp(min, max T) Vector[T] {
 	return Vector[T]{
-		x: T(clamp(float64(v.x), float64(min), float64(max))),
-		y: T(clamp(float64(v.y), float64(min), float64(max))),
-		z: T(clamp(float64(v.z), float64(min), float64(max))),
+		x: T(vector.Clamp(float64(v.x), float64(min), float64(max))),
+		y: T(vector.Clamp(float64(v.y), float64(min), float64(max))),
+		z: T(vector.Clamp(float64(v.z), float64(min), float64(max))),
 	}
 }
 
@@ -579,7 +579,7 @@ func (v Vector[T]) Angle(other Vector[T]) float64 {
 	if denominator < 1e-15 {
 		return 0.
 	}
-	return math.Acos(clamp(v.Dot(other)/denominator, -1., 1.))
+	return math.Acos(vector.Clamp(v.Dot(other)/denominator, -1., 1.))
 }
 
 func (v Vector[T]) NearZero() bool {

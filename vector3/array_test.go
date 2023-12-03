@@ -149,6 +149,41 @@ func TestArray_Add(t *testing.T) {
 	}
 }
 
+func TestArray_AddInplace(t *testing.T) {
+	// ARRANGE ================================================================
+	arr := vector3.Float64Array([]vector3.Float64{
+		vector3.New(0., 0., 0.),
+		vector3.New(1., 0., 0.),
+		vector3.New(2., 0., 0.),
+	})
+	add := vector3.New(1., 2., 3.)
+
+	// ACT ====================================================================
+	arr.AddInplace(add)
+
+	// ASSERT =================================================================
+	assert.Equal(t, vector3.New(1., 2., 3.), arr[0])
+	assert.Equal(t, vector3.New(2., 2., 3.), arr[1])
+	assert.Equal(t, vector3.New(3., 2., 3.), arr[2])
+}
+
+func TestArray_ScaleInplace(t *testing.T) {
+	// ARRANGE ================================================================
+	arr := vector3.Float64Array([]vector3.Float64{
+		vector3.New(0., 0., 0.),
+		vector3.New(1., 0., 0.),
+		vector3.New(2., 0., 0.),
+	})
+
+	// ACT ====================================================================
+	arr.ScaleInplace(2)
+
+	// ASSERT =================================================================
+	assert.Equal(t, vector3.New(0., 0., 0.), arr[0])
+	assert.Equal(t, vector3.New(2., 0., 0.), arr[1])
+	assert.Equal(t, vector3.New(4., 0., 0.), arr[2])
+}
+
 func TestArray_Sub(t *testing.T) {
 	// ARRANGE ================================================================
 	arr := vector3.Float64Array([]vector3.Float64{
@@ -165,6 +200,24 @@ func TestArray_Sub(t *testing.T) {
 	for i, v := range added {
 		assert.Equal(t, arr[i].Sub(sub), v)
 	}
+}
+
+func TestArray_SubInplace(t *testing.T) {
+	// ARRANGE ================================================================
+	arr := vector3.Float64Array([]vector3.Float64{
+		vector3.New(0., 0., 0.),
+		vector3.New(1., 0., 0.),
+		vector3.New(2., 0., 0.),
+	})
+	sub := vector3.New(1., 2., 3.)
+
+	// ACT ====================================================================
+	arr.SubInplace(sub)
+
+	// ASSERT =================================================================
+	assert.Equal(t, vector3.New(-1., -2., -3.), arr[0])
+	assert.Equal(t, vector3.New(0., -2., -3.), arr[1])
+	assert.Equal(t, vector3.New(1., -2., -3.), arr[2])
 }
 
 func TestArray_ContainsNaN_True(t *testing.T) {
