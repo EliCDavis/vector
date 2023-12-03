@@ -345,6 +345,21 @@ func (v Vector[T]) YZ() vector2.Vector[T] {
 	return vector2.New(v.y, v.z)
 }
 
+// YX returns vector2 with the y and x components
+func (v Vector[T]) YX() vector2.Vector[T] {
+	return vector2.New(v.y, v.x)
+}
+
+// ZX returns vector2 with the z and x components
+func (v Vector[T]) ZX() vector2.Vector[T] {
+	return vector2.New(v.z, v.x)
+}
+
+// ZY returns vector2 with the z and y components
+func (v Vector[T]) ZY() vector2.Vector[T] {
+	return vector2.New(v.z, v.y)
+}
+
 // Midpoint returns the midpoint between this vector and the vector passed in.
 func (v Vector[T]) Midpoint(o Vector[T]) Vector[T] {
 	return o.Add(v).Scale(0.5)

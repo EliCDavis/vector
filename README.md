@@ -39,6 +39,12 @@ Collection of **generic, immutable** vector math functions I've written overtime
 | Y             | ✅      | ✅     | ✅      | Returns the y component of the vector                  |
 | Z             |         | ✅     | ✅      | Returns the z component of the vector                  |
 | W             |         |         | ✅      | Returns the w component of the vector                  |
+| XY            |         | ✅     | ✅      | Equivalent to vector2.New[T](v.x, v.y)                 |
+| YZ            |         | ✅     | ✅      | Equivalent to vector2.New[T](v.y, v.z)                 |
+| XZ            |         | ✅     | ✅      | Equivalent to vector2.New[T](v.x, v.z)                 |
+| YX            |         | ✅     | ✅      | Equivalent to vector2.New[T](v.y, v.x)                 |
+| ZY            |         | ✅     | ✅      | Equivalent to vector2.New[T](v.z, v.y)                 |
+| ZX            |         | ✅     | ✅      | Equivalent to vector2.New[T](v.z, v.x)                 |
 
 
 ## Example

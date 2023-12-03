@@ -7,6 +7,8 @@ import (
 	"math"
 
 	"github.com/EliCDavis/vector"
+	"github.com/EliCDavis/vector/vector2"
+	"github.com/EliCDavis/vector/vector3"
 )
 
 // Vector contains 4 components
@@ -494,4 +496,38 @@ func (v Vector[T]) FlipW() Vector[T] {
 		z: v.z,
 		w: v.w * -1,
 	}
+}
+
+func (v Vector[T]) XYZ() vector3.Vector[T] {
+	return vector3.New[T](v.x, v.y, v.z)
+}
+
+// XY returns vector2 with the x and y components
+func (v Vector[T]) XY() vector2.Vector[T] {
+	return vector2.New(v.x, v.y)
+}
+
+// XZ returns vector2 with the x and z components
+func (v Vector[T]) XZ() vector2.Vector[T] {
+	return vector2.New(v.x, v.z)
+}
+
+// YZ returns vector2 with the y and z components
+func (v Vector[T]) YZ() vector2.Vector[T] {
+	return vector2.New(v.y, v.z)
+}
+
+// YX returns vector2 with the y and x components
+func (v Vector[T]) YX() vector2.Vector[T] {
+	return vector2.New(v.y, v.x)
+}
+
+// ZX returns vector2 with the z and x components
+func (v Vector[T]) ZX() vector2.Vector[T] {
+	return vector2.New(v.z, v.x)
+}
+
+// ZY returns vector2 with the z and y components
+func (v Vector[T]) ZY() vector2.Vector[T] {
+	return vector2.New(v.z, v.y)
 }

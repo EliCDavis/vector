@@ -6,6 +6,8 @@ import (
 	"math"
 	"testing"
 
+	"github.com/EliCDavis/vector/vector2"
+	"github.com/EliCDavis/vector/vector3"
 	"github.com/EliCDavis/vector/vector4"
 	"github.com/stretchr/testify/assert"
 )
@@ -113,6 +115,48 @@ func TestScaleVecFloat(t *testing.T) {
 			assert.InDelta(t, tc.want.Y(), got.Y(), 0.000001)
 			assert.InDelta(t, tc.want.Z(), got.Z(), 0.000001)
 			assert.InDelta(t, tc.want.W(), got.W(), 0.000001)
+		})
+	}
+}
+
+func TestSwizzle_Vector3(t *testing.T) {
+	in := vector4.New(1., 2., 3., 4.)
+
+	tests := map[string]struct {
+		expected vector3.Float64
+		got      vector3.Float64
+	}{
+		"XYZ": {expected: vector3.New(1., 2., 3.), got: in.XYZ()},
+	}
+
+	for name, tc := range tests {
+		t.Run(name, func(t *testing.T) {
+			assert.Equal(t, tc.expected.X(), tc.got.X())
+			assert.Equal(t, tc.expected.Y(), tc.got.Y())
+			assert.Equal(t, tc.expected.Z(), tc.got.Z())
+		})
+	}
+}
+
+func TestSwizzle_Vector2(t *testing.T) {
+	start := vector3.New(1.2, -2.4, 3.7)
+
+	tests := map[string]struct {
+		got  vector2.Float64
+		want vector2.Float64
+	}{
+		"xy": {got: start.XY(), want: vector2.New(1.2, -2.4)},
+		"yz": {got: start.YZ(), want: vector2.New(-2.4, 3.7)},
+		"xz": {got: start.XZ(), want: vector2.New(1.2, 3.7)},
+		"yx": {got: start.YX(), want: vector2.New(-2.4, 1.2)},
+		"zy": {got: start.ZY(), want: vector2.New(3.7, -2.4)},
+		"zx": {got: start.ZX(), want: vector2.New(3.7, 1.2)},
+	}
+
+	for name, tc := range tests {
+		t.Run(name, func(t *testing.T) {
+			assert.Equal(t, tc.want.X(), tc.got.X())
+			assert.Equal(t, tc.want.Y(), tc.got.Y())
 		})
 	}
 }

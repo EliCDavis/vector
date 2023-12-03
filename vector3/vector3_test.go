@@ -76,6 +76,9 @@ func TestToVector2(t *testing.T) {
 		"xy": {got: start.XY(), want: vector2.New(1.2, -2.4)},
 		"yz": {got: start.YZ(), want: vector2.New(-2.4, 3.7)},
 		"xz": {got: start.XZ(), want: vector2.New(1.2, 3.7)},
+		"yx": {got: start.YX(), want: vector2.New(-2.4, 1.2)},
+		"zy": {got: start.ZY(), want: vector2.New(3.7, -2.4)},
+		"zx": {got: start.ZX(), want: vector2.New(3.7, 1.2)},
 	}
 
 	for name, tc := range tests {
