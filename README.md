@@ -27,10 +27,21 @@ Collection of **generic, immutable** vector math functions I've written overtime
 | Format        | ✅      | ✅     | ✅      | Build a string with vector data                        |
 | Length        | ✅      | ✅     | ✅      | Returns the length of the vector                       |
 | LengthSquared | ✅      | ✅     | ✅      | Returns the squared length of the vector               |
+| Max           | ✅      | ✅     | ✅      | Returns a new vector where each component is the largest value between the two vectors |
+| MaxX          | ✅      | ✅     | ✅      | Returns the largest X component between the two vectors |
+| MaxY          | ✅      | ✅     | ✅      | Returns the largest Y component between the two vectors |
+| MaxZ          |         | ✅     | ✅      | Returns the largest Z component between the two vectors |
+| MaxW          |         |         | ✅      | Returns the largest W component between the two vectors |
 | MaxComponent  | ✅      | ✅     | ✅      | Returns the vectors largest component                  |
 | Midpoint      | ✅      | ✅     | ✅      | Finds the mid point between two vectors                |
+| Min           | ✅      | ✅     | ✅      | Returns a new vector where each component is the smallest value between the two vectors |
+| MinX          | ✅      | ✅     | ✅      | Returns the smallest X component between the two vectors |
+| MinY          | ✅      | ✅     | ✅      | Returns the smallest Y component between the two vectors |
+| MinZ          |         | ✅     | ✅      | Returns the smallest Z component between the two vectors |
+| MinW          |         |         | ✅      | Returns the smallest W component between the two vectors |
 | MinComponent  | ✅      | ✅     | ✅      | Returns the vectors smallest component                 |
 | Normalized    | ✅      | ✅     | ✅      | Returns the normalized vector                          |
+| NearZero      | ✅      | ✅     | ✅      | Returns true if all of the components are near 0       |
 | Round         | ✅      | ✅     | ✅      | Rounds each vectors component to the nearest integer   |
 | Scale         | ✅      | ✅     | ✅      | Scales the vector by some constant                     |
 | Sqrt          | ✅      | ✅     | ✅      | Returns a vector with each component's square root     |
@@ -55,6 +66,8 @@ Below is an example on how to implement the different sign distance field functi
 package sdf
 
 import (
+	"math"
+
 	"github.com/EliCDavis/vector"
 	"github.com/EliCDavis/vector/vector3"
 )

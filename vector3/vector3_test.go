@@ -543,3 +543,32 @@ func TestFormat(t *testing.T) {
 		})
 	}
 }
+
+func TestMaxMinComponents(t *testing.T) {
+	tests := map[string]struct {
+		a    vector3.Float64
+		b    vector3.Float64
+		f    func(a, b vector3.Float64) float64
+		want float64
+	}{
+		"maxX((0, 0, 0), (1, 0, 0))": {a: vector3.New(0., 0., 0.), b: vector3.New(1., 0., 0.), f: vector3.MaxX[float64], want: 1},
+		"maxX((2, 0, 0), (0, 0, 0))": {a: vector3.New(2., 0., 0.), b: vector3.New(0., 0., 0.), f: vector3.MaxX[float64], want: 2},
+		"maxY((0, 0, 0), (0, 1, 0))": {a: vector3.New(0., 0., 0.), b: vector3.New(0., 1., 0.), f: vector3.MaxY[float64], want: 1},
+		"maxY((0, 2, 0), (0, 0, 0))": {a: vector3.New(0., 2., 0.), b: vector3.New(0., 0., 0.), f: vector3.MaxY[float64], want: 2},
+		"maxZ((0, 0, 0), (0, 0, 1))": {a: vector3.New(0., 0., 0.), b: vector3.New(0., 0., 1.), f: vector3.MaxZ[float64], want: 1},
+		"maxZ((0, 0, 2), (0, 0, 0))": {a: vector3.New(0., 0., 2.), b: vector3.New(0., 0., 0.), f: vector3.MaxZ[float64], want: 2},
+
+		"minX((0, 0, 0), (-1, 0, 0))": {a: vector3.New(0., 0., 0.), b: vector3.New(-1., 0., 0.), f: vector3.MinX[float64], want: -1},
+		"minX((-2, 0, 0), (0, 0, 0))": {a: vector3.New(-2., 0., 0.), b: vector3.New(0., 0., 0.), f: vector3.MinX[float64], want: -2},
+		"minY((0, 0, 0), (0, -1, 0))": {a: vector3.New(0., 0., 0.), b: vector3.New(0., -1., 0.), f: vector3.MinY[float64], want: -1},
+		"minY((0, -2, 0), (0, 0, 0))": {a: vector3.New(0., -2., 0.), b: vector3.New(0., 0., 0.), f: vector3.MinY[float64], want: -2},
+		"minZ((0, 0, 0), (0, 0, -1))": {a: vector3.New(0., 0., 0.), b: vector3.New(0., 0., -1.), f: vector3.MinZ[float64], want: -1},
+		"minZ((0, 0, -2), (0, 0, 0))": {a: vector3.New(0., 0., -2.), b: vector3.New(0., 0., 0.), f: vector3.MinZ[float64], want: -2},
+	}
+
+	for name, tc := range tests {
+		t.Run(name, func(t *testing.T) {
+			assert.Equal(t, tc.want, tc.f(tc.a, tc.b))
+		})
+	}
+}

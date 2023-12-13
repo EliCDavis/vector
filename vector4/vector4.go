@@ -115,6 +115,38 @@ func Max[T vector.Number](a, b Vector[T]) Vector[T] {
 	)
 }
 
+func MaxX[T vector.Number](a, b Vector[T]) T {
+	return T(math.Max(float64(a.x), float64(b.x)))
+}
+
+func MaxY[T vector.Number](a, b Vector[T]) T {
+	return T(math.Max(float64(a.y), float64(b.y)))
+}
+
+func MaxZ[T vector.Number](a, b Vector[T]) T {
+	return T(math.Max(float64(a.z), float64(b.z)))
+}
+
+func MaxW[T vector.Number](a, b Vector[T]) T {
+	return T(math.Max(float64(a.w), float64(b.w)))
+}
+
+func MinX[T vector.Number](a, b Vector[T]) T {
+	return T(math.Min(float64(a.x), float64(b.x)))
+}
+
+func MinY[T vector.Number](a, b Vector[T]) T {
+	return T(math.Min(float64(a.y), float64(b.y)))
+}
+
+func MinZ[T vector.Number](a, b Vector[T]) T {
+	return T(math.Min(float64(a.z), float64(b.z)))
+}
+
+func MinW[T vector.Number](a, b Vector[T]) T {
+	return T(math.Min(float64(a.w), float64(b.w)))
+}
+
 func Midpoint[T vector.Number](a, b Vector[T]) Vector[T] {
 	// center = (b - a)0.5 + a
 	// center = b0.5 - a0.5 + a
@@ -451,6 +483,11 @@ func (v Vector[T]) ContainsNaN() bool {
 	}
 
 	return false
+}
+
+func (v Vector[T]) NearZero() bool {
+	const s = 1e-8
+	return (math.Abs(float64(v.x)) < s) && (math.Abs(float64(v.y)) < s) && (math.Abs(float64(v.z)) < s) && (math.Abs(float64(v.w)) < s)
 }
 
 func (v Vector[T]) Flip() Vector[T] {

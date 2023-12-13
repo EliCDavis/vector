@@ -399,3 +399,53 @@ func TestContainsNaN(t *testing.T) {
 		})
 	}
 }
+
+func TestNearZero(t *testing.T) {
+	tests := map[string]struct {
+		vec  vector4.Float64
+		want bool
+	}{
+		"0, 0, 0":           {vec: vector4.New(0., 0., 0., 0.), want: true},
+		"0, 0, 1":           {vec: vector4.New(0., 1., 0., 0.), want: false},
+		"0, 0, .0000000001": {vec: vector4.New(0., 0.0000000001, 0., 0.), want: true},
+	}
+
+	for name, tc := range tests {
+		t.Run(name, func(t *testing.T) {
+			assert.Equal(t, tc.want, tc.vec.NearZero())
+		})
+	}
+}
+
+func TestMaxMinComponents(t *testing.T) {
+	tests := map[string]struct {
+		a    vector4.Float64
+		b    vector4.Float64
+		f    func(a, b vector4.Float64) float64
+		want float64
+	}{
+		"maxX((0, 0, 0, 0), (1, 0, 0, 0))": {a: vector4.New(0., 0., 0., 0.), b: vector4.New(1., 0., 0., 0.), f: vector4.MaxX[float64], want: 1},
+		"maxX((2, 0, 0, 0), (0, 0, 0, 0))": {a: vector4.New(2., 0., 0., 0.), b: vector4.New(0., 0., 0., 0.), f: vector4.MaxX[float64], want: 2},
+		"maxY((0, 0, 0, 0), (0, 1, 0, 0))": {a: vector4.New(0., 0., 0., 0.), b: vector4.New(0., 1., 0., 0.), f: vector4.MaxY[float64], want: 1},
+		"maxY((0, 2, 0, 0), (0, 0, 0, 0))": {a: vector4.New(0., 2., 0., 0.), b: vector4.New(0., 0., 0., 0.), f: vector4.MaxY[float64], want: 2},
+		"maxZ((0, 0, 0, 0), (0, 0, 1, 0))": {a: vector4.New(0., 0., 0., 0.), b: vector4.New(0., 0., 1., 0.), f: vector4.MaxZ[float64], want: 1},
+		"maxZ((0, 0, 2, 0), (0, 0, 0, 0))": {a: vector4.New(0., 0., 2., 0.), b: vector4.New(0., 0., 0., 0.), f: vector4.MaxZ[float64], want: 2},
+		"maxW((0, 0, 0, 0), (0, 0, 0, 1))": {a: vector4.New(0., 0., 0., 0.), b: vector4.New(0., 0., 0., 1.), f: vector4.MaxW[float64], want: 1},
+		"maxW((0, 0, 0, 2), (0, 0, 0, 0))": {a: vector4.New(0., 0., 0., 2.), b: vector4.New(0., 0., 0., 0.), f: vector4.MaxW[float64], want: 2},
+
+		"minX((0, 0, 0, 0), (-1, 0, 0, 0))": {a: vector4.New(0., 0., 0., 0.), b: vector4.New(-1., 0., 0., 0.), f: vector4.MinX[float64], want: -1},
+		"minX((-2, 0, 0, 0), (0, 0, 0, 0))": {a: vector4.New(-2., 0., 0., 0.), b: vector4.New(0., 0., 0., 0.), f: vector4.MinX[float64], want: -2},
+		"minY((0, 0, 0, 0), (0, -1, 0, 0))": {a: vector4.New(0., 0., 0., 0.), b: vector4.New(0., -1., 0., 0.), f: vector4.MinY[float64], want: -1},
+		"minY((0, -2, 0, 0), (0, 0, 0, 0))": {a: vector4.New(0., -2., 0., 0.), b: vector4.New(0., 0., 0., 0.), f: vector4.MinY[float64], want: -2},
+		"minZ((0, 0, 0, 0), (0, 0, -1, 0))": {a: vector4.New(0., 0., 0., 0.), b: vector4.New(0., 0., -1., 0.), f: vector4.MinZ[float64], want: -1},
+		"minZ((0, 0, -2, 0), (0, 0, 0, 0))": {a: vector4.New(0., 0., -2., 0.), b: vector4.New(0., 0., 0., 0.), f: vector4.MinZ[float64], want: -2},
+		"minW((0, 0, 0, 0), (0, 0, 0, -1))": {a: vector4.New(0., 0., 0., 0.), b: vector4.New(0., 0., 0., -1.), f: vector4.MinW[float64], want: -1},
+		"minW((0, 0, 0, -2), (0, 0, 0, 0))": {a: vector4.New(0., 0., 0., -2.), b: vector4.New(0., 0., 0., 0.), f: vector4.MinW[float64], want: -2},
+	}
+
+	for name, tc := range tests {
+		t.Run(name, func(t *testing.T) {
+			assert.Equal(t, tc.want, tc.f(tc.a, tc.b))
+		})
+	}
+}
