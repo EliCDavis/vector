@@ -449,3 +449,15 @@ func TestMaxMinComponents(t *testing.T) {
 		})
 	}
 }
+
+var result vector4.Float64
+
+func BenchmarkLerp(b *testing.B) {
+	var r vector4.Float64
+	a := vector4.New(1., 2., 3., 7.)
+	c := vector4.New(4., 5., 6., 8.)
+	for i := 0; i < b.N; i++ {
+		r = vector4.Lerp(a, c, float64(i)/float64(b.N))
+	}
+	result = r
+}

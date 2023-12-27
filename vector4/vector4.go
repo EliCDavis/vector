@@ -75,8 +75,30 @@ func Average[T vector.Number](vectors []Vector[T]) Vector[T] {
 }
 
 // Lerp linearly interpolates between a and b by t
+// func Lerp[T vector.Number](a, b Vector[T], t float64) Vector[T] {
+
+// 	// (b - a) * t + a
+// 	// bt - at + a
+// 	// bt - a(1 - t)
+// 	tm1 := 1. - t
+// 	return Vector[T]{
+// 		x: T((float64(b.x) * t) - (float64(a.x) * tm1)),
+// 		y: T((float64(b.y) * t) - (float64(a.y) * tm1)),
+// 		z: T((float64(b.z) * t) - (float64(a.z) * tm1)),
+// 		w: T((float64(b.w) * t) - (float64(a.w) * tm1)),
+// 	}
+// }
+
+// Lerp linearly interpolates between a and b by t
 func Lerp[T vector.Number](a, b Vector[T], t float64) Vector[T] {
-	return b.Sub(a).Scale(t).Add(a)
+
+	// return b.Sub(a).Scale(t).Add(a)
+	return Vector[T]{
+		x: T((float64(b.x-a.x) * t) + float64(a.x)),
+		y: T((float64(b.y-a.y) * t) + float64(a.y)),
+		z: T((float64(b.z-a.z) * t) + float64(a.z)),
+		w: T((float64(b.w-a.w) * t) + float64(a.w)),
+	}
 }
 
 func (v Vector[T]) Scale(t float64) Vector[T] {
@@ -152,7 +174,12 @@ func Midpoint[T vector.Number](a, b Vector[T]) Vector[T] {
 	// center = b0.5 - a0.5 + a
 	// center = b0.5 + a0.5
 	// center = 0.5(b + a)
-	return b.Add(a).Scale(0.5)
+	return Vector[T]{
+		x: T(float64(a.x+b.x) * 0.5),
+		y: T(float64(a.y+b.y) * 0.5),
+		z: T(float64(a.z+b.z) * 0.5),
+		w: T(float64(a.w+b.w) * 0.5),
+	}
 }
 
 // Builds a vector from the data found from the passed in array to the best of

@@ -63,12 +63,17 @@ Collection of **generic, immutable** vector math functions I've written overtime
 Below is an example on how to implement the different sign distance field functions in a generic fashion to work for both int, int64, float32, and float64.
 
 ```go
-package sdf
+package main
 
 import (
+	"image"
+	"image/color"
+	"image/png"
 	"math"
+	"os"
 
 	"github.com/EliCDavis/vector"
+	"github.com/EliCDavis/vector/vector2"
 	"github.com/EliCDavis/vector/vector3"
 )
 
@@ -91,15 +96,39 @@ func Box[T vector.Number](pos vector3.Vector[T], bounds vector3.Vector[T]) Field
 	}
 }
 
-func Union[T vector.Number](a, b Field[T]) Field[T] {
+func Union[T vector.Number](fields ...Field[T]) Field[T] {
 	return func(v vector3.Vector[T]) float64 {
-		return math.Min(a(v), b(v))
+		min := math.MaxFloat64
+
+		for _, f := range fields {
+			fv := f(v)
+			if fv < min {
+				min = fv
+			}
+		}
+
+		return min
 	}
 }
 
-func Intersect[T vector.Number](a, b Field[T]) Field[T] {
+func Intersect[T vector.Number](fields ...Field[T]) Field[T] {
 	return func(v vector3.Vector[T]) float64 {
-		return math.Max(a(v), b(v))
+		max := -math.MaxFloat64
+
+		for _, f := range fields {
+			fv := f(v)
+			if fv > max {
+				max = fv
+			}
+		}
+
+		return max
+	}
+}
+
+func Subtract[T vector.Number](minuend, subtrahend Field[T]) Field[T] {
+	return func(f vector3.Vector[T]) float64 {
+		return math.Max(minuend(f), -subtrahend(f))
 	}
 }
 
@@ -108,4 +137,60 @@ func Translate[T vector.Number](field Field[T], translation vector3.Vector[T]) F
 		return field(v.Sub(translation))
 	}
 }
+
+func main() {
+	dimension := 512
+	quarterDim := float64(dimension) / 4.
+
+	middleCoord := vector2.
+		Fill(dimension).
+		Scale(0.5).
+		ToFloat64()
+
+	middleCord3D := vector3.New(middleCoord.X(), middleCoord.Y(), 0)
+
+	smallRing := Subtract(
+		Sphere(middleCord3D, 100),
+		Sphere(middleCord3D, 50),
+	)
+
+	field := Intersect(
+		Subtract(
+			Sphere(middleCord3D, 200),
+			Sphere(middleCord3D, 100),
+		),
+		Union(
+			Translate(smallRing, vector3.New(1., 1., 0.).Scale(quarterDim)),
+			Translate(smallRing, vector3.New(1., -1., 0.).Scale(quarterDim)),
+			Translate(smallRing, vector3.New(-1., 1., 0.).Scale(quarterDim)),
+			Translate(smallRing, vector3.New(-1., -1., 0.).Scale(quarterDim)),
+			Box(middleCord3D, middleCord3D),
+		),
+	)
+
+	img := image.NewRGBA(image.Rectangle{
+		image.Point{0, 0},
+		image.Point{dimension, dimension},
+	})
+
+	for x := 0; x < dimension; x++ {
+		for y := 0; y < dimension; y++ {
+			v := field(vector3.New(x, y, 0).ToFloat64())
+			byteVal := (v / float64(dimension/20)) * 255
+			var c color.Color
+			if v > 0 {
+				c = color.RGBA{R: 0, G: 0, B: byte(byteVal), A: 255}
+			} else {
+				c = color.RGBA{R: 0, G: byte(-byteVal), B: 0, A: 255}
+			}
+			img.Set(x, y, c)
+		}
+	}
+
+	f, _ := os.Create("field.png")
+	png.Encode(f, img)
+}
 ```
+
+
+![field.png](./field.png)
