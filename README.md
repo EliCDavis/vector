@@ -60,12 +60,18 @@ Collection of **generic, immutable** vector math functions I've written overtime
 
 ## Example
 
-Below is an example on how to implement the different sign distance field functions in a generic fashion to work for both int, int64, float32, and float64.
+Below is an example on how to implement the different sign distance field functions in a generic fashion to work for both `int`, `int64`, `float32`, and `float64`.
+
+The code below produces this output:
+
+![out.gif](./out.gif)
+
 
 ```go
 package main
 
 import (
+	"fmt"
 	"image"
 	"image/color"
 	"image/png"
@@ -138,6 +144,38 @@ func Translate[T vector.Number](field Field[T], translation vector3.Vector[T]) F
 	}
 }
 
+func evaluateAtDepth[T vector.Number](dimension int, field Field[T], depth T, i int) {
+	img := image.NewRGBA(image.Rectangle{
+		image.Point{0, 0},
+		image.Point{dimension, dimension},
+	})
+
+	for x := 0; x < dimension; x++ {
+		for y := 0; y < dimension; y++ {
+			v := field(vector3.New[T](T(x), T(y), depth))
+			byteVal := (v / float64(dimension/20)) * 255
+			var c color.Color
+			if v > 0 {
+				c = color.RGBA{R: 0, G: 0, B: byte(byteVal), A: 255}
+			} else {
+				c = color.RGBA{R: 0, G: byte(-byteVal), B: 0, A: 255}
+			}
+			img.Set(x, y, c)
+		}
+	}
+
+	f, err := os.Create(fmt.Sprintf("field_%04d.png", i))
+	if err != nil {
+		panic(err)
+	}
+	defer f.Close()
+
+	err = png.Encode(f, img)
+	if err != nil {
+		panic(err)
+	}
+}
+
 func main() {
 	dimension := 512
 	quarterDim := float64(dimension) / 4.
@@ -168,29 +206,10 @@ func main() {
 		),
 	)
 
-	img := image.NewRGBA(image.Rectangle{
-		image.Point{0, 0},
-		image.Point{dimension, dimension},
-	})
-
-	for x := 0; x < dimension; x++ {
-		for y := 0; y < dimension; y++ {
-			v := field(vector3.New(x, y, 0).ToFloat64())
-			byteVal := (v / float64(dimension/20)) * 255
-			var c color.Color
-			if v > 0 {
-				c = color.RGBA{R: 0, G: 0, B: byte(byteVal), A: 255}
-			} else {
-				c = color.RGBA{R: 0, G: byte(-byteVal), B: 0, A: 255}
-			}
-			img.Set(x, y, c)
-		}
+	for i := 0; i < 100; i++ {
+		evaluateAtDepth(dimension, field, float64(-dimension/2)+(float64(i*dimension)*0.01), i)
 	}
-
-	f, _ := os.Create("field.png")
-	png.Encode(f, img)
 }
+
 ```
 
-
-![field.png](./field.png)
