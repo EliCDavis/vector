@@ -76,6 +76,14 @@ func TestOperations(t *testing.T) {
 		"flip":          {got: start.Flip(), want: vector2.New(-1.2, 2.4)},
 		"flipX":         {got: start.FlipX(), want: vector2.New(-1.2, -2.4)},
 		"flipY":         {got: start.FlipY(), want: vector2.New(1.2, 2.4)},
+
+		// Math package functions
+		"log":   {got: start.Log(), want: vector2.New(0.1823215, math.NaN())},
+		"log10": {got: start.Log10(), want: vector2.New(0.0791812, math.NaN())},
+		"log2":  {got: start.Log2(), want: vector2.New(0.263034, math.NaN())},
+		"exp":   {got: start.Exp(), want: vector2.New(3.320116, 0.090717)},
+		"exp2":  {got: start.Exp2(), want: vector2.New(2.297396, 0.189464)},
+		"expm1": {got: start.Expm1(), want: vector2.New(2.320116, -0.909282)},
 	}
 
 	for name, tc := range tests {
@@ -400,6 +408,16 @@ func TestAngle(t *testing.T) {
 			a:     vector2.Up[float64](),
 			b:     vector2.Right[float64](),
 			angle: math.Pi / 2,
+		},
+		"up => up: 0": {
+			a:     vector2.Up[float64](),
+			b:     vector2.Up[float64](),
+			angle: 0,
+		},
+		"0 => 0: 0": {
+			a:     vector2.Zero[float64](),
+			b:     vector2.Zero[float64](),
+			angle: 0,
 		},
 	}
 

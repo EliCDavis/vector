@@ -394,7 +394,11 @@ func (v Vector[T]) ZY() vector2.Vector[T] {
 
 // Midpoint returns the midpoint between this vector and the vector passed in.
 func (v Vector[T]) Midpoint(o Vector[T]) Vector[T] {
-	return o.Add(v).Scale(0.5)
+	return Vector[T]{
+		x: T(float64(o.x+v.x) * 0.5),
+		y: T(float64(o.y+v.y) * 0.5),
+		z: T(float64(o.z+v.z) * 0.5),
+	}
 }
 
 // Perpendicular finds a vector that meets this vector at a right angle.
@@ -663,5 +667,59 @@ func (v Vector[T]) FlipZ() Vector[T] {
 		x: v.x,
 		y: v.y,
 		z: v.z * -1,
+	}
+}
+
+// Log returns the natural logarithm for each component
+func (v Vector[T]) Log() Vector[T] {
+	return Vector[T]{
+		x: T(math.Log(float64(v.x))),
+		y: T(math.Log(float64(v.y))),
+		z: T(math.Log(float64(v.z))),
+	}
+}
+
+// Log10 returns the decimal logarithm for each component.
+func (v Vector[T]) Log10() Vector[T] {
+	return Vector[T]{
+		x: T(math.Log10(float64(v.x))),
+		y: T(math.Log10(float64(v.y))),
+		z: T(math.Log10(float64(v.z))),
+	}
+}
+
+// Log2 returns the binary logarithm for each component
+func (v Vector[T]) Log2() Vector[T] {
+	return Vector[T]{
+		x: T(math.Log2(float64(v.x))),
+		y: T(math.Log2(float64(v.y))),
+		z: T(math.Log2(float64(v.z))),
+	}
+}
+
+// Exp2 returns 2**x, the base-2 exponential for each component
+func (v Vector[T]) Exp2() Vector[T] {
+	return Vector[T]{
+		x: T(math.Exp2(float64(v.x))),
+		y: T(math.Exp2(float64(v.y))),
+		z: T(math.Exp2(float64(v.z))),
+	}
+}
+
+// Exp returns e**x, the base-e exponential for each component
+func (v Vector[T]) Exp() Vector[T] {
+	return Vector[T]{
+		x: T(math.Exp(float64(v.x))),
+		y: T(math.Exp(float64(v.y))),
+		z: T(math.Exp(float64(v.z))),
+	}
+}
+
+// Expm1 returns e**x - 1, the base-e exponential for each component minus 1. It is more accurate than Exp(x) - 1 when the component is near zero
+func (v Vector[T]) Expm1() Vector[T] {
+	return Vector[T]{
+		x: T(math.Expm1(float64(v.x))),
+		y: T(math.Expm1(float64(v.y))),
+		z: T(math.Expm1(float64(v.z))),
 	}
 }

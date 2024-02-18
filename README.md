@@ -53,14 +53,21 @@ Collection of **generic, immutable** vector math functions I've written overtime
 | XY            |         | ✅     | ✅      | Equivalent to vector2.New[T](v.x, v.y)                 |
 | YZ            |         | ✅     | ✅      | Equivalent to vector2.New[T](v.y, v.z)                 |
 | XZ            |         | ✅     | ✅      | Equivalent to vector2.New[T](v.x, v.z)                 |
-| YX            |         | ✅     | ✅      | Equivalent to vector2.New[T](v.y, v.x)                 |
-| ZY            |         | ✅     | ✅      | Equivalent to vector2.New[T](v.z, v.y)                 |
+| YX            | ✅      | ✅     | ✅      | Equivalent to vector2.New[T](v.y, v.x)                 |
 | ZX            |         | ✅     | ✅      | Equivalent to vector2.New[T](v.z, v.x)                 |
+| ZY            |         | ✅     | ✅      | Equivalent to vector2.New[T](v.z, v.y)                 |
+| Log           | ✅      | ✅     | ✅      | Returns the natural logarithm for each component       |
+| Log2          | ✅      | ✅     | ✅      | Returns the binary logarithm for each component        |
+| Log10         | ✅      | ✅     | ✅      | Returns the decimal logarithm for each component       |
+| Exp           | ✅      | ✅     | ✅      | Returns e**x, the base-e exponential for each component |
+| Exp2          | ✅      | ✅     | ✅      | Returns 2**x, the base-2 exponential for each component |
+| Expm1         | ✅      | ✅     | ✅      | Returns e**x - 1, the base-e exponential for each component minus 1. It is more accurate than Exp(x) - 1 when the component is near zero
+ |
 
 
 ## Example
 
-Below is an example on how to implement the different sign distance field functions in a generic fashion to work for both `int`, `int64`, `float32`, and `float64`.
+Below is an example on how to implement the different sign distance field functions in a generic fashion to work for both `int8`, `int16`, `int32` `int`, `int64`, `float32`, and `float64`.
 
 The code below produces this output:
 

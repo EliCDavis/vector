@@ -55,6 +55,14 @@ func TestVectorOperations(t *testing.T) {
 			got:  vector3.RandNormal(r),
 			want: vector3.New(0.8852213, -0.326936, -0.330901),
 		},
+
+		// Math package functions
+		"log":   {got: start.Log(), want: vector3.New(0.1823215, math.NaN(), 1.308332)},
+		"log10": {got: start.Log10(), want: vector3.New(0.0791812, math.NaN(), 0.568201)},
+		"log2":  {got: start.Log2(), want: vector3.New(0.263034, math.NaN(), 1.887525)},
+		"exp":   {got: start.Exp(), want: vector3.New(3.320116, 0.090717, 40.447304)},
+		"exp2":  {got: start.Exp2(), want: vector3.New(2.297396, 0.189464, 12.996038)},
+		"expm1": {got: start.Expm1(), want: vector3.New(2.320116, -0.909282, 39.447304)},
 	}
 
 	for name, tc := range tests {
@@ -486,6 +494,17 @@ func TestAngle(t *testing.T) {
 			a:     vector3.Up[float64](),
 			b:     vector3.Right[float64](),
 			angle: math.Pi / 2,
+		},
+
+		"up => up: 0": {
+			a:     vector3.Up[float64](),
+			b:     vector3.Up[float64](),
+			angle: 0,
+		},
+		"0 => 0: 0": {
+			a:     vector3.Zero[float64](),
+			b:     vector3.Zero[float64](),
+			angle: 0,
 		},
 	}
 

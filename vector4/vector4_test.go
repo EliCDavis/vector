@@ -62,6 +62,14 @@ func TestVectorOperations(t *testing.T) {
 		"flipZ":        {got: start.FlipZ(), want: vector4.New(1.2, -2.4, -3.7, 4.9)},
 		"flipW":        {got: start.FlipW(), want: vector4.New(1.2, -2.4, 3.7, -4.9)},
 		"normalize":    {got: start.Normalized(), want: vector4.New(0.1790845316, -0.35816906, 0.5521773, 0.73126183)},
+
+		// Math package functions
+		"log":   {got: start.Log(), want: vector4.New(0.1823215, math.NaN(), 1.308332, 1.589235)},
+		"log10": {got: start.Log10(), want: vector4.New(0.0791812, math.NaN(), 0.568201, 0.690196)},
+		"log2":  {got: start.Log2(), want: vector4.New(0.263034, math.NaN(), 1.887525, 2.292781)},
+		"exp":   {got: start.Exp(), want: vector4.New(3.320116, 0.090717, 40.447304, 134.289779)},
+		"exp2":  {got: start.Exp2(), want: vector4.New(2.297396, 0.189464, 12.996038, 29.8570557)},
+		"expm1": {got: start.Expm1(), want: vector4.New(2.320116, -0.909282, 39.447304, 133.289779)},
 	}
 
 	for name, tc := range tests {

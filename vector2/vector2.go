@@ -446,3 +446,51 @@ func (v Vector[T]) FlipY() Vector[T] {
 		y: v.y * -1,
 	}
 }
+
+// Log returns the natural logarithm for each component
+func (v Vector[T]) Log() Vector[T] {
+	return Vector[T]{
+		x: T(math.Log(float64(v.x))),
+		y: T(math.Log(float64(v.y))),
+	}
+}
+
+// Log10 returns the decimal logarithm for each component.
+func (v Vector[T]) Log10() Vector[T] {
+	return Vector[T]{
+		x: T(math.Log10(float64(v.x))),
+		y: T(math.Log10(float64(v.y))),
+	}
+}
+
+// Log2 returns the binary logarithm for each component
+func (v Vector[T]) Log2() Vector[T] {
+	return Vector[T]{
+		x: T(math.Log2(float64(v.x))),
+		y: T(math.Log2(float64(v.y))),
+	}
+}
+
+// Exp2 returns 2**x, the base-2 exponential for each component
+func (v Vector[T]) Exp2() Vector[T] {
+	return Vector[T]{
+		x: T(math.Exp2(float64(v.x))),
+		y: T(math.Exp2(float64(v.y))),
+	}
+}
+
+// Exp returns e**x, the base-e exponential for each component
+func (v Vector[T]) Exp() Vector[T] {
+	return Vector[T]{
+		x: T(math.Exp(float64(v.x))),
+		y: T(math.Exp(float64(v.y))),
+	}
+}
+
+// Expm1 returns e**x - 1, the base-e exponential for each component minus 1. It is more accurate than Exp(x) - 1 when the component is near zero
+func (v Vector[T]) Expm1() Vector[T] {
+	return Vector[T]{
+		x: T(math.Expm1(float64(v.x))),
+		y: T(math.Expm1(float64(v.y))),
+	}
+}
