@@ -20,9 +20,9 @@ func (v3a Array[T]) Add(other Vector[T]) (out Array[T]) {
 
 	for i, v := range v3a {
 		out[i] = Vector[T]{
-			v.x + other.x,
-			v.y + other.y,
-			v.z + other.z,
+			v.X + other.X,
+			v.Y + other.Y,
+			v.Z + other.Z,
 		}
 	}
 
@@ -32,9 +32,9 @@ func (v3a Array[T]) Add(other Vector[T]) (out Array[T]) {
 func (v3a Array[T]) AddInplace(other Vector[T]) Array[T] {
 	for i, v := range v3a {
 		v3a[i] = Vector[T]{
-			v.x + other.x,
-			v.y + other.y,
-			v.z + other.z,
+			v.X + other.X,
+			v.Y + other.Y,
+			v.Z + other.Z,
 		}
 	}
 	return v3a
@@ -45,9 +45,9 @@ func (v3a Array[T]) Sub(other Vector[T]) (out Array[T]) {
 
 	for i, v := range v3a {
 		out[i] = Vector[T]{
-			v.x - other.x,
-			v.y - other.y,
-			v.z - other.z,
+			v.X - other.X,
+			v.Y - other.Y,
+			v.Z - other.Z,
 		}
 	}
 
@@ -57,9 +57,9 @@ func (v3a Array[T]) Sub(other Vector[T]) (out Array[T]) {
 func (v3a Array[T]) SubInplace(other Vector[T]) Array[T] {
 	for i, v := range v3a {
 		v3a[i] = Vector[T]{
-			v.x - other.x,
-			v.y - other.y,
-			v.z - other.z,
+			v.X - other.X,
+			v.Y - other.Y,
+			v.Z - other.Z,
 		}
 	}
 	return v3a
@@ -80,9 +80,9 @@ func (v3a Array[T]) Scale(t float64) (out Array[T]) {
 
 	for i, v := range v3a {
 		out[i] = Vector[T]{
-			x: T(float64(v.x) * t),
-			y: T(float64(v.y) * t),
-			z: T(float64(v.z) * t),
+			X: T(float64(v.X) * t),
+			Y: T(float64(v.Y) * t),
+			Z: T(float64(v.Z) * t),
 		}
 	}
 
@@ -92,9 +92,9 @@ func (v3a Array[T]) Scale(t float64) (out Array[T]) {
 func (v3a Array[T]) ScaleInplace(t float64) Array[T] {
 	for i, v := range v3a {
 		v3a[i] = Vector[T]{
-			x: T(float64(v.x) * t),
-			y: T(float64(v.y) * t),
-			z: T(float64(v.z) * t),
+			X: T(float64(v.X) * t),
+			Y: T(float64(v.Y) * t),
+			Z: T(float64(v.Z) * t),
 		}
 	}
 	return v3a
@@ -164,9 +164,9 @@ func (v3a Array[T]) Average(vectors []Vector[T]) Vector[float64] {
 	zTotal := 0.
 
 	for _, v := range v3a {
-		xTotal += float64(v.X())
-		yTotal += float64(v.Y())
-		zTotal += float64(v.Z())
+		xTotal += float64(v.X)
+		yTotal += float64(v.Y)
+		zTotal += float64(v.Z)
 	}
 
 	return New(xTotal, yTotal, zTotal).DivByConstant(float64(len(v3a)))
@@ -179,19 +179,19 @@ func (v3a Array[T]) Bounds() (Vector[T], Vector[T]) {
 
 	for _, v := range v3a {
 		min = New(
-			math.Min(float64(v.x), min.x),
-			math.Min(float64(v.y), min.y),
-			math.Min(float64(v.z), min.z),
+			math.Min(float64(v.X), min.X),
+			math.Min(float64(v.Y), min.Y),
+			math.Min(float64(v.Z), min.Z),
 		)
 
 		max = New(
-			math.Max(float64(v.x), max.x),
-			math.Max(float64(v.y), max.y),
-			math.Max(float64(v.z), max.z),
+			math.Max(float64(v.X), max.X),
+			math.Max(float64(v.Y), max.Y),
+			math.Max(float64(v.Z), max.Z),
 		)
 	}
 
-	return New(T(min.x), T(min.y), T(min.z)), New(T(max.x), T(max.y), T(max.z))
+	return New(T(min.X), T(min.Y), T(min.Z)), New(T(max.X), T(max.Y), T(max.Z))
 }
 
 // StandardDeviation calculates the population standard deviation on each
@@ -202,9 +202,9 @@ func (v3a Array[T]) StandardDeviation() (mean, deviation Vector[float64]) {
 	xTotal, yTotal, zTotal := 0., 0., 0.
 	for _, v := range v3a {
 		diff := v.ToFloat64().Sub(mean)
-		xTotal += (diff.x * diff.x)
-		yTotal += (diff.y * diff.y)
-		zTotal += (diff.z * diff.z)
+		xTotal += (diff.X * diff.X)
+		yTotal += (diff.Y * diff.Y)
+		zTotal += (diff.Z * diff.Z)
 	}
 
 	deviation = New(
