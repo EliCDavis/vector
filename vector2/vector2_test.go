@@ -452,3 +452,9 @@ func TestMaxMinComponents(t *testing.T) {
 		})
 	}
 }
+
+func TestValues(t *testing.T) {
+	x, y := vector2.New(1, 2).Values()
+	assert.Equal(t, x, 1)
+	assert.Equal(t, y, 2)
+}

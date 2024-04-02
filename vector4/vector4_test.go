@@ -458,6 +458,14 @@ func TestMaxMinComponents(t *testing.T) {
 	}
 }
 
+func TestValues(t *testing.T) {
+	x, y, z, w := vector4.New(1, 2, 3, 4).Values()
+	assert.Equal(t, x, 1)
+	assert.Equal(t, y, 2)
+	assert.Equal(t, z, 3)
+	assert.Equal(t, w, 4)
+}
+
 var result vector4.Float64
 
 func BenchmarkLerp(b *testing.B) {

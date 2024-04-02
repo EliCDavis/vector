@@ -46,6 +46,7 @@ Collection of **generic, immutable** vector math functions I've written overtime
 | Scale         | ✅      | ✅     | ✅      | Scales the vector by some constant                     |
 | Sqrt          | ✅      | ✅     | ✅      | Returns a vector with each component's square root     |
 | Sub           | ✅      | ✅     | ✅      | Component Wise Subtraction                             |
+| Values        | ✅      | ✅     | ✅      | Returns all components of the vector                   |
 | X             | ✅      | ✅     | ✅      | Returns the x component of the vector                  |
 | Y             | ✅      | ✅     | ✅      | Returns the y component of the vector                  |
 | Z             |         | ✅     | ✅      | Returns the z component of the vector                  |
