@@ -119,6 +119,22 @@ func MinY[T vector.Number](a, b Vector[T]) T {
 	return T(math.Min(float64(a.Y), float64(b.Y)))
 }
 
+func Less[T vector.Number](a, b Vector[T]) bool {
+	return a.X < b.X && a.Y < b.Y
+}
+
+func LessEq[T vector.Number](a, b Vector[T]) bool {
+	return a.X <= b.X && a.Y <= b.Y
+}
+
+func Greater[T vector.Number](a, b Vector[T]) bool {
+	return a.X > b.X && a.Y > b.Y
+}
+
+func GreaterEq[T vector.Number](a, b Vector[T]) bool {
+	return a.X >= b.X && a.Y >= b.Y
+}
+
 func Midpoint[T vector.Number](a, b Vector[T]) Vector[T] {
 	// center = (b - a)0.5 + a
 	// center = b0.5 - a0.5 + a
@@ -202,6 +218,13 @@ func (v Vector[T]) Sqrt() Vector[T] {
 	)
 }
 
+func (v Vector[T]) Clamp(min, max T) Vector[T] {
+	return Vector[T]{
+		X: T(math.Max(math.Min(float64(v.X), float64(max)), float64(min))),
+		Y: T(math.Max(math.Min(float64(v.Y), float64(max)), float64(min))),
+	}
+}
+
 func (v Vector[T]) ToInt() Vector[int] {
 	return Vector[int]{
 		X: int(v.X),
@@ -213,13 +236,6 @@ func (v Vector[T]) ToFloat64() Vector[float64] {
 	return Vector[float64]{
 		X: float64(v.X),
 		Y: float64(v.Y),
-	}
-}
-
-func (v Vector[T]) Clamp(min, max T) Vector[T] {
-	return Vector[T]{
-		X: T(math.Max(math.Min(float64(v.X), float64(max)), float64(min))),
-		Y: T(math.Max(math.Min(float64(v.Y), float64(max)), float64(min))),
 	}
 }
 
@@ -263,6 +279,20 @@ func (v Vector[T]) SetY(newY T) Vector[T] {
 }
 */
 
+func (v Vector[T]) Dx(dX T) Vector[T] {
+	return Vector[T]{
+		X: v.X + dX,
+		Y: v.Y,
+	}
+}
+
+func (v Vector[T]) Dy(dY T) Vector[T] {
+	return Vector[T]{
+		X: v.X,
+		Y: v.Y + dY,
+	}
+}
+
 func (v Vector[T]) YX() Vector[T] {
 	return Vector[T]{
 		X: v.Y,
@@ -271,11 +301,11 @@ func (v Vector[T]) YX() Vector[T] {
 }
 
 func (v Vector[T]) Angle(other Vector[T]) float64 {
-	denominator := math.Sqrt(v.LengthSquared() * other.LengthSquared())
+	denominator := math.Sqrt((float64)(v.LengthSquared()) * (float64)(other.LengthSquared()))
 	if denominator < 1e-15 {
 		return 0.
 	}
-	return math.Acos(vector.Clamp(v.Dot(other)/denominator, -1., 1.))
+	return math.Acos(vector.Clamp((float64)(v.Dot(other))/denominator, -1., 1.))
 }
 
 // Midpoint returns the midpoint between this vector and the vector passed in.
@@ -283,8 +313,8 @@ func (v Vector[T]) Midpoint(o Vector[T]) Vector[T] {
 	return o.Add(v).Scale(0.5)
 }
 
-func (v Vector[T]) Dot(other Vector[T]) float64 {
-	return float64(v.X*other.X) + float64(v.Y*other.Y)
+func (v Vector[T]) Dot(other Vector[T]) T {
+	return v.X*other.X + v.Y*other.Y
 }
 
 // Perpendicular creates a vector perpendicular to the one passed in with the
@@ -311,12 +341,16 @@ func (v Vector[T]) Sub(other Vector[T]) Vector[T] {
 	}
 }
 
-func (v Vector[T]) Length() float64 {
-	return math.Sqrt(float64(v.X*v.X) + float64(v.Y*v.Y))
+func (v Vector[T]) Product() T {
+	return v.X * v.Y
 }
 
-func (v Vector[T]) LengthSquared() float64 {
-	return float64(v.X*v.X) + float64(v.Y*v.Y)
+func (v Vector[T]) LengthSquared() T {
+	return v.X*v.X + v.Y*v.Y
+}
+
+func (v Vector[T]) Length() float64 {
+	return math.Sqrt((float64)(v.LengthSquared()))
 }
 
 func (v Vector[T]) Normalized() Vector[T] {
@@ -362,15 +396,15 @@ func (v Vector[T]) DivByConstant(t float64) Vector[T] {
 	return v.Scale(1.0 / t)
 }
 
-func (v Vector[T]) DistanceSquared(other Vector[T]) float64 {
+func (v Vector[T]) DistanceSquared(other Vector[T]) T {
 	xDist := other.X - v.X
 	yDist := other.Y - v.Y
-	return float64((xDist * xDist) + (yDist * yDist))
+	return (xDist * xDist) + (yDist * yDist)
 }
 
 // Distance is the euclidean distance between two points
 func (v Vector[T]) Distance(other Vector[T]) float64 {
-	return math.Sqrt(v.DistanceSquared(other))
+	return math.Sqrt((float64)(v.DistanceSquared(other)))
 }
 
 // Round takes each component of the vector and rounds it to the nearest whole

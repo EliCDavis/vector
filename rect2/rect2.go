@@ -41,6 +41,14 @@ func One[T vector.Number]() Rectangle[T] {
 	}
 }
 
+func (r Rectangle[T]) A() vector2.Vector[T] {
+	return r.XY
+}
+
+func (r Rectangle[T]) B() vector2.Vector[T] {
+	return r.XY.Add(r.WH)
+}
+
 func (r Rectangle[T]) Delta(xy vector2.Vector[T], wh vector2.Vector[T]) Rectangle[T] {
 	return Rectangle[T]{
 		XY: r.XY.Add(xy),
@@ -74,4 +82,8 @@ func (r Rectangle[T]) ScaleByVectorF(f vector2.Float32) Rectangle[T] {
 		XY: r.XY,
 		WH: r.WH.ScaleByVectorF(f),
 	}
+}
+
+func (r Rectangle[T]) Contains(v vector2.Vector[T]) bool {
+	return vector2.GreaterEq(v, r.A()) && vector2.LessEq(v, r.B())
 }
