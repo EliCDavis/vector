@@ -392,6 +392,13 @@ func (v Vector[T]) MultByVector(o Vector[T]) Vector[T] {
 	}
 }
 
+func (v Vector[T]) DivByVector(o Vector[T]) Vector[T] {
+	return Vector[T]{
+		X: v.X / o.X,
+		Y: v.Y / o.Y,
+	}
+}
+
 func (v Vector[T]) DivByConstant(t float64) Vector[T] {
 	return v.Scale(1.0 / t)
 }
