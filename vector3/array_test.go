@@ -24,13 +24,13 @@ func TestArrayBounds(t *testing.T) {
 	min, max := vector3.Array[float64](pts).Bounds()
 
 	// ASSERT =================================================================
-	assert.InDelta(t, -2, min.X(), 0.000001)
-	assert.InDelta(t, -4, min.Y(), 0.000001)
-	assert.InDelta(t, 0, min.Z(), 0.000001)
+	assert.InDelta(t, -2, min.X, 0.000001)
+	assert.InDelta(t, -4, min.Y, 0.000001)
+	assert.InDelta(t, 0, min.Z, 0.000001)
 
-	assert.InDelta(t, 3, max.X(), 0.000001)
-	assert.InDelta(t, 2, max.Y(), 0.000001)
-	assert.InDelta(t, 5, max.Z(), 0.000001)
+	assert.InDelta(t, 3, max.X, 0.000001)
+	assert.InDelta(t, 2, max.Y, 0.000001)
+	assert.InDelta(t, 5, max.Z, 0.000001)
 }
 
 func TestArrayDistance(t *testing.T) {
@@ -122,13 +122,13 @@ func TestArrayStandardDeviation(t *testing.T) {
 	average, deviation := vector3.Array[float64](pts).StandardDeviation()
 
 	// ASSERT =================================================================
-	assert.InDelta(t, 0, average.X(), 0.01)
-	assert.InDelta(t, 0, average.Y(), 0.01)
-	assert.InDelta(t, 0, average.Z(), 0.01)
+	assert.InDelta(t, 0, average.X, 0.01)
+	assert.InDelta(t, 0, average.Y, 0.01)
+	assert.InDelta(t, 0, average.Z, 0.01)
 
-	assert.InDelta(t, 0.5, deviation.X(), 0.1)
-	assert.InDelta(t, 0.5, deviation.Y(), 0.1)
-	assert.InDelta(t, 0.5, deviation.Z(), 0.1)
+	assert.InDelta(t, 0.5, deviation.X, 0.1)
+	assert.InDelta(t, 0.5, deviation.Y, 0.1)
+	assert.InDelta(t, 0.5, deviation.Z, 0.1)
 }
 
 func TestArray_Add(t *testing.T) {
@@ -268,7 +268,7 @@ func TestArray_Sum(t *testing.T) {
 	sum := arr.Sum()
 
 	// ASSERT =================================================================
-	assert.Equal(t, 9., sum.X())
-	assert.Equal(t, 12., sum.Y())
-	assert.Equal(t, 15., sum.Z())
+	assert.Equal(t, 9., sum.X)
+	assert.Equal(t, 12., sum.Y)
+	assert.Equal(t, 15., sum.Z)
 }

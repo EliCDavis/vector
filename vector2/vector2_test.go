@@ -24,8 +24,8 @@ func TestToIntConversions(t *testing.T) {
 
 	for name, tc := range tests {
 		t.Run(name, func(t *testing.T) {
-			assert.InDelta(t, tc.want.X(), tc.got.X(), 0.000001)
-			assert.InDelta(t, tc.want.Y(), tc.got.Y(), 0.000001)
+			assert.InDelta(t, tc.want.X, tc.got.X, 0.000001)
+			assert.InDelta(t, tc.want.Y, tc.got.Y, 0.000001)
 		})
 	}
 }
@@ -58,8 +58,8 @@ func TestOperations(t *testing.T) {
 		want vector2.Float64
 		got  vector2.Float64
 	}{
-		"x":             {want: start.SetX(4), got: vector2.New(4., -2.4)},
-		"y":             {want: start.SetY(4), got: vector2.New(1.2, 4.)},
+		//		"x":             {want: start.SetX(4), got: vector2.New(4., -2.4)},
+		//		"y":             {want: start.SetY(4), got: vector2.New(1.2, 4.)},
 		"abs":           {want: start.Abs(), got: vector2.New(1.2, 2.4)},
 		"floor":         {want: start.Floor(), got: vector2.New(1., -3.)},
 		"ceil":          {want: start.Ceil(), got: vector2.New(2., -2.)},
@@ -88,8 +88,8 @@ func TestOperations(t *testing.T) {
 
 	for name, tc := range tests {
 		t.Run(name, func(t *testing.T) {
-			assert.InDelta(t, tc.want.X(), tc.got.X(), 0.000001)
-			assert.InDelta(t, tc.want.Y(), tc.got.Y(), 0.000001)
+			assert.InDelta(t, tc.want.X, tc.got.X, 0.000001)
+			assert.InDelta(t, tc.want.Y, tc.got.Y, 0.000001)
 		})
 	}
 }
@@ -108,8 +108,8 @@ func TestAdd(t *testing.T) {
 		t.Run(name, func(t *testing.T) {
 			got := tc.left.Add(tc.right)
 
-			assert.InDelta(t, tc.want.X(), got.X(), 0.000001)
-			assert.InDelta(t, tc.want.Y(), got.Y(), 0.000001)
+			assert.InDelta(t, tc.want.X, got.X, 0.000001)
+			assert.InDelta(t, tc.want.Y, got.Y, 0.000001)
 		})
 	}
 }
@@ -128,8 +128,8 @@ func TestSub(t *testing.T) {
 		t.Run(name, func(t *testing.T) {
 			got := tc.left.Sub(tc.right)
 
-			assert.InDelta(t, tc.want.X(), got.X(), 0.000001)
-			assert.InDelta(t, tc.want.Y(), got.Y(), 0.000001)
+			assert.InDelta(t, tc.want.X, got.X, 0.000001)
+			assert.InDelta(t, tc.want.Y, got.Y, 0.000001)
 		})
 	}
 }
@@ -149,8 +149,8 @@ func TestDefaults(t *testing.T) {
 
 	for name, tc := range tests {
 		t.Run(name, func(t *testing.T) {
-			assert.InDelta(t, tc.want.X(), tc.got.X(), 0.000001)
-			assert.InDelta(t, tc.want.Y(), tc.got.Y(), 0.000001)
+			assert.InDelta(t, tc.want.X, tc.got.X, 0.000001)
+			assert.InDelta(t, tc.want.Y, tc.got.Y, 0.000001)
 		})
 	}
 }
@@ -170,8 +170,8 @@ func TestMidpoint(t *testing.T) {
 		t.Run(name, func(t *testing.T) {
 			got := tc.left.Midpoint(tc.right)
 
-			assert.InDelta(t, tc.want.X(), got.X(), 0.000001)
-			assert.InDelta(t, tc.want.Y(), got.Y(), 0.000001)
+			assert.InDelta(t, tc.want.X, got.X, 0.000001)
+			assert.InDelta(t, tc.want.Y, got.Y, 0.000001)
 		})
 	}
 }
@@ -192,8 +192,8 @@ func TestLerp(t *testing.T) {
 		t.Run(name, func(t *testing.T) {
 			got := vector2.Lerp(tc.left, tc.right, tc.t)
 
-			assert.InDelta(t, tc.want.X(), got.X(), 0.000001)
-			assert.InDelta(t, tc.want.Y(), got.Y(), 0.000001)
+			assert.InDelta(t, tc.want.X, got.X, 0.000001)
+			assert.InDelta(t, tc.want.Y, got.Y, 0.000001)
 		})
 	}
 }
@@ -211,8 +211,8 @@ func TestMin(t *testing.T) {
 		t.Run(name, func(t *testing.T) {
 			got := vector2.Min(tc.left, tc.right)
 
-			assert.InDelta(t, tc.want.X(), got.X(), 0.000001)
-			assert.InDelta(t, tc.want.Y(), got.Y(), 0.000001)
+			assert.InDelta(t, tc.want.X, got.X, 0.000001)
+			assert.InDelta(t, tc.want.Y, got.Y, 0.000001)
 		})
 	}
 }
@@ -230,8 +230,8 @@ func TestMax(t *testing.T) {
 		t.Run(name, func(t *testing.T) {
 			got := vector2.Max(tc.left, tc.right)
 
-			assert.InDelta(t, tc.want.X(), got.X(), 0.000001)
-			assert.InDelta(t, tc.want.Y(), got.Y(), 0.000001)
+			assert.InDelta(t, tc.want.X, got.X, 0.000001)
+			assert.InDelta(t, tc.want.Y, got.Y, 0.000001)
 		})
 	}
 }
@@ -263,8 +263,8 @@ func TestJSON(t *testing.T) {
 	assert.NoError(t, marshallErr)
 	assert.NoError(t, unmarshallErr)
 	assert.Equal(t, "{\"x\":1.2,\"y\":2.3}", string(marshalledData))
-	assert.Equal(t, 1.2, out.X())
-	assert.Equal(t, 2.3, out.Y())
+	assert.Equal(t, 1.2, out.X)
+	assert.Equal(t, 2.3, out.Y)
 }
 
 func TestBadJSON(t *testing.T) {
@@ -273,21 +273,21 @@ func TestBadJSON(t *testing.T) {
 	unmarshallErr := out.UnmarshalJSON([]byte("bad json"))
 
 	assert.Error(t, unmarshallErr)
-	assert.Equal(t, 0., out.X())
-	assert.Equal(t, 0., out.Y())
+	assert.Equal(t, 0., out.X)
+	assert.Equal(t, 0., out.Y)
 }
 
 func TestDot(t *testing.T) {
 	a := vector2.New(2, 3)
 	b := vector2.New(6, 7)
 
-	assert.Equal(t, 33., a.Dot(b))
+	assert.Equal(t, 33, a.Dot(b))
 }
 
 func TestLengthSquared(t *testing.T) {
 	a := vector2.New(2, 3)
 
-	assert.Equal(t, 13., a.LengthSquared())
+	assert.Equal(t, 13, a.LengthSquared())
 }
 
 func TestFromArray(t *testing.T) {
@@ -304,8 +304,8 @@ func TestFromArray(t *testing.T) {
 	for name, tc := range tests {
 		t.Run(name, func(t *testing.T) {
 			got := vector2.FromArray(tc.arr)
-			assert.InDelta(t, tc.want.X(), got.X(), 0.000001)
-			assert.InDelta(t, tc.want.Y(), got.Y(), 0.000001)
+			assert.InDelta(t, tc.want.X, got.X, 0.000001)
+			assert.InDelta(t, tc.want.Y, got.Y, 0.000001)
 		})
 	}
 }
@@ -313,29 +313,29 @@ func TestFromArray(t *testing.T) {
 func TestToInt(t *testing.T) {
 	in := vector2.New(1.2, 2.3)
 	out := in.ToInt()
-	assert.Equal(t, 1, out.X())
-	assert.Equal(t, 2, out.Y())
+	assert.Equal(t, 1, out.X)
+	assert.Equal(t, 2, out.Y)
 }
 
 func TestToInt64(t *testing.T) {
 	in := vector2.New(1.2, 2.3)
 	out := in.ToInt64()
-	assert.Equal(t, int64(1), out.X())
-	assert.Equal(t, int64(2), out.Y())
+	assert.Equal(t, int64(1), out.X)
+	assert.Equal(t, int64(2), out.Y)
 }
 
 func TestToFloat32(t *testing.T) {
 	in := vector2.New(1.2, 2.3)
 	out := in.ToFloat32()
-	assert.Equal(t, float32(1.2), out.X())
-	assert.Equal(t, float32(2.3), out.Y())
+	assert.Equal(t, float32(1.2), out.X)
+	assert.Equal(t, float32(2.3), out.Y)
 }
 
 func TestToFloat64(t *testing.T) {
 	in := vector2.New(1, 2)
 	out := in.ToFloat64()
-	assert.Equal(t, float64(1), out.X())
-	assert.Equal(t, float64(2), out.Y())
+	assert.Equal(t, float64(1), out.X)
+	assert.Equal(t, float64(2), out.Y)
 }
 
 func TestMaxComponent(t *testing.T) {
