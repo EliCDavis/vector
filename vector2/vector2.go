@@ -225,13 +225,6 @@ func (v Vector[T]) Clamp(min, max T) Vector[T] {
 	}
 }
 
-func (v Vector[T]) ToInt() Vector[int] {
-	return Vector[int]{
-		X: int(v.X),
-		Y: int(v.Y),
-	}
-}
-
 func (v Vector[T]) ToFloat64() Vector[float64] {
 	return Vector[float64]{
 		X: float64(v.X),
@@ -243,6 +236,20 @@ func (v Vector[T]) ToFloat32() Vector[float32] {
 	return Vector[float32]{
 		X: float32(v.X),
 		Y: float32(v.Y),
+	}
+}
+
+func (v Vector[T]) ToInt() Vector[int] {
+	return Vector[int]{
+		X: int(v.X),
+		Y: int(v.Y),
+	}
+}
+
+func (v Vector[T]) ToInt32() Vector[int32] {
+	return Vector[int32]{
+		X: int32(v.X),
+		Y: int32(v.Y),
 	}
 }
 

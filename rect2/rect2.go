@@ -49,6 +49,41 @@ func (r Rectangle[T]) B() vector2.Vector[T] {
 	return r.XY.Add(r.WH)
 }
 
+func (v Rectangle[T]) ToFloat64() Rectangle[float64] {
+	return Rectangle[float64]{
+		XY: v.XY.ToFloat64(),
+		WH: v.WH.ToFloat64(),
+	}
+}
+
+func (v Rectangle[T]) ToFloat32() Rectangle[float32] {
+	return Rectangle[float32]{
+		XY: v.XY.ToFloat32(),
+		WH: v.WH.ToFloat32(),
+	}
+}
+
+func (v Rectangle[T]) ToInt() Rectangle[int] {
+	return Rectangle[int]{
+		XY: v.XY.ToInt(),
+		WH: v.WH.ToInt(),
+	}
+}
+
+func (v Rectangle[T]) ToInt32() Rectangle[int32] {
+	return Rectangle[int32]{
+		XY: v.XY.ToInt32(),
+		WH: v.WH.ToInt32(),
+	}
+}
+
+func (v Rectangle[T]) ToInt64() Rectangle[int64] {
+	return Rectangle[int64]{
+		XY: v.XY.ToInt64(),
+		WH: v.WH.ToInt64(),
+	}
+}
+
 func (r Rectangle[T]) Delta(xy vector2.Vector[T], wh vector2.Vector[T]) Rectangle[T] {
 	return Rectangle[T]{
 		XY: r.XY.Add(xy),
