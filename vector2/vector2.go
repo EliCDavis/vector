@@ -341,6 +341,13 @@ func (v Vector[T]) Add(other Vector[T]) Vector[T] {
 	}
 }
 
+func (v Vector[T]) AddXY(x, y T) Vector[T] {
+	return Vector[T]{
+		X: v.X + x,
+		Y: v.Y + y,
+	}
+}
+
 func (v Vector[T]) Sub(other Vector[T]) Vector[T] {
 	return Vector[T]{
 		X: v.X - other.X,
@@ -389,6 +396,13 @@ func (v Vector[T]) ScaleByVectorF(o Float32) Vector[T] {
 	return Vector[T]{
 		X: T(float32(v.X) * o.X),
 		Y: T(float32(v.Y) * o.Y),
+	}
+}
+
+func (v Vector[T]) ScaleByXYF(x, y float32) Vector[T] {
+	return Vector[T]{
+		X: T(float32(v.X) * x),
+		Y: T(float32(v.Y) * y),
 	}
 }
 
