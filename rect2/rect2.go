@@ -84,6 +84,13 @@ func (v Rectangle[T]) ToInt64() Rectangle[int64] {
 	}
 }
 
+func (r Rectangle[T]) Shift(xy vector2.Vector[T]) Rectangle[T] {
+	return Rectangle[T]{
+		XY: r.XY.Add(xy),
+		WH: r.WH,
+	}
+}
+
 func (r Rectangle[T]) Delta(xy vector2.Vector[T], wh vector2.Vector[T]) Rectangle[T] {
 	return Rectangle[T]{
 		XY: r.XY.Add(xy),
