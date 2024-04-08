@@ -105,6 +105,13 @@ func (r Rectangle[T]) DeltaXYWH(x, y, w, h T) Rectangle[T] {
 	}
 }
 
+func (r Rectangle[T]) ShrinkXYWH(left, top, right, bottom T) Rectangle[T] {
+	return Rectangle[T]{
+		XY: r.XY.AddXY(left, top),
+		WH: r.WH.AddXY(-left-right, -top-bottom),
+	}
+}
+
 func (r Rectangle[T]) Scale(f float64) Rectangle[T] {
 	return Rectangle[T]{
 		XY: r.XY,

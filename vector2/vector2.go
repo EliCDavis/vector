@@ -355,6 +355,20 @@ func (v Vector[T]) Sub(other Vector[T]) Vector[T] {
 	}
 }
 
+func (v Vector[float32]) ReciprocalF() Vector[float32] {
+	return Vector[float32]{
+		X: 1.0 / v.X,
+		Y: 1.0 / v.Y,
+	}
+}
+
+func (v Vector[float64]) Reciprocal() Vector[float64] {
+	return Vector[float64]{
+		X: 1.0 / v.X,
+		Y: 1.0 / v.Y,
+	}
+}
+
 func (v Vector[T]) Product() T {
 	return v.X * v.Y
 }
