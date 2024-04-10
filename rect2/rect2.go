@@ -49,6 +49,10 @@ func (r Rectangle[T]) B() vector2.Vector[T] {
 	return r.XY.Add(r.WH)
 }
 
+func (r Rectangle[T]) Center() vector2.Vector[T] {
+	return r.XY.Add(r.WH.ScaleF(0.5))
+}
+
 func (v Rectangle[T]) ToFloat64() Rectangle[float64] {
 	return Rectangle[float64]{
 		XY: v.XY.ToFloat64(),
