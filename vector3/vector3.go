@@ -482,18 +482,18 @@ func (v Vector[T]) CeilToInt() Vector[int] {
 // Sqrt applies the math.Sqrt to each component of the vector
 func (v Vector[T]) Sqrt() Vector[T] {
 	return New(
-		T(math.Sqrt(float64(v.X))),
-		T(math.Sqrt(float64(v.Y))),
-		T(math.Sqrt(float64(v.Z))),
+		mathex.Sqrt(v.X),
+		mathex.Sqrt(v.Y),
+		mathex.Sqrt(v.Z),
 	)
 }
 
 // Abs applies the Abs math operation to each component of the vector
 func (v Vector[T]) Abs() Vector[T] {
 	return New(
-		T(math.Abs(float64(v.X))),
-		T(math.Abs(float64(v.Y))),
-		T(math.Abs(float64(v.Z))),
+		T(mathex.Abs(v.X)),
+		T(mathex.Abs(v.Y)),
+		T(mathex.Abs(v.Z)),
 	)
 }
 
@@ -642,8 +642,7 @@ func (v Vector[T]) Angle(other Vector[T]) float64 {
 }
 
 func (v Vector[T]) NearZero() bool {
-	const s = 1e-8
-	return (math.Abs(float64(v.X)) < s) && (math.Abs(float64(v.Y)) < s) && (math.Abs(float64(v.Z)) < s)
+	return mathex.NearZero(v.X) && mathex.NearZero(v.Y) && mathex.NearZero(v.Z)
 }
 
 func (v Vector[T]) Flip() Vector[T] {

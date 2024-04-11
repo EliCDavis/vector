@@ -214,8 +214,8 @@ func (v Vector[T]) Format(format string) string {
 // Sqrt applies the math.Sqrt to each component of the vector
 func (v Vector[T]) Sqrt() Vector[T] {
 	return New(
-		T(math.Sqrt(float64(v.X))),
-		T(math.Sqrt(float64(v.Y))),
+		mathex.Sqrt(v.X),
+		mathex.Sqrt(v.Y),
 	)
 }
 
@@ -323,7 +323,7 @@ func (v Vector[T]) YX() Vector[T] {
 }
 
 func (v Vector[T]) Angle(other Vector[T]) float64 {
-	denominator := math.Sqrt((float64)(v.LengthSquared()) * (float64)(other.LengthSquared()))
+	denominator := mathex.Sqrt((float64)(v.LengthSquared()) * (float64)(other.LengthSquared()))
 	if denominator < 1e-15 {
 		return 0.
 	}
@@ -518,14 +518,13 @@ func (v Vector[T]) FloorToInt() Vector[int] {
 // Abs applies the Abs math operation to each component of the vector
 func (v Vector[T]) Abs() Vector[T] {
 	return Vector[T]{
-		X: T(math.Abs(float64(v.X))),
-		Y: T(math.Abs(float64(v.Y))),
+		X: T(mathex.Abs(v.X)),
+		Y: T(mathex.Abs(v.Y)),
 	}
 }
 
 func (v Vector[T]) NearZero() bool {
-	const s = 1e-8
-	return (math.Abs(float64(v.X)) < s) && (math.Abs(float64(v.Y)) < s)
+	return mathex.NearZero(v.X) && mathex.NearZero(v.Y)
 }
 
 func (v Vector[T]) ContainsNaN() bool {

@@ -11,19 +11,29 @@ type Number interface {
 	constraints.Integer | constraints.Float | vector.Number
 }
 
+func NearZero[T Number](v T) bool {
+	const s = 1e-8
+	return Abs(float64(v)) < s
+}
+
+// FloatEquals - Check whether two given floats are almost equal
+//func FloatEquals[FT FloatT](x, y FT) bool {
+//	return (mathex.Abs(x-y) <= 0.000001*math.Max(1.0, math.Max(mathex.Abs(x), mathex.Abs(y))))
+//}
+
 // Lerp - Calculate linear interpolation between two floats
-func Lerp[T Number](start, end, amount T) T {
-	return start + amount*(end-start)
+func Lerp[T Number](start, end T, amount float64) T {
+	return T(float64(start) + amount*float64(end-start))
 }
 
 // Normalize - Normalize input value within input range
 func Normalize[T Number](value, start, end T) T {
-	return (value - start) / (end - start)
+	return T(float64(value-start) / float64(end-start))
 }
 
 // Remap - Remap input value within input range to output range
 func Remap[T Number](value, inputStart, inputEnd, outputStart, outputEnd T) T {
-	return (value-inputStart)/(inputEnd-inputStart)*(outputEnd-outputStart) + outputStart
+	return T(float64(value-inputStart)/float64(inputEnd-inputStart)*float64(outputEnd-outputStart) + float64(outputStart))
 }
 
 // Wrap - Wrap input value from min to max
@@ -49,4 +59,16 @@ func Ceil[T Number](v T) T {
 
 func Floor[T Number](v T) T {
 	return T(math.Floor(float64(v)))
+}
+
+func Sqrt[T Number](v T) T {
+	return T(math.Sqrt(float64(v)))
+}
+
+func Cos[T constraints.Float](v T) T {
+	return T(math.Cos(float64(v)))
+}
+
+func Sin[T constraints.Float](v T) T {
+	return T(math.Sin(float64(v)))
 }
