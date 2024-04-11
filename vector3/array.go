@@ -174,24 +174,24 @@ func (v3a Array[T]) Average(vectors []Vector[T]) Vector[float64] {
 
 // Bounds returns the min and max points of an AABB encompassing
 func (v3a Array[T]) Bounds() (Vector[T], Vector[T]) {
-	min := New(math.Inf(1), math.Inf(1), math.Inf(1))
-	max := New(math.Inf(-1), math.Inf(-1), math.Inf(-1))
+	vmin := New(math.Inf(1), math.Inf(1), math.Inf(1))
+	vmax := New(math.Inf(-1), math.Inf(-1), math.Inf(-1))
 
 	for _, v := range v3a {
-		min = New(
-			math.Min(float64(v.X), min.X),
-			math.Min(float64(v.Y), min.Y),
-			math.Min(float64(v.Z), min.Z),
+		vmin = New(
+			min(float64(v.X), vmin.X),
+			min(float64(v.Y), vmin.Y),
+			min(float64(v.Z), vmin.Z),
 		)
 
-		max = New(
-			math.Max(float64(v.X), max.X),
-			math.Max(float64(v.Y), max.Y),
-			math.Max(float64(v.Z), max.Z),
+		vmax = New(
+			max(float64(v.X), vmax.X),
+			max(float64(v.Y), vmax.Y),
+			max(float64(v.Z), vmax.Z),
 		)
 	}
 
-	return New(T(min.X), T(min.Y), T(min.Z)), New(T(max.X), T(max.Y), T(max.Z))
+	return New(T(vmin.X), T(vmin.Y), T(vmin.Z)), New(T(vmax.X), T(vmax.Y), T(vmax.Z))
 }
 
 // StandardDeviation calculates the population standard deviation on each

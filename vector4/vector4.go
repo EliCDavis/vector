@@ -122,52 +122,52 @@ func (v Vector[T]) DivByConstant(t float64) Vector[T] {
 
 func Min[T vector.Number](a, b Vector[T]) Vector[T] {
 	return New(
-		T(math.Min(float64(a.X), float64(b.X))),
-		T(math.Min(float64(a.Y), float64(b.Y))),
-		T(math.Min(float64(a.Z), float64(b.Z))),
-		T(math.Min(float64(a.W), float64(b.W))),
+		min(a.X, b.X),
+		min(a.Y, b.Y),
+		min(a.Z, b.Z),
+		min(a.W, b.W),
 	)
 }
 
 func Max[T vector.Number](a, b Vector[T]) Vector[T] {
 	return New(
-		T(math.Max(float64(a.X), float64(b.X))),
-		T(math.Max(float64(a.Y), float64(b.Y))),
-		T(math.Max(float64(a.Z), float64(b.Z))),
-		T(math.Max(float64(a.W), float64(b.W))),
+		max(a.X, b.X),
+		max(a.Y, b.Y),
+		max(a.Z, b.Z),
+		max(a.W, b.W),
 	)
 }
 
 func MaxX[T vector.Number](a, b Vector[T]) T {
-	return T(math.Max(float64(a.X), float64(b.X)))
+	return max(a.X, b.X)
 }
 
 func MaxY[T vector.Number](a, b Vector[T]) T {
-	return T(math.Max(float64(a.Y), float64(b.Y)))
+	return max(a.Y, b.Y)
 }
 
 func MaxZ[T vector.Number](a, b Vector[T]) T {
-	return T(math.Max(float64(a.Z), float64(b.Z)))
+	return max(a.Z, b.Z)
 }
 
 func MaxW[T vector.Number](a, b Vector[T]) T {
-	return T(math.Max(float64(a.W), float64(b.W)))
+	return max(a.W, b.W)
 }
 
 func MinX[T vector.Number](a, b Vector[T]) T {
-	return T(math.Min(float64(a.X), float64(b.X)))
+	return min(a.X, b.X)
 }
 
 func MinY[T vector.Number](a, b Vector[T]) T {
-	return T(math.Min(float64(a.Y), float64(b.Y)))
+	return min(a.Y, b.Y)
 }
 
 func MinZ[T vector.Number](a, b Vector[T]) T {
-	return T(math.Min(float64(a.Z), float64(b.Z)))
+	return min(a.Z, b.Z)
 }
 
 func MinW[T vector.Number](a, b Vector[T]) T {
-	return T(math.Min(float64(a.W), float64(b.W)))
+	return min(a.W, b.W)
 }
 
 func Midpoint[T vector.Number](a, b Vector[T]) Vector[T] {
@@ -251,11 +251,11 @@ func (v Vector[T]) Format(format string) string {
 }
 
 func (v Vector[T]) MinComponent() T {
-	return T(math.Min(math.Min(float64(v.X), float64(v.Y)), math.Min(float64(v.Z), float64(v.W))))
+	return min(min(v.X, v.Y), min(v.Z, v.W))
 }
 
 func (v Vector[T]) MaxComponent() T {
-	return T(math.Max(math.Max(float64(v.X), float64(v.Y)), math.Max(float64(v.Z), float64(v.W))))
+	return max(max(v.X, v.Y), max(v.Z, v.W))
 }
 
 func (v Vector[T]) ToInt() Vector[int] {
@@ -411,12 +411,12 @@ func (v Vector[T]) Abs() Vector[T] {
 	)
 }
 
-func (v Vector[T]) Clamp(min, max T) Vector[T] {
+func (v Vector[T]) Clamp(vmin, vmax T) Vector[T] {
 	return Vector[T]{
-		X: mathex.Clamp(v.X, min, max),
-		Y: mathex.Clamp(v.Y, min, max),
-		Z: mathex.Clamp(v.Z, min, max),
-		W: mathex.Clamp(v.W, min, max),
+		X: mathex.Clamp(v.X, vmin, vmax),
+		Y: mathex.Clamp(v.Y, vmin, vmax),
+		Z: mathex.Clamp(v.Z, vmin, vmax),
+		W: mathex.Clamp(v.W, vmin, vmax),
 	}
 }
 

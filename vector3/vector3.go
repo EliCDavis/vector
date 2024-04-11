@@ -113,42 +113,42 @@ func Lerp[T vector.Number](a, b Vector[T], t float64) Vector[T] {
 
 func Min[T vector.Number](a, b Vector[T]) Vector[T] {
 	return New(
-		T(math.Min(float64(a.X), float64(b.X))),
-		T(math.Min(float64(a.Y), float64(b.Y))),
-		T(math.Min(float64(a.Z), float64(b.Z))),
+		min(a.X, b.X),
+		min(a.Y, b.Y),
+		min(a.Z, b.Z),
 	)
 }
 
 func Max[T vector.Number](a, b Vector[T]) Vector[T] {
 	return New(
-		T(math.Max(float64(a.X), float64(b.X))),
-		T(math.Max(float64(a.Y), float64(b.Y))),
-		T(math.Max(float64(a.Z), float64(b.Z))),
+		max(a.X, b.X),
+		max(a.Y, b.Y),
+		max(a.Z, b.Z),
 	)
 }
 
 func MaxX[T vector.Number](a, b Vector[T]) T {
-	return T(math.Max(float64(a.X), float64(b.X)))
+	return max(a.X, b.X)
 }
 
 func MaxY[T vector.Number](a, b Vector[T]) T {
-	return T(math.Max(float64(a.Y), float64(b.Y)))
+	return max(a.Y, b.Y)
 }
 
 func MaxZ[T vector.Number](a, b Vector[T]) T {
-	return T(math.Max(float64(a.Z), float64(b.Z)))
+	return max(a.Z, b.Z)
 }
 
 func MinX[T vector.Number](a, b Vector[T]) T {
-	return T(math.Min(float64(a.X), float64(b.X)))
+	return min(a.X, b.X)
 }
 
 func MinY[T vector.Number](a, b Vector[T]) T {
-	return T(math.Min(float64(a.Y), float64(b.Y)))
+	return min(a.Y, b.Y)
 }
 
 func MinZ[T vector.Number](a, b Vector[T]) T {
-	return T(math.Min(float64(a.Z), float64(b.Z)))
+	return min(a.Z, b.Z)
 }
 
 func Midpoint[T vector.Number](a, b Vector[T]) Vector[T] {
@@ -242,11 +242,11 @@ func (v Vector[T]) Format(format string) string {
 }
 
 func (v Vector[T]) MinComponent() T {
-	return T(math.Min(float64(v.X), math.Min(float64(v.Y), float64(v.Z))))
+	return min(v.X, min(v.Y, v.Z))
 }
 
 func (v Vector[T]) MaxComponent() T {
-	return T(math.Max(float64(v.X), math.Max(float64(v.Y), float64(v.Z))))
+	return max(v.X, max(v.Y, v.Z))
 }
 
 func (v Vector[T]) ToInt() Vector[int] {
@@ -497,11 +497,11 @@ func (v Vector[T]) Abs() Vector[T] {
 	)
 }
 
-func (v Vector[T]) Clamp(min, max T) Vector[T] {
+func (v Vector[T]) Clamp(vmin, vmax T) Vector[T] {
 	return Vector[T]{
-		X: mathex.Clamp(v.X, min, max),
-		Y: mathex.Clamp(v.Y, min, max),
-		Z: mathex.Clamp(v.Z, min, max),
+		X: mathex.Clamp(v.X, vmin, vmax),
+		Y: mathex.Clamp(v.Y, vmin, vmax),
+		Z: mathex.Clamp(v.Z, vmin, vmax),
 	}
 }
 
@@ -591,7 +591,7 @@ func (v Vector[T]) Reflect(normal Vector[T]) Vector[T] {
 }
 
 func (v Vector[T]) Refract(normal Vector[T], etaiOverEtat float64) Vector[T] {
-	cosTheta := math.Min(v.Scale(-1).Dot(normal), 1.0)
+	cosTheta := min(v.Scale(-1).Dot(normal), 1.0)
 	perpendicular := v.Add(normal.Scale(cosTheta)).Scale(etaiOverEtat)
 	parallel := normal.Scale(-math.Sqrt(math.Abs(1.0 - perpendicular.LengthSquared())))
 	return perpendicular.Add(parallel)

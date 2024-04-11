@@ -92,32 +92,32 @@ func Lerp[T vector.Number](a, b Vector[T], t float64) Vector[T] {
 
 func Min[T vector.Number](a, b Vector[T]) Vector[T] {
 	return New(
-		T(math.Min(float64(a.X), float64(b.X))),
-		T(math.Min(float64(a.Y), float64(b.Y))),
+		min(a.X, b.X),
+		min(a.Y, b.Y),
 	)
 }
 
 func Max[T vector.Number](a, b Vector[T]) Vector[T] {
 	return New(
-		T(math.Max(float64(a.X), float64(b.X))),
-		T(math.Max(float64(a.Y), float64(b.Y))),
+		max(a.X, b.X),
+		max(a.Y, b.Y),
 	)
 }
 
 func MaxX[T vector.Number](a, b Vector[T]) T {
-	return T(math.Max(float64(a.X), float64(b.X)))
+	return max(a.X, b.X)
 }
 
 func MaxY[T vector.Number](a, b Vector[T]) T {
-	return T(math.Max(float64(a.Y), float64(b.Y)))
+	return max(a.Y, b.Y)
 }
 
 func MinX[T vector.Number](a, b Vector[T]) T {
-	return T(math.Min(float64(a.X), float64(b.X)))
+	return min(a.X, b.X)
 }
 
 func MinY[T vector.Number](a, b Vector[T]) T {
-	return T(math.Min(float64(a.Y), float64(b.Y)))
+	return min(a.Y, b.Y)
 }
 
 func Less[T vector.Number](a, b Vector[T]) bool {
@@ -174,11 +174,11 @@ func Rand(r *rand.Rand) Vector[float64] {
 }
 
 func (v Vector[T]) MinComponent() T {
-	return T(math.Min(float64(v.X), float64(v.Y)))
+	return min(v.X, v.Y)
 }
 
 func (v Vector[T]) MaxComponent() T {
-	return T(math.Max(float64(v.X), float64(v.Y)))
+	return max(v.X, v.Y)
 }
 
 func (v Vector[T]) MarshalJSON() ([]byte, error) {
@@ -219,24 +219,24 @@ func (v Vector[T]) Sqrt() Vector[T] {
 	)
 }
 
-func (v Vector[T]) Clamp(min, max T) Vector[T] {
+func (v Vector[T]) Clamp(vmin, vmax T) Vector[T] {
 	return Vector[T]{
-		X: mathex.Clamp(v.X, min, max),
-		Y: mathex.Clamp(v.Y, min, max),
+		X: mathex.Clamp(v.X, vmin, vmax),
+		Y: mathex.Clamp(v.Y, vmin, vmax),
 	}
 }
 
-func (v Vector[T]) ClampV(min, max Vector[T]) Vector[T] {
+func (v Vector[T]) ClampV(vmin, vmax Vector[T]) Vector[T] {
 	return Vector[T]{
-		X: mathex.Clamp(v.X, min.X, max.X),
-		Y: mathex.Clamp(v.Y, min.Y, max.Y),
+		X: mathex.Clamp(v.X, vmin.X, vmax.X),
+		Y: mathex.Clamp(v.Y, vmin.Y, vmax.Y),
 	}
 }
 
-func (v Vector[T]) Clamp0V(max Vector[T]) Vector[T] {
+func (v Vector[T]) Clamp0V(vmax Vector[T]) Vector[T] {
 	return Vector[T]{
-		X: mathex.Clamp(v.X, 0, max.X),
-		Y: mathex.Clamp(v.Y, 0, max.Y),
+		X: mathex.Clamp(v.X, 0, vmax.X),
+		Y: mathex.Clamp(v.Y, 0, vmax.Y),
 	}
 }
 
