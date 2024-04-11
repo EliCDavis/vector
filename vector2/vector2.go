@@ -7,6 +7,7 @@ import (
 	"math/rand"
 
 	"github.com/EliCDavis/vector"
+	"github.com/EliCDavis/vector/mathex"
 )
 
 type Vector[T vector.Number] struct {
@@ -220,8 +221,22 @@ func (v Vector[T]) Sqrt() Vector[T] {
 
 func (v Vector[T]) Clamp(min, max T) Vector[T] {
 	return Vector[T]{
-		X: T(math.Max(math.Min(float64(v.X), float64(max)), float64(min))),
-		Y: T(math.Max(math.Min(float64(v.Y), float64(max)), float64(min))),
+		X: mathex.Clamp(v.X, min, max),
+		Y: mathex.Clamp(v.Y, min, max),
+	}
+}
+
+func (v Vector[T]) ClampV(min, max Vector[T]) Vector[T] {
+	return Vector[T]{
+		X: mathex.Clamp(v.X, min.X, max.X),
+		Y: mathex.Clamp(v.Y, min.Y, max.Y),
+	}
+}
+
+func (v Vector[T]) Clamp0V(max Vector[T]) Vector[T] {
+	return Vector[T]{
+		X: mathex.Clamp(v.X, 0, max.X),
+		Y: mathex.Clamp(v.Y, 0, max.Y),
 	}
 }
 
@@ -312,7 +327,7 @@ func (v Vector[T]) Angle(other Vector[T]) float64 {
 	if denominator < 1e-15 {
 		return 0.
 	}
-	return math.Acos(vector.Clamp((float64)(v.Dot(other))/denominator, -1., 1.))
+	return math.Acos(mathex.Clamp((float64)(v.Dot(other))/denominator, -1., 1.))
 }
 
 // Midpoint returns the midpoint between this vector and the vector passed in.
@@ -453,8 +468,8 @@ func (v Vector[T]) Distance(other Vector[T]) float64 {
 // number
 func (v Vector[T]) Round() Vector[T] {
 	return Vector[T]{
-		X: T(math.Round(float64(v.X))),
-		Y: T(math.Round(float64(v.Y))),
+		X: mathex.Round(v.X),
+		Y: mathex.Round(v.Y),
 	}
 }
 
@@ -462,16 +477,16 @@ func (v Vector[T]) Round() Vector[T] {
 // whole number, and then casts it to a int
 func (v Vector[T]) RoundToInt() Vector[int] {
 	return New(
-		int(math.Round(float64(v.X))),
-		int(math.Round(float64(v.Y))),
+		int(mathex.Round(v.X)),
+		int(mathex.Round(v.Y)),
 	)
 }
 
 // Ceil applies the ceil math operation to each component of the vector
 func (v Vector[T]) Ceil() Vector[T] {
 	return Vector[T]{
-		X: T(math.Ceil(float64(v.X))),
-		Y: T(math.Ceil(float64(v.Y))),
+		X: mathex.Ceil(v.X),
+		Y: mathex.Ceil(v.Y),
 	}
 }
 
@@ -479,15 +494,15 @@ func (v Vector[T]) Ceil() Vector[T] {
 // and then casts it to a int
 func (v Vector[T]) CeilToInt() Vector[int] {
 	return New(
-		int(math.Ceil(float64(v.X))),
-		int(math.Ceil(float64(v.Y))),
+		int(mathex.Ceil(v.X)),
+		int(mathex.Ceil(v.Y)),
 	)
 }
 
 func (v Vector[T]) Floor() Vector[T] {
 	return Vector[T]{
-		X: T(math.Floor(float64(v.X))),
-		Y: T(math.Floor(float64(v.Y))),
+		X: mathex.Floor(v.X),
+		Y: mathex.Floor(v.Y),
 	}
 }
 
@@ -495,8 +510,8 @@ func (v Vector[T]) Floor() Vector[T] {
 // and then casts it to a int
 func (v Vector[T]) FloorToInt() Vector[int] {
 	return New(
-		int(math.Floor(float64(v.X))),
-		int(math.Floor(float64(v.Y))),
+		int(mathex.Floor(v.X)),
+		int(mathex.Floor(v.Y)),
 	)
 }
 

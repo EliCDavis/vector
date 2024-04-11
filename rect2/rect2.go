@@ -88,6 +88,58 @@ func (v Rectangle[T]) ToInt64() Rectangle[int64] {
 	}
 }
 
+// Round takes each component of the rectangle and rounds it to the nearest whole
+// number
+func (v Rectangle[T]) Round() Rectangle[T] {
+	return New(
+		v.XY.Round(),
+		v.WH.Round(),
+	)
+}
+
+// RoundToInt takes each component of the rectangle and rounds it to the nearest
+// whole number, and then casts it to a int
+func (v Rectangle[T]) RoundToInt() Rectangle[int] {
+	return New(
+		v.XY.RoundToInt(),
+		v.WH.RoundToInt(),
+	)
+}
+
+// Ceil applies the ceil math operation to each component of the rectangle
+func (v Rectangle[T]) Ceil() Rectangle[T] {
+	return New(
+		v.XY.Ceil(),
+		v.WH.Ceil(),
+	)
+}
+
+// CeilToInt applies the ceil math operation to each component of the rectangle,
+// and then casts it to a int
+func (v Rectangle[T]) CeilToInt() Rectangle[int] {
+	return New(
+		v.XY.CeilToInt(),
+		v.WH.CeilToInt(),
+	)
+}
+
+// Floor applies the floor math operation to each component of the rectangle
+func (v Rectangle[T]) Floor() Rectangle[T] {
+	return New(
+		v.XY.Floor(),
+		v.WH.Floor(),
+	)
+}
+
+// FloorToInt applies the floor math operation to each component of the rectangle,
+// and then casts it to a int
+func (v Rectangle[T]) FloorToInt() Rectangle[int] {
+	return New(
+		v.XY.FloorToInt(),
+		v.WH.FloorToInt(),
+	)
+}
+
 func (r Rectangle[T]) Shift(xy vector2.Vector[T]) Rectangle[T] {
 	return Rectangle[T]{
 		XY: r.XY.Add(xy),

@@ -66,6 +66,8 @@ func TestOperations(t *testing.T) {
 		"round":         {want: start.Round(), got: vector2.New(1., -2.)},
 		"sqrt":          {want: start.Sqrt(), got: vector2.New(1.0954451, math.NaN())},
 		"clamp":         {want: start.Clamp(1, 2), got: vector2.New(1.2, 1.)},
+		"clampv":        {want: start.ClampV(vector2.New(0., 0.8), vector2.New(1., 2)), got: vector2.New(1., 0.8)},
+		"clamp0v":       {want: start.Clamp0V(vector2.New(1., 2.)), got: vector2.New(1., 0)},
 		"perpendicular": {want: start.Perpendicular(), got: vector2.New(-2.4, -1.2)},
 		"normalized":    {want: start.Normalized(), got: vector2.New(0.447213, -.894427)},
 		"mult by vec":   {want: start.MultByVector(vector2.New(2., 4.)), got: vector2.New(2.4, -9.6)},

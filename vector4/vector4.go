@@ -7,6 +7,7 @@ import (
 	"math"
 
 	"github.com/EliCDavis/vector"
+	"github.com/EliCDavis/vector/mathex"
 	"github.com/EliCDavis/vector/vector2"
 	"github.com/EliCDavis/vector/vector3"
 )
@@ -412,10 +413,10 @@ func (v Vector[T]) Abs() Vector[T] {
 
 func (v Vector[T]) Clamp(min, max T) Vector[T] {
 	return Vector[T]{
-		X: T(math.Max(math.Min(float64(v.X), float64(max)), float64(min))),
-		Y: T(math.Max(math.Min(float64(v.Y), float64(max)), float64(min))),
-		Z: T(math.Max(math.Min(float64(v.Z), float64(max)), float64(min))),
-		W: T(math.Max(math.Min(float64(v.W), float64(max)), float64(min))),
+		X: mathex.Clamp(v.X, min, max),
+		Y: mathex.Clamp(v.Y, min, max),
+		Z: mathex.Clamp(v.Z, min, max),
+		W: mathex.Clamp(v.W, min, max),
 	}
 }
 
@@ -423,10 +424,10 @@ func (v Vector[T]) Clamp(min, max T) Vector[T] {
 // number
 func (v Vector[T]) Round() Vector[T] {
 	return New(
-		T(math.Round(float64(v.X))),
-		T(math.Round(float64(v.Y))),
-		T(math.Round(float64(v.Z))),
-		T(math.Round(float64(v.W))),
+		mathex.Round(v.X),
+		mathex.Round(v.Y),
+		mathex.Round(v.Z),
+		mathex.Round(v.W),
 	)
 }
 
@@ -434,20 +435,20 @@ func (v Vector[T]) Round() Vector[T] {
 // whole number, and then casts it to a int
 func (v Vector[T]) RoundToInt() Vector[int] {
 	return New(
-		int(math.Round(float64(v.X))),
-		int(math.Round(float64(v.Y))),
-		int(math.Round(float64(v.Z))),
-		int(math.Round(float64(v.W))),
+		int(mathex.Round(v.X)),
+		int(mathex.Round(v.Y)),
+		int(mathex.Round(v.Z)),
+		int(mathex.Round(v.W)),
 	)
 }
 
 // Floor applies the floor math operation to each component of the vector
 func (v Vector[T]) Floor() Vector[T] {
 	return New(
-		T(math.Floor(float64(v.X))),
-		T(math.Floor(float64(v.Y))),
-		T(math.Floor(float64(v.Z))),
-		T(math.Floor(float64(v.W))),
+		mathex.Floor(v.X),
+		mathex.Floor(v.Y),
+		mathex.Floor(v.Z),
+		mathex.Floor(v.W),
 	)
 }
 
@@ -455,20 +456,20 @@ func (v Vector[T]) Floor() Vector[T] {
 // and then casts it to a int
 func (v Vector[T]) FloorToInt() Vector[int] {
 	return New(
-		int(math.Floor(float64(v.X))),
-		int(math.Floor(float64(v.Y))),
-		int(math.Floor(float64(v.Z))),
-		int(math.Floor(float64(v.W))),
+		int(mathex.Floor(v.X)),
+		int(mathex.Floor(v.Y)),
+		int(mathex.Floor(v.Z)),
+		int(mathex.Floor(v.W)),
 	)
 }
 
 // Ceil applies the ceil math operation to each component of the vector
 func (v Vector[T]) Ceil() Vector[T] {
 	return New(
-		T(math.Ceil(float64(v.X))),
-		T(math.Ceil(float64(v.Y))),
-		T(math.Ceil(float64(v.Z))),
-		T(math.Ceil(float64(v.W))),
+		mathex.Ceil(v.X),
+		mathex.Ceil(v.Y),
+		mathex.Ceil(v.Z),
+		mathex.Ceil(v.W),
 	)
 }
 
@@ -476,10 +477,10 @@ func (v Vector[T]) Ceil() Vector[T] {
 // and then casts it to a int
 func (v Vector[T]) CeilToInt() Vector[int] {
 	return New(
-		int(math.Ceil(float64(v.X))),
-		int(math.Ceil(float64(v.Y))),
-		int(math.Ceil(float64(v.Z))),
-		int(math.Ceil(float64(v.W))),
+		int(mathex.Ceil(v.X)),
+		int(mathex.Ceil(v.Y)),
+		int(mathex.Ceil(v.Z)),
+		int(mathex.Ceil(v.W)),
 	)
 }
 
