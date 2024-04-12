@@ -16,6 +16,14 @@ func NearZero[T Number](v T) bool {
 	return Abs(float64(v)) < s
 }
 
+func Npot[T Number](v T) T {
+	r := 1
+	for T(r) < v {
+		r <<= 1
+	}
+	return T(r)
+}
+
 // FloatEquals - Check whether two given floats are almost equal
 //func FloatEquals[FT FloatT](x, y FT) bool {
 //	return (mathex.Abs(x-y) <= 0.000001*math.Max(1.0, math.Max(mathex.Abs(x), mathex.Abs(y))))

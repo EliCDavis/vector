@@ -240,6 +240,13 @@ func (v Vector[T]) Clamp0V(vmax Vector[T]) Vector[T] {
 	}
 }
 
+func (v Vector[T]) ToNpot() Vector[T] {
+	return Vector[T]{
+		X: mathex.Npot(v.X),
+		Y: mathex.Npot(v.Y),
+	}
+}
+
 func (v Vector[T]) ToFloat64() Vector[float64] {
 	return Vector[float64]{
 		X: float64(v.X),
