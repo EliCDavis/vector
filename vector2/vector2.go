@@ -377,17 +377,17 @@ func (v Vector[T]) Sub(other Vector[T]) Vector[T] {
 	}
 }
 
-func (v Vector[float32]) ReciprocalF() Vector[float32] {
+func (v Vector[T]) ReciprocalF() Vector[float32] {
 	return Vector[float32]{
-		X: 1.0 / v.X,
-		Y: 1.0 / v.Y,
+		X: 1.0 / float32(v.X),
+		Y: 1.0 / float32(v.Y),
 	}
 }
 
-func (v Vector[float64]) Reciprocal() Vector[float64] {
+func (v Vector[T]) Reciprocal() Vector[float64] {
 	return Vector[float64]{
-		X: 1.0 / v.X,
-		Y: 1.0 / v.Y,
+		X: 1.0 / float64(v.X),
+		Y: 1.0 / float64(v.Y),
 	}
 }
 
@@ -432,6 +432,13 @@ func (v Vector[T]) ScaleByVectorF(o Float32) Vector[T] {
 	return Vector[T]{
 		X: T(float32(v.X) * o.X),
 		Y: T(float32(v.Y) * o.Y),
+	}
+}
+
+func (v Vector[T]) ScaleByVectorI(o Int) Vector[T] {
+	return Vector[T]{
+		X: v.X * T(o.X),
+		Y: v.Y * T(o.Y),
 	}
 }
 

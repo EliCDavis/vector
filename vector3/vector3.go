@@ -523,6 +523,26 @@ func (v Vector[T]) Sub(other Vector[T]) Vector[T] {
 	}
 }
 
+func (v Vector[T]) ReciprocalF() Vector[float32] {
+	return Vector[float32]{
+		X: 1.0 / float32(v.X),
+		Y: 1.0 / float32(v.Y),
+		Z: 1.0 / float32(v.Z),
+	}
+}
+
+func (v Vector[T]) Reciprocal() Vector[float64] {
+	return Vector[float64]{
+		X: 1.0 / float64(v.X),
+		Y: 1.0 / float64(v.Y),
+		Z: 1.0 / float64(v.Z),
+	}
+}
+
+func (v Vector[T]) Product() T {
+	return v.X * v.Y * v.Z
+}
+
 func (v Vector[T]) Dot(other Vector[T]) float64 {
 	return float64((v.X * other.X) + (v.Y * other.Y) + (v.Z * other.Z))
 }
