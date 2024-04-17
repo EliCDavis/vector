@@ -162,6 +162,13 @@ func (r Rectangle[T]) Shift(xy vector2.Vector[T]) Rectangle[T] {
 	}
 }
 
+func (r Rectangle[T]) ShiftXY(x, y T) Rectangle[T] {
+	return Rectangle[T]{
+		XY: r.XY.AddXY(x, y),
+		WH: r.WH,
+	}
+}
+
 func (r Rectangle[T]) Delta(xy vector2.Vector[T], wh vector2.Vector[T]) Rectangle[T] {
 	return Rectangle[T]{
 		XY: r.XY.Add(xy),
