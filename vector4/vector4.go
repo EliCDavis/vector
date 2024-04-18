@@ -680,5 +680,5 @@ func (v Vector[T]) Expm1() Vector[T] {
 }
 
 func (v Vector[T]) Values() (T, T, T, T) {
-	return v.x, v.y, v.z, v.w
+	return v.X, v.Y, v.Z, v.W
 }
