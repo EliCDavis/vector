@@ -64,6 +64,14 @@ func (r Rectangle[T]) SetB(b vector2.Vector[T]) Rectangle[T] {
 	}
 }
 
+func (r Rectangle[T]) HorizontalLine(y T) (vector2.Vector[T], vector2.Vector[T]) {
+	return vector2.New(r.XY.X, y), vector2.New(r.XY.X+r.WH.X, y)
+}
+
+func (r Rectangle[T]) VerticalLine(x T) (vector2.Vector[T], vector2.Vector[T]) {
+	return vector2.New(x, r.XY.Y), vector2.New(x, r.XY.Y+r.WH.Y)
+}
+
 func (r Rectangle[T]) Center() vector2.Vector[T] {
 	return r.XY.Add(r.WH.ScaleF(0.5))
 }
