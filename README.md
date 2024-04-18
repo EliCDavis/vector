@@ -1,6 +1,6 @@
 # Vector
 
-![Coverage](https://img.shields.io/badge/Coverage-96.4%25-brightgreen)
+![Coverage](https://img.shields.io/badge/Coverage-96.5%25-brightgreen)
 [![Go Report Card](https://goreportcard.com/badge/github.com/EliCDavis/vector)](https://goreportcard.com/report/github.com/EliCDavis/vector)
 [![GoDoc](https://godoc.org/github.com/EliCDavis/vector?status.svg)](http://godoc.org/github.com/EliCDavis/vector)
 
@@ -46,6 +46,7 @@ Collection of **generic, immutable** vector math functions I've written overtime
 | Scale         | ✅      | ✅     | ✅      | Scales the vector by some constant                     |
 | Sqrt          | ✅      | ✅     | ✅      | Returns a vector with each component's square root     |
 | Sub           | ✅      | ✅     | ✅      | Component Wise Subtraction                             |
+| Values        | ✅      | ✅     | ✅      | Returns all components of the vector                   |
 | X             | ✅      | ✅     | ✅      | Returns the x component of the vector                  |
 | Y             | ✅      | ✅     | ✅      | Returns the y component of the vector                  |
 | Z             |         | ✅     | ✅      | Returns the z component of the vector                  |

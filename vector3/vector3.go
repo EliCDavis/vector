@@ -750,3 +750,7 @@ func (v Vector[T]) Expm1() Vector[T] {
 		Z: T(math.Expm1(float64(v.Z))),
 	}
 }
+
+func (v Vector[T]) Values() (T, T, T) {
+	return v.x, v.y, v.z
+}
