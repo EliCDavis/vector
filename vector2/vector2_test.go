@@ -63,6 +63,8 @@ func TestOperations(t *testing.T) {
 		want vector2.Float64
 		got  vector2.Float64
 	}{
+		"x":              {got: start.SetX(4), want: vector2.New(4., -2.4)},
+		"y":              {got: start.SetY(4), want: vector2.New(1.2, 4.)},
 		"dx":             {got: start.Dx(4), want: vector2.New(5.2, -2.4)},
 		"dy":             {got: start.Dy(4), want: vector2.New(1.2, 1.6)},
 		"abs":            {got: start.Abs(), want: vector2.New(1.2, 2.4)},

@@ -22,9 +22,12 @@ func TestVectorOperations(t *testing.T) {
 		got  vector3.Float64
 		want vector3.Float64
 	}{
-		//		"x":            {got: start.SetX(4), want: vector3.New(4., -2.4, 3.7)},
-		//		"y":            {got: start.SetY(4), want: vector3.New(1.2, 4., 3.7)},
-		//		"z":            {got: start.SetZ(4), want: vector3.New(1.2, -2.4, 4.)},
+		"x":            {got: start.SetX(4), want: vector3.New(4., -2.4, 3.7)},
+		"y":            {got: start.SetY(4), want: vector3.New(1.2, 4., 3.7)},
+		"z":            {got: start.SetZ(4), want: vector3.New(1.2, -2.4, 4.)},
+		"dx":           {got: start.Dx(4), want: vector3.New(5.2, -2.4, 3.7)},
+		"dy":           {got: start.Dy(4), want: vector3.New(1.2, 1.6, 3.7)},
+		"dz":           {got: start.Dz(4), want: vector3.New(1.2, -2.4, 7.7)},
 		"abs":          {got: start.Abs(), want: vector3.New(1.2, 2.4, 3.7)},
 		"floor":        {got: start.Floor(), want: vector3.New(1., -3., 3.)},
 		"ceil":         {got: start.Ceil(), want: vector3.New(2., -2., 4.)},
