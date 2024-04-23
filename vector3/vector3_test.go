@@ -447,7 +447,7 @@ func TestDot(t *testing.T) {
 	a := vector3.New(2, 3, 4)
 	b := vector3.New(6, 7, 8)
 
-	assert.Equal(t, 65., a.Dot(b))
+	assert.Equal(t, 65, a.Dot(b))
 }
 
 func TestToInt(t *testing.T) {

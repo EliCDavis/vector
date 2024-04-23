@@ -560,8 +560,8 @@ func (v Vector[T]) Product() T {
 	return v.x * v.y * v.z
 }
 
-func (v Vector[T]) Dot(other Vector[T]) float64 {
-	return float64((v.x * other.x) + (v.y * other.y) + (v.z * other.z))
+func (v Vector[T]) Dot(other Vector[T]) T {
+	return (v.x * other.x) + (v.y * other.y) + (v.z * other.z)
 }
 
 func (v Vector[T]) Cross(other Vector[T]) Vector[T] {
@@ -631,14 +631,25 @@ func (v Vector[T]) ScaleF(t float32) Vector[T] {
 	}
 }
 
+func (v Vector[T]) Project(normal Vector[T]) Vector[T] {
+	vdn := float64(v.Dot(normal))
+	ndn := float64(normal.Dot(normal))
+	mag := vdn / ndn
+	return normal.Scale(mag)
+}
+
+func (v Vector[T]) Reject(normal Vector[T]) Vector[T] {
+	return v.Sub(v.Project(normal))
+}
+
 func (v Vector[T]) Reflect(normal Vector[T]) Vector[T] {
-	return v.Sub(normal.Scale(2. * v.Dot(normal)))
+	return v.Sub(normal.Scale(2. * float64(v.Dot(normal))))
 }
 
 func (v Vector[T]) Refract(normal Vector[T], etaiOverEtat float64) Vector[T] {
-	cosTheta := min(v.Scale(-1).Dot(normal), 1.0)
+	cosTheta := min(float64(v.Scale(-1).Dot(normal)), 1.0)
 	perpendicular := v.Add(normal.Scale(cosTheta)).Scale(etaiOverEtat)
-	parallel := normal.Scale(-math.Sqrt(math.Abs(1.0 - perpendicular.LengthSquared())))
+	parallel := normal.Scale(-math.Sqrt(math.Abs(1.0 - float64(perpendicular.LengthSquared()))))
 	return perpendicular.Add(parallel)
 }
 
@@ -660,11 +671,11 @@ func (v Vector[T]) DivByConstant(t float64) Vector[T] {
 }
 
 func (v Vector[T]) Length() float64 {
-	return math.Sqrt(v.LengthSquared())
+	return math.Sqrt(float64(v.LengthSquared()))
 }
 
-func (v Vector[T]) LengthSquared() float64 {
-	return float64((v.x * v.x) + (v.y * v.y) + (v.z * v.z))
+func (v Vector[T]) LengthSquared() T {
+	return (v.x * v.x) + (v.y * v.y) + (v.z * v.z)
 }
 
 func (v Vector[T]) DistanceSquared(other Vector[T]) T {
@@ -679,11 +690,19 @@ func (v Vector[T]) Distance(other Vector[T]) float64 {
 }
 
 func (v Vector[T]) Angle(other Vector[T]) float64 {
-	denominator := math.Sqrt(v.LengthSquared() * other.LengthSquared())
+	denominator := mathex.Sqrt(float64(v.LengthSquared() * other.LengthSquared()))
 	if denominator < 1e-15 {
 		return 0.
 	}
-	return math.Acos(mathex.Clamp(v.Dot(other)/denominator, -1., 1.))
+	return mathex.Acos(mathex.Clamp(float64(v.Dot(other))/denominator, -1., 1.))
+}
+
+func (v Vector[T]) AngleF(other Vector[T]) float32 {
+	denominator := mathex.Sqrt(float32(v.LengthSquared() * other.LengthSquared()))
+	if denominator < 1e-15 {
+		return 0.
+	}
+	return mathex.Acos(mathex.Clamp(float32(v.Dot(other))/denominator, -1., 1.))
 }
 
 func (v Vector[T]) NearZero() bool {

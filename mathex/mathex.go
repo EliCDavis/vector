@@ -80,3 +80,11 @@ func Cos[T constraints.Float](v T) T {
 func Sin[T constraints.Float](v T) T {
 	return T(math.Sin(float64(v)))
 }
+
+func Acos[T constraints.Float](v T) T {
+	return T(math.Acos(float64(v)))
+}
+
+func Asin[T constraints.Float](v T) T {
+	return T(math.Asin(float64(v)))
+}

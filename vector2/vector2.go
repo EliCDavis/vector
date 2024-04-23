@@ -326,11 +326,19 @@ func (v Vector[T]) YX() Vector[T] {
 }
 
 func (v Vector[T]) Angle(other Vector[T]) float64 {
-	denominator := mathex.Sqrt((float64)(v.LengthSquared()) * (float64)(other.LengthSquared()))
+	denominator := mathex.Sqrt(float64(v.LengthSquared() * other.LengthSquared()))
 	if denominator < 1e-15 {
 		return 0.
 	}
-	return math.Acos(mathex.Clamp((float64)(v.Dot(other))/denominator, -1., 1.))
+	return mathex.Acos(mathex.Clamp(float64(v.Dot(other))/denominator, -1., 1.))
+}
+
+func (v Vector[T]) AngleF(other Vector[T]) float32 {
+	denominator := mathex.Sqrt(float32(v.LengthSquared() * other.LengthSquared()))
+	if denominator < 1e-15 {
+		return 0.
+	}
+	return mathex.Acos(mathex.Clamp(float32(v.Dot(other))/denominator, -1., 1.))
 }
 
 // Midpoint returns the midpoint between this vector and the vector passed in.
@@ -474,6 +482,21 @@ func (v Vector[T]) DistanceSquared(other Vector[T]) T {
 	xDist := other.x - v.x
 	yDist := other.y - v.y
 	return (xDist * xDist) + (yDist * yDist)
+}
+
+func (v Vector[T]) Project(normal Vector[T]) Vector[T] {
+	vdn := float64(v.Dot(normal))
+	ndn := float64(normal.Dot(normal))
+	mag := vdn / ndn
+	return normal.Scale(mag)
+}
+
+func (v Vector[T]) Reject(normal Vector[T]) Vector[T] {
+	return v.Sub(v.Project(normal))
+}
+
+func (v Vector[T]) Reflect(normal Vector[T]) Vector[T] {
+	return v.Sub(normal.Scale(2. * float64(v.Dot(normal))))
 }
 
 // Distance is the euclidean distance between two points
