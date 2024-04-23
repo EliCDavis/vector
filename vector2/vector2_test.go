@@ -12,8 +12,8 @@ import (
 )
 
 func assertVector2InDelta[T vector.Number](t assert.TestingT, expected, actual vector2.Vector[T], delta float64) {
-	assert.InDelta(t, expected.X, actual.X, delta)
-	assert.InDelta(t, expected.Y, actual.Y, delta)
+	assert.InDelta(t, expected.X(), actual.X(), delta)
+	assert.InDelta(t, expected.Y(), actual.Y(), delta)
 }
 
 func TestToIntConversions(t *testing.T) {
@@ -125,7 +125,7 @@ func TestAdd(t *testing.T) {
 
 	for name, tc := range tests {
 		t.Run(name, func(t *testing.T) {
-			got := tc.left.AddXY(tc.right.X, tc.right.Y)
+			got := tc.left.AddXY(tc.right.X(), tc.right.Y())
 
 			assertVector2InDelta(t, tc.want, got, 0.000001)
 		})
@@ -152,7 +152,7 @@ func TestSub(t *testing.T) {
 
 	for name, tc := range tests {
 		t.Run(name, func(t *testing.T) {
-			got := tc.left.SubXY(tc.right.X, tc.right.Y)
+			got := tc.left.SubXY(tc.right.X(), tc.right.Y())
 
 			assertVector2InDelta(t, tc.want, got, 0.000001)
 		})
@@ -283,8 +283,8 @@ func TestJSON(t *testing.T) {
 	assert.NoError(t, marshallErr)
 	assert.NoError(t, unmarshallErr)
 	assert.Equal(t, "{\"x\":1.2,\"y\":2.3}", string(marshalledData))
-	assert.Equal(t, 1.2, out.X)
-	assert.Equal(t, 2.3, out.Y)
+	assert.Equal(t, 1.2, out.X())
+	assert.Equal(t, 2.3, out.Y())
 }
 
 func TestBadJSON(t *testing.T) {
@@ -293,8 +293,8 @@ func TestBadJSON(t *testing.T) {
 	unmarshallErr := out.UnmarshalJSON([]byte("bad json"))
 
 	assert.Error(t, unmarshallErr)
-	assert.Equal(t, 0., out.X)
-	assert.Equal(t, 0., out.Y)
+	assert.Equal(t, 0., out.X())
+	assert.Equal(t, 0., out.Y())
 }
 
 func TestDot(t *testing.T) {
@@ -352,29 +352,29 @@ func TestFromArray(t *testing.T) {
 func TestToInt(t *testing.T) {
 	in := vector2.New(1.2, 2.3)
 	out := in.ToInt()
-	assert.Equal(t, 1, out.X)
-	assert.Equal(t, 2, out.Y)
+	assert.Equal(t, 1, out.X())
+	assert.Equal(t, 2, out.Y())
 }
 
 func TestToInt64(t *testing.T) {
 	in := vector2.New(1.2, 2.3)
 	out := in.ToInt64()
-	assert.Equal(t, int64(1), out.X)
-	assert.Equal(t, int64(2), out.Y)
+	assert.Equal(t, int64(1), out.X())
+	assert.Equal(t, int64(2), out.Y())
 }
 
 func TestToFloat32(t *testing.T) {
 	in := vector2.New(1.2, 2.3)
 	out := in.ToFloat32()
-	assert.Equal(t, float32(1.2), out.X)
-	assert.Equal(t, float32(2.3), out.Y)
+	assert.Equal(t, float32(1.2), out.X())
+	assert.Equal(t, float32(2.3), out.Y())
 }
 
 func TestToFloat64(t *testing.T) {
 	in := vector2.New(1, 2)
 	out := in.ToFloat64()
-	assert.Equal(t, float64(1), out.X)
-	assert.Equal(t, float64(2), out.Y)
+	assert.Equal(t, float64(1), out.X())
+	assert.Equal(t, float64(2), out.Y())
 }
 
 func TestMaxComponent(t *testing.T) {

@@ -23,10 +23,10 @@ func TestDefaults(t *testing.T) {
 
 	for name, tc := range tests {
 		t.Run(name, func(t *testing.T) {
-			assert.InDelta(t, tc.want.X, tc.got.X, 0.000001)
-			assert.InDelta(t, tc.want.Y, tc.got.Y, 0.000001)
-			assert.InDelta(t, tc.want.Z, tc.got.Z, 0.000001)
-			assert.InDelta(t, tc.want.W, tc.got.W, 0.000001)
+			assert.InDelta(t, tc.want.X(), tc.got.X(), 0.000001)
+			assert.InDelta(t, tc.want.Y(), tc.got.Y(), 0.000001)
+			assert.InDelta(t, tc.want.Z(), tc.got.Z(), 0.000001)
+			assert.InDelta(t, tc.want.W(), tc.got.W(), 0.000001)
 		})
 	}
 }
@@ -74,10 +74,10 @@ func TestVectorOperations(t *testing.T) {
 
 	for name, tc := range tests {
 		t.Run(name, func(t *testing.T) {
-			assert.InDelta(t, tc.want.X, tc.got.X, 0.000001)
-			assert.InDelta(t, tc.want.Y, tc.got.Y, 0.000001)
-			assert.InDelta(t, tc.want.Z, tc.got.Z, 0.000001)
-			assert.InDelta(t, tc.want.W, tc.got.W, 0.000001)
+			assert.InDelta(t, tc.want.X(), tc.got.X(), 0.000001)
+			assert.InDelta(t, tc.want.Y(), tc.got.Y(), 0.000001)
+			assert.InDelta(t, tc.want.Z(), tc.got.Z(), 0.000001)
+			assert.InDelta(t, tc.want.W(), tc.got.W(), 0.000001)
 		})
 	}
 }
@@ -96,10 +96,10 @@ func TestToIntConversions(t *testing.T) {
 
 	for name, tc := range tests {
 		t.Run(name, func(t *testing.T) {
-			assert.InDelta(t, tc.want.X, tc.got.X, 0.000001)
-			assert.InDelta(t, tc.want.Y, tc.got.Y, 0.000001)
-			assert.InDelta(t, tc.want.Z, tc.got.Z, 0.000001)
-			assert.InDelta(t, tc.want.W, tc.got.W, 0.000001)
+			assert.InDelta(t, tc.want.X(), tc.got.X(), 0.000001)
+			assert.InDelta(t, tc.want.Y(), tc.got.Y(), 0.000001)
+			assert.InDelta(t, tc.want.Z(), tc.got.Z(), 0.000001)
+			assert.InDelta(t, tc.want.W(), tc.got.W(), 0.000001)
 		})
 	}
 }
@@ -119,10 +119,10 @@ func TestScaleVecFloat(t *testing.T) {
 		t.Run(name, func(t *testing.T) {
 			got := tc.vec.Scale(tc.scalar)
 
-			assert.InDelta(t, tc.want.X, got.X, 0.000001)
-			assert.InDelta(t, tc.want.Y, got.Y, 0.000001)
-			assert.InDelta(t, tc.want.Z, got.Z, 0.000001)
-			assert.InDelta(t, tc.want.W, got.W, 0.000001)
+			assert.InDelta(t, tc.want.X(), got.X(), 0.000001)
+			assert.InDelta(t, tc.want.Y(), got.Y(), 0.000001)
+			assert.InDelta(t, tc.want.Z(), got.Z(), 0.000001)
+			assert.InDelta(t, tc.want.W(), got.W(), 0.000001)
 		})
 	}
 }
@@ -139,9 +139,9 @@ func TestSwizzle_Vector3(t *testing.T) {
 
 	for name, tc := range tests {
 		t.Run(name, func(t *testing.T) {
-			assert.Equal(t, tc.expected.X, tc.got.X)
-			assert.Equal(t, tc.expected.Y, tc.got.Y)
-			assert.Equal(t, tc.expected.Z, tc.got.Z)
+			assert.Equal(t, tc.expected.X(), tc.got.X())
+			assert.Equal(t, tc.expected.Y(), tc.got.Y())
+			assert.Equal(t, tc.expected.Z(), tc.got.Z())
 		})
 	}
 }
@@ -163,8 +163,8 @@ func TestSwizzle_Vector2(t *testing.T) {
 
 	for name, tc := range tests {
 		t.Run(name, func(t *testing.T) {
-			assert.Equal(t, tc.want.X, tc.got.X)
-			assert.Equal(t, tc.want.Y, tc.got.Y)
+			assert.Equal(t, tc.want.X(), tc.got.X())
+			assert.Equal(t, tc.want.Y(), tc.got.Y())
 		})
 	}
 }
@@ -179,10 +179,10 @@ func TestJSON(t *testing.T) {
 	assert.NoError(t, marshallErr)
 	assert.NoError(t, unmarshallErr)
 	assert.Equal(t, "{\"x\":1.2,\"y\":2.3,\"z\":3.4,\"w\":5.6}", string(marshalledData))
-	assert.Equal(t, 1.2, out.X)
-	assert.Equal(t, 2.3, out.Y)
-	assert.Equal(t, 3.4, out.Z)
-	assert.Equal(t, 5.6, out.W)
+	assert.Equal(t, 1.2, out.X())
+	assert.Equal(t, 2.3, out.Y())
+	assert.Equal(t, 3.4, out.Z())
+	assert.Equal(t, 5.6, out.W())
 }
 
 func TestBadJSON(t *testing.T) {
@@ -191,10 +191,10 @@ func TestBadJSON(t *testing.T) {
 	unmarshallErr := out.UnmarshalJSON([]byte("bad json"))
 
 	assert.Error(t, unmarshallErr)
-	assert.Equal(t, 0., out.X)
-	assert.Equal(t, 0., out.Y)
-	assert.Equal(t, 0., out.Z)
-	assert.Equal(t, 0., out.W)
+	assert.Equal(t, 0., out.X())
+	assert.Equal(t, 0., out.Y())
+	assert.Equal(t, 0., out.Z())
+	assert.Equal(t, 0., out.W())
 }
 
 func TestDot(t *testing.T) {
@@ -220,10 +220,10 @@ func TestFromArray(t *testing.T) {
 	for name, tc := range tests {
 		t.Run(name, func(t *testing.T) {
 			got := vector4.FromArray(tc.arr)
-			assert.InDelta(t, tc.want.X, got.X, 0.000001)
-			assert.InDelta(t, tc.want.Y, got.Y, 0.000001)
-			assert.InDelta(t, tc.want.Z, got.Z, 0.000001)
-			assert.InDelta(t, tc.want.W, got.W, 0.000001)
+			assert.InDelta(t, tc.want.X(), got.X(), 0.000001)
+			assert.InDelta(t, tc.want.Y(), got.Y(), 0.000001)
+			assert.InDelta(t, tc.want.Z(), got.Z(), 0.000001)
+			assert.InDelta(t, tc.want.W(), got.W(), 0.000001)
 		})
 	}
 }
@@ -240,10 +240,10 @@ func TestAverage(t *testing.T) {
 	avg := vector4.Average(vals)
 
 	// ASSERT =================================================================
-	assert.InDelta(t, 1., avg.X, 0.000001)
-	assert.InDelta(t, 2., avg.Y, 0.000001)
-	assert.InDelta(t, 3., avg.Z, 0.000001)
-	assert.InDelta(t, 4., avg.W, 0.000001)
+	assert.InDelta(t, 1., avg.X(), 0.000001)
+	assert.InDelta(t, 2., avg.Y(), 0.000001)
+	assert.InDelta(t, 3., avg.Z(), 0.000001)
+	assert.InDelta(t, 4., avg.W(), 0.000001)
 }
 
 func TestLerp(t *testing.T) {
@@ -277,10 +277,10 @@ func TestLerp(t *testing.T) {
 		t.Run(name, func(t *testing.T) {
 			got := vector4.Lerp(tc.left, tc.right, tc.t)
 
-			assert.InDelta(t, tc.want.X, got.X, 0.000001)
-			assert.InDelta(t, tc.want.Y, got.Y, 0.000001)
-			assert.InDelta(t, tc.want.Z, got.Z, 0.000001)
-			assert.InDelta(t, tc.want.W, got.W, 0.000001)
+			assert.InDelta(t, tc.want.X(), got.X(), 0.000001)
+			assert.InDelta(t, tc.want.Y(), got.Y(), 0.000001)
+			assert.InDelta(t, tc.want.Z(), got.Z(), 0.000001)
+			assert.InDelta(t, tc.want.W(), got.W(), 0.000001)
 		})
 	}
 }
@@ -298,10 +298,10 @@ func TestMin(t *testing.T) {
 		t.Run(name, func(t *testing.T) {
 			got := vector4.Min(tc.left, tc.right)
 
-			assert.InDelta(t, tc.want.X, got.X, 0.000001)
-			assert.InDelta(t, tc.want.Y, got.Y, 0.000001)
-			assert.InDelta(t, tc.want.Z, got.Z, 0.000001)
-			assert.InDelta(t, tc.want.W, got.W, 0.000001)
+			assert.InDelta(t, tc.want.X(), got.X(), 0.000001)
+			assert.InDelta(t, tc.want.Y(), got.Y(), 0.000001)
+			assert.InDelta(t, tc.want.Z(), got.Z(), 0.000001)
+			assert.InDelta(t, tc.want.W(), got.W(), 0.000001)
 		})
 	}
 }
@@ -319,10 +319,10 @@ func TestMax(t *testing.T) {
 		t.Run(name, func(t *testing.T) {
 			got := vector4.Max(tc.left, tc.right)
 
-			assert.InDelta(t, tc.want.X, got.X, 0.000001)
-			assert.InDelta(t, tc.want.Y, got.Y, 0.000001)
-			assert.InDelta(t, tc.want.Z, got.Z, 0.000001)
-			assert.InDelta(t, tc.want.W, got.W, 0.000001)
+			assert.InDelta(t, tc.want.X(), got.X(), 0.000001)
+			assert.InDelta(t, tc.want.Y(), got.Y(), 0.000001)
+			assert.InDelta(t, tc.want.Z(), got.Z(), 0.000001)
+			assert.InDelta(t, tc.want.W(), got.W(), 0.000001)
 		})
 	}
 }
@@ -330,37 +330,37 @@ func TestMax(t *testing.T) {
 func TestToInt(t *testing.T) {
 	in := vector4.New(1.2, 2.3, 3.4, 5.6)
 	out := in.ToInt()
-	assert.Equal(t, 1, out.X)
-	assert.Equal(t, 2, out.Y)
-	assert.Equal(t, 3, out.Z)
-	assert.Equal(t, 5, out.W)
+	assert.Equal(t, 1, out.X())
+	assert.Equal(t, 2, out.Y())
+	assert.Equal(t, 3, out.Z())
+	assert.Equal(t, 5, out.W())
 }
 
 func TestToInt64(t *testing.T) {
 	in := vector4.New(1.2, 2.3, 3.4, 5.6)
 	out := in.ToInt64()
-	assert.Equal(t, int64(1), out.X)
-	assert.Equal(t, int64(2), out.Y)
-	assert.Equal(t, int64(3), out.Z)
-	assert.Equal(t, int64(5), out.W)
+	assert.Equal(t, int64(1), out.X())
+	assert.Equal(t, int64(2), out.Y())
+	assert.Equal(t, int64(3), out.Z())
+	assert.Equal(t, int64(5), out.W())
 }
 
 func TestToFloat32(t *testing.T) {
 	in := vector4.New(1.2, 2.3, 3.4, 5.6)
 	out := in.ToFloat32()
-	assert.Equal(t, float32(1.2), out.X)
-	assert.Equal(t, float32(2.3), out.Y)
-	assert.Equal(t, float32(3.4), out.Z)
-	assert.Equal(t, float32(5.6), out.W)
+	assert.Equal(t, float32(1.2), out.X())
+	assert.Equal(t, float32(2.3), out.Y())
+	assert.Equal(t, float32(3.4), out.Z())
+	assert.Equal(t, float32(5.6), out.W())
 }
 
 func TestToFloat64(t *testing.T) {
 	in := vector4.New(1, 2, 3, 5)
 	out := in.ToFloat64()
-	assert.Equal(t, float64(1), out.X)
-	assert.Equal(t, float64(2), out.Y)
-	assert.Equal(t, float64(3), out.Z)
-	assert.Equal(t, float64(5), out.W)
+	assert.Equal(t, float64(1), out.X())
+	assert.Equal(t, float64(2), out.Y())
+	assert.Equal(t, float64(3), out.Z())
+	assert.Equal(t, float64(5), out.W())
 }
 
 func TestMaxComponent(t *testing.T) {

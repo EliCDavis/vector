@@ -6,8 +6,8 @@ import (
 )
 
 type Rectangle[T vector.Number] struct {
-	XY vector2.Vector[T]
-	WH vector2.Vector[T]
+	xy vector2.Vector[T]
+	wh vector2.Vector[T]
 }
 
 type (
@@ -22,92 +22,132 @@ type (
 
 func New[T vector.Number](xy vector2.Vector[T], wh vector2.Vector[T]) Rectangle[T] {
 	return Rectangle[T]{
-		XY: xy,
-		WH: wh,
+		xy: xy,
+		wh: wh,
 	}
 }
 
 func Zero[T vector.Number]() Rectangle[T] {
 	return Rectangle[T]{
-		XY: vector2.Zero[T](),
-		WH: vector2.Zero[T](),
+		xy: vector2.Zero[T](),
+		wh: vector2.Zero[T](),
 	}
 }
 
 func One[T vector.Number]() Rectangle[T] {
 	return Rectangle[T]{
-		XY: vector2.Zero[T](),
-		WH: vector2.One[T](),
+		xy: vector2.Zero[T](),
+		wh: vector2.One[T](),
 	}
 }
 
 func (r Rectangle[T]) A() vector2.Vector[T] {
-	return r.XY
+	return r.xy
 }
 
 func (r Rectangle[T]) SetA(a vector2.Vector[T]) Rectangle[T] {
-	dxy := a.Sub(r.XY)
+	dxy := a.Sub(r.xy)
 	return Rectangle[T]{
-		XY: a,
-		WH: r.WH.Sub(dxy),
+		xy: a,
+		wh: r.wh.Sub(dxy),
 	}
 }
 
 func (r Rectangle[T]) B() vector2.Vector[T] {
-	return r.XY.Add(r.WH)
+	return r.xy.Add(r.wh)
 }
 
 func (r Rectangle[T]) SetB(b vector2.Vector[T]) Rectangle[T] {
 	return Rectangle[T]{
-		XY: r.XY,
-		WH: b,
+		xy: r.xy,
+		wh: b,
 	}
 }
 
 func (r Rectangle[T]) HorizontalLine(y T) (vector2.Vector[T], vector2.Vector[T]) {
-	return vector2.New(r.XY.X, y), vector2.New(r.XY.X+r.WH.X, y)
+	return vector2.New(r.xy.X(), y), vector2.New(r.xy.X()+r.wh.X(), y)
 }
 
 func (r Rectangle[T]) VerticalLine(x T) (vector2.Vector[T], vector2.Vector[T]) {
-	return vector2.New(x, r.XY.Y), vector2.New(x, r.XY.Y+r.WH.Y)
+	return vector2.New(x, r.xy.Y()), vector2.New(x, r.xy.Y()+r.wh.Y())
 }
 
 func (r Rectangle[T]) Center() vector2.Vector[T] {
-	return r.XY.Add(r.WH.ScaleF(0.5))
+	return r.xy.Add(r.wh.ScaleF(0.5))
 }
 
 func (v Rectangle[T]) ToFloat64() Rectangle[float64] {
 	return Rectangle[float64]{
-		XY: v.XY.ToFloat64(),
-		WH: v.WH.ToFloat64(),
+		xy: v.xy.ToFloat64(),
+		wh: v.wh.ToFloat64(),
 	}
 }
 
 func (v Rectangle[T]) ToFloat32() Rectangle[float32] {
 	return Rectangle[float32]{
-		XY: v.XY.ToFloat32(),
-		WH: v.WH.ToFloat32(),
+		xy: v.xy.ToFloat32(),
+		wh: v.wh.ToFloat32(),
 	}
 }
 
 func (v Rectangle[T]) ToInt() Rectangle[int] {
 	return Rectangle[int]{
-		XY: v.XY.ToInt(),
-		WH: v.WH.ToInt(),
+		xy: v.xy.ToInt(),
+		wh: v.wh.ToInt(),
 	}
 }
 
 func (v Rectangle[T]) ToInt32() Rectangle[int32] {
 	return Rectangle[int32]{
-		XY: v.XY.ToInt32(),
-		WH: v.WH.ToInt32(),
+		xy: v.xy.ToInt32(),
+		wh: v.wh.ToInt32(),
 	}
 }
 
 func (v Rectangle[T]) ToInt64() Rectangle[int64] {
 	return Rectangle[int64]{
-		XY: v.XY.ToInt64(),
-		WH: v.WH.ToInt64(),
+		xy: v.xy.ToInt64(),
+		wh: v.wh.ToInt64(),
+	}
+}
+
+// XY returns the xy component
+func (r Rectangle[T]) XY() vector2.Vector[T] {
+	return r.xy
+}
+
+// SetXY changes the xy component of the rectangle
+func (r Rectangle[T]) SetXY(newXY vector2.Vector[T]) Rectangle[T] {
+	return Rectangle[T]{
+		xy: newXY,
+		wh: r.wh,
+	}
+}
+
+func (r Rectangle[T]) Dxy(dXY vector2.Vector[T]) Rectangle[T] {
+	return Rectangle[T]{
+		xy: r.xy.Add(dXY),
+		wh: r.wh,
+	}
+}
+
+// WH returns the xy component
+func (r Rectangle[T]) WH() vector2.Vector[T] {
+	return r.wh
+}
+
+// SetXY changes the wh component of the rectangle
+func (r Rectangle[T]) SetWH(newWH vector2.Vector[T]) Rectangle[T] {
+	return Rectangle[T]{
+		xy: r.xy,
+		wh: newWH,
+	}
+}
+
+func (r Rectangle[T]) Dwh(dWH vector2.Vector[T]) Rectangle[T] {
+	return Rectangle[T]{
+		xy: r.xy,
+		wh: r.wh.Add(dWH),
 	}
 }
 
@@ -115,8 +155,8 @@ func (v Rectangle[T]) ToInt64() Rectangle[int64] {
 // number
 func (v Rectangle[T]) Round() Rectangle[T] {
 	return New(
-		v.XY.Round(),
-		v.WH.Round(),
+		v.xy.Round(),
+		v.wh.Round(),
 	)
 }
 
@@ -124,16 +164,16 @@ func (v Rectangle[T]) Round() Rectangle[T] {
 // whole number, and then casts it to a int
 func (v Rectangle[T]) RoundToInt() Rectangle[int] {
 	return New(
-		v.XY.RoundToInt(),
-		v.WH.RoundToInt(),
+		v.xy.RoundToInt(),
+		v.wh.RoundToInt(),
 	)
 }
 
 // Ceil applies the ceil math operation to each component of the rectangle
 func (v Rectangle[T]) Ceil() Rectangle[T] {
 	return New(
-		v.XY.Ceil(),
-		v.WH.Ceil(),
+		v.xy.Ceil(),
+		v.wh.Ceil(),
 	)
 }
 
@@ -141,16 +181,16 @@ func (v Rectangle[T]) Ceil() Rectangle[T] {
 // and then casts it to a int
 func (v Rectangle[T]) CeilToInt() Rectangle[int] {
 	return New(
-		v.XY.CeilToInt(),
-		v.WH.CeilToInt(),
+		v.xy.CeilToInt(),
+		v.wh.CeilToInt(),
 	)
 }
 
 // Floor applies the floor math operation to each component of the rectangle
 func (v Rectangle[T]) Floor() Rectangle[T] {
 	return New(
-		v.XY.Floor(),
-		v.WH.Floor(),
+		v.xy.Floor(),
+		v.wh.Floor(),
 	)
 }
 
@@ -158,113 +198,113 @@ func (v Rectangle[T]) Floor() Rectangle[T] {
 // and then casts it to a int
 func (v Rectangle[T]) FloorToInt() Rectangle[int] {
 	return New(
-		v.XY.FloorToInt(),
-		v.WH.FloorToInt(),
+		v.xy.FloorToInt(),
+		v.wh.FloorToInt(),
 	)
 }
 
 func (r Rectangle[T]) Shift(xy vector2.Vector[T]) Rectangle[T] {
 	return Rectangle[T]{
-		XY: r.XY.Add(xy),
-		WH: r.WH,
+		xy: r.xy.Add(xy),
+		wh: r.wh,
 	}
 }
 
 func (r Rectangle[T]) ShiftXY(x, y T) Rectangle[T] {
 	return Rectangle[T]{
-		XY: r.XY.AddXY(x, y),
-		WH: r.WH,
+		xy: r.xy.AddXY(x, y),
+		wh: r.wh,
 	}
 }
 
 func (r Rectangle[T]) Delta(xy vector2.Vector[T], wh vector2.Vector[T]) Rectangle[T] {
 	return Rectangle[T]{
-		XY: r.XY.Add(xy),
-		WH: r.WH.Add(wh),
+		xy: r.xy.Add(xy),
+		wh: r.wh.Add(wh),
 	}
 }
 
 func (r Rectangle[T]) DeltaXYWH(x, y, w, h T) Rectangle[T] {
 	return Rectangle[T]{
-		XY: r.XY.AddXY(x, y),
-		WH: r.WH.AddXY(w, h),
+		xy: r.xy.AddXY(x, y),
+		wh: r.wh.AddXY(w, h),
 	}
 }
 
 func (r Rectangle[T]) ShrinkXYWH(left, top, right, bottom T) Rectangle[T] {
 	return Rectangle[T]{
-		XY: r.XY.AddXY(left, top),
-		WH: r.WH.AddXY(-left-right, -top-bottom),
+		xy: r.xy.AddXY(left, top),
+		wh: r.wh.AddXY(-left-right, -top-bottom),
 	}
 }
 
 func (r Rectangle[T]) Scale(f float64) Rectangle[T] {
 	return Rectangle[T]{
-		XY: r.XY,
-		WH: r.WH.Scale(f),
+		xy: r.xy,
+		wh: r.wh.Scale(f),
 	}
 }
 
 func (r Rectangle[T]) ScaleF(f float32) Rectangle[T] {
 	return Rectangle[T]{
-		XY: r.XY,
-		WH: r.WH.ScaleF(f),
+		xy: r.xy,
+		wh: r.wh.ScaleF(f),
 	}
 }
 
 func (r Rectangle[T]) ScaleByVector(f vector2.Float64) Rectangle[T] {
 	return Rectangle[T]{
-		XY: r.XY,
-		WH: r.WH.ScaleByVector(f),
+		xy: r.xy,
+		wh: r.wh.ScaleByVector(f),
 	}
 }
 
 func (r Rectangle[T]) ScaleByVectorF(f vector2.Float32) Rectangle[T] {
 	return Rectangle[T]{
-		XY: r.XY,
-		WH: r.WH.ScaleByVectorF(f),
+		xy: r.xy,
+		wh: r.wh.ScaleByVectorF(f),
 	}
 }
 
 func (r Rectangle[T]) ScaleByXYF(x, y float32) Rectangle[T] {
 	return Rectangle[T]{
-		XY: r.XY,
-		WH: r.WH.ScaleByXYF(x, y),
+		xy: r.xy,
+		wh: r.wh.ScaleByXYF(x, y),
 	}
 }
 
 func (r Rectangle[T]) Zoom(f float64) Rectangle[T] {
 	return Rectangle[T]{
-		XY: r.XY.Scale(f),
-		WH: r.WH.Scale(f),
+		xy: r.xy.Scale(f),
+		wh: r.wh.Scale(f),
 	}
 }
 
 func (r Rectangle[T]) ZoomF(f float32) Rectangle[T] {
 	return Rectangle[T]{
-		XY: r.XY.ScaleF(f),
-		WH: r.WH.ScaleF(f),
+		xy: r.xy.ScaleF(f),
+		wh: r.wh.ScaleF(f),
 	}
 }
 
 func (r Rectangle[T]) ZoomByVector(f vector2.Float64) Rectangle[T] {
 	return Rectangle[T]{
-		XY: r.XY.ScaleByVector(f),
-		WH: r.WH.ScaleByVector(f),
+		xy: r.xy.ScaleByVector(f),
+		wh: r.wh.ScaleByVector(f),
 	}
 }
 
 func (r Rectangle[T]) ZoomByVectorF(f vector2.Float32) Rectangle[T] {
 	return Rectangle[T]{
-		XY: r.XY.ScaleByVectorF(f),
-		WH: r.WH.ScaleByVectorF(f),
+		xy: r.xy.ScaleByVectorF(f),
+		wh: r.wh.ScaleByVectorF(f),
 	}
 }
 
 func (r Rectangle[T]) ZoomByXYF(x, y float32) Rectangle[T] {
 	return Rectangle[T]{
-		XY: r.XY.ScaleByXYF(x, y),
-		WH: r.WH.ScaleByXYF(x, y),
+		xy: r.xy.ScaleByXYF(x, y),
+		wh: r.wh.ScaleByXYF(x, y),
 	}
 }
 
