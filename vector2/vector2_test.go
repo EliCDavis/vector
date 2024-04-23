@@ -6,9 +6,15 @@ import (
 	"math/rand"
 	"testing"
 
+	"github.com/EliCDavis/vector"
 	"github.com/EliCDavis/vector/vector2"
 	"github.com/stretchr/testify/assert"
 )
+
+func assertVector2InDelta[T vector.Number](t assert.TestingT, expected, actual vector2.Vector[T], delta float64) {
+	assert.InDelta(t, expected.X, actual.X, delta)
+	assert.InDelta(t, expected.Y, actual.Y, delta)
+}
 
 func TestToIntConversions(t *testing.T) {
 	start := vector2.New(1.2, -2.4)
@@ -24,8 +30,7 @@ func TestToIntConversions(t *testing.T) {
 
 	for name, tc := range tests {
 		t.Run(name, func(t *testing.T) {
-			assert.InDelta(t, tc.want.X, tc.got.X, 0.000001)
-			assert.InDelta(t, tc.want.Y, tc.got.Y, 0.000001)
+			assertVector2InDelta(t, tc.want, tc.got, 0.000001)
 		})
 	}
 }
@@ -58,26 +63,31 @@ func TestOperations(t *testing.T) {
 		want vector2.Float64
 		got  vector2.Float64
 	}{
-		//		"x":             {want: start.SetX(4), got: vector2.New(4., -2.4)},
-		//		"y":             {want: start.SetY(4), got: vector2.New(1.2, 4.)},
-		"abs":           {want: start.Abs(), got: vector2.New(1.2, 2.4)},
-		"floor":         {want: start.Floor(), got: vector2.New(1., -3.)},
-		"ceil":          {want: start.Ceil(), got: vector2.New(2., -2.)},
-		"round":         {want: start.Round(), got: vector2.New(1., -2.)},
-		"sqrt":          {want: start.Sqrt(), got: vector2.New(1.0954451, math.NaN())},
-		"clamp":         {want: start.Clamp(1, 2), got: vector2.New(1.2, 1.)},
-		"clampv":        {want: start.ClampV(vector2.New(0., 0.8), vector2.New(1., 2)), got: vector2.New(1., 0.8)},
-		"clamp0v":       {want: start.Clamp0V(vector2.New(1., 2.)), got: vector2.New(1., 0)},
-		"perpendicular": {want: start.Perpendicular(), got: vector2.New(-2.4, -1.2)},
-		"normalized":    {want: start.Normalized(), got: vector2.New(0.447213, -.894427)},
-		"mult by vec":   {want: start.MultByVector(vector2.New(2., 4.)), got: vector2.New(2.4, -9.6)},
-		"center":        {want: vector2.Midpoint(start, vector2.New(2.4, 2.4)), got: vector2.New(1.8, 0.)},
-		"fill":          {want: vector2.Fill(9.3), got: vector2.New(9.3, 9.3)},
-		"yx":            {want: start.YX(), got: vector2.New(-2.4, 1.2)},
-		"random":        {want: vector2.Rand(r), got: vector2.New(.373028361, 0.066000496)},
-		"flip":          {got: start.Flip(), want: vector2.New(-1.2, 2.4)},
-		"flipX":         {got: start.FlipX(), want: vector2.New(-1.2, -2.4)},
-		"flipY":         {got: start.FlipY(), want: vector2.New(1.2, 2.4)},
+		"dx":             {got: start.Dx(4), want: vector2.New(5.2, -2.4)},
+		"dy":             {got: start.Dy(4), want: vector2.New(1.2, 1.6)},
+		"abs":            {got: start.Abs(), want: vector2.New(1.2, 2.4)},
+		"floor":          {got: start.Floor(), want: vector2.New(1., -3.)},
+		"ceil":           {got: start.Ceil(), want: vector2.New(2., -2.)},
+		"round":          {got: start.Round(), want: vector2.New(1., -2.)},
+		"sqrt":           {got: start.Sqrt(), want: vector2.New(1.0954451, math.NaN())},
+		"clamp":          {got: start.Clamp(1, 2), want: vector2.New(1.2, 1.)},
+		"clampv":         {got: start.ClampV(vector2.New(0., 0.8), vector2.New(1., 2)), want: vector2.New(1., 0.8)},
+		"clamp0v":        {got: start.Clamp0V(vector2.New(1., 2.)), want: vector2.New(1., 0)},
+		"perpendicular":  {got: start.Perpendicular(), want: vector2.New(-2.4, -1.2)},
+		"normalized":     {got: start.Normalized(), want: vector2.New(0.447213, -.894427)},
+		"scale":          {got: start.Scale(2.), want: vector2.New(2.4, -4.8)},
+		"scale f":        {got: start.ScaleF(2.), want: vector2.New(2.4, -4.8)},
+		"scale by vec":   {got: start.ScaleByVector(vector2.New(2., 4.)), want: vector2.New(2.4, -9.6)},
+		"scale by vec f": {got: start.ScaleByVectorF(vector2.New[float32](2., 4.)), want: vector2.New(2.4, -9.6)},
+		"mult by vec":    {got: start.MultByVector(vector2.New(2., 4.)), want: vector2.New(2.4, -9.6)},
+		"div by vec":     {got: start.DivByVector(vector2.New(2., 4.)), want: vector2.New(0.6, -0.6)},
+		"center":         {got: vector2.Midpoint(start, vector2.New(2.4, 2.4)), want: vector2.New(1.8, 0.)},
+		"fill":           {got: vector2.Fill(9.3), want: vector2.New(9.3, 9.3)},
+		"yx":             {got: start.YX(), want: vector2.New(-2.4, 1.2)},
+		"random":         {got: vector2.Rand(r), want: vector2.New(.373028361, 0.066000496)},
+		"flip":           {got: start.Flip(), want: vector2.New(-1.2, 2.4)},
+		"flipX":          {got: start.FlipX(), want: vector2.New(-1.2, -2.4)},
+		"flipY":          {got: start.FlipY(), want: vector2.New(1.2, 2.4)},
 
 		// Math package functions
 		"log":   {got: start.Log(), want: vector2.New(0.1823215, math.NaN())},
@@ -90,8 +100,7 @@ func TestOperations(t *testing.T) {
 
 	for name, tc := range tests {
 		t.Run(name, func(t *testing.T) {
-			assert.InDelta(t, tc.want.X, tc.got.X, 0.000001)
-			assert.InDelta(t, tc.want.Y, tc.got.Y, 0.000001)
+			assertVector2InDelta(t, tc.want, tc.got, 0.000001)
 		})
 	}
 }
@@ -110,8 +119,15 @@ func TestAdd(t *testing.T) {
 		t.Run(name, func(t *testing.T) {
 			got := tc.left.Add(tc.right)
 
-			assert.InDelta(t, tc.want.X, got.X, 0.000001)
-			assert.InDelta(t, tc.want.Y, got.Y, 0.000001)
+			assertVector2InDelta(t, tc.want, got, 0.000001)
+		})
+	}
+
+	for name, tc := range tests {
+		t.Run(name, func(t *testing.T) {
+			got := tc.left.AddXY(tc.right.X, tc.right.Y)
+
+			assertVector2InDelta(t, tc.want, got, 0.000001)
 		})
 	}
 }
@@ -130,8 +146,15 @@ func TestSub(t *testing.T) {
 		t.Run(name, func(t *testing.T) {
 			got := tc.left.Sub(tc.right)
 
-			assert.InDelta(t, tc.want.X, got.X, 0.000001)
-			assert.InDelta(t, tc.want.Y, got.Y, 0.000001)
+			assertVector2InDelta(t, tc.want, got, 0.000001)
+		})
+	}
+
+	for name, tc := range tests {
+		t.Run(name, func(t *testing.T) {
+			got := tc.left.SubXY(tc.right.X, tc.right.Y)
+
+			assertVector2InDelta(t, tc.want, got, 0.000001)
 		})
 	}
 }
@@ -151,8 +174,7 @@ func TestDefaults(t *testing.T) {
 
 	for name, tc := range tests {
 		t.Run(name, func(t *testing.T) {
-			assert.InDelta(t, tc.want.X, tc.got.X, 0.000001)
-			assert.InDelta(t, tc.want.Y, tc.got.Y, 0.000001)
+			assertVector2InDelta(t, tc.want, tc.got, 0.000001)
 		})
 	}
 }
@@ -172,8 +194,7 @@ func TestMidpoint(t *testing.T) {
 		t.Run(name, func(t *testing.T) {
 			got := tc.left.Midpoint(tc.right)
 
-			assert.InDelta(t, tc.want.X, got.X, 0.000001)
-			assert.InDelta(t, tc.want.Y, got.Y, 0.000001)
+			assertVector2InDelta(t, tc.want, got, 0.000001)
 		})
 	}
 }
@@ -194,8 +215,7 @@ func TestLerp(t *testing.T) {
 		t.Run(name, func(t *testing.T) {
 			got := vector2.Lerp(tc.left, tc.right, tc.t)
 
-			assert.InDelta(t, tc.want.X, got.X, 0.000001)
-			assert.InDelta(t, tc.want.Y, got.Y, 0.000001)
+			assertVector2InDelta(t, tc.want, got, 0.000001)
 		})
 	}
 }
@@ -213,8 +233,7 @@ func TestMin(t *testing.T) {
 		t.Run(name, func(t *testing.T) {
 			got := vector2.Min(tc.left, tc.right)
 
-			assert.InDelta(t, tc.want.X, got.X, 0.000001)
-			assert.InDelta(t, tc.want.Y, got.Y, 0.000001)
+			assertVector2InDelta(t, tc.want, got, 0.000001)
 		})
 	}
 }
@@ -232,8 +251,7 @@ func TestMax(t *testing.T) {
 		t.Run(name, func(t *testing.T) {
 			got := vector2.Max(tc.left, tc.right)
 
-			assert.InDelta(t, tc.want.X, got.X, 0.000001)
-			assert.InDelta(t, tc.want.Y, got.Y, 0.000001)
+			assertVector2InDelta(t, tc.want, got, 0.000001)
 		})
 	}
 }
@@ -286,10 +304,29 @@ func TestDot(t *testing.T) {
 	assert.Equal(t, 33, a.Dot(b))
 }
 
+func TestReciprocal(t *testing.T) {
+	a := vector2.New(2, 3)
+
+	assertVector2InDelta(t, vector2.New(float64(1)/2, float64(1)/3), a.Reciprocal(), 0.000001)
+	assertVector2InDelta(t, vector2.New(float32(1)/2, float32(1)/3), a.ReciprocalF(), 0.000001)
+}
+
+func TestProduct(t *testing.T) {
+	a := vector2.New(2, 3)
+
+	assert.Equal(t, 6, a.Product())
+}
+
 func TestLengthSquared(t *testing.T) {
 	a := vector2.New(2, 3)
 
 	assert.Equal(t, 13, a.LengthSquared())
+}
+
+func TestLength(t *testing.T) {
+	a := vector2.New(2, 3)
+
+	assert.InDelta(t, 3.60555127, a.Length(), 0.000001)
 }
 
 func TestFromArray(t *testing.T) {
@@ -306,8 +343,8 @@ func TestFromArray(t *testing.T) {
 	for name, tc := range tests {
 		t.Run(name, func(t *testing.T) {
 			got := vector2.FromArray(tc.arr)
-			assert.InDelta(t, tc.want.X, got.X, 0.000001)
-			assert.InDelta(t, tc.want.Y, got.Y, 0.000001)
+
+			assertVector2InDelta(t, tc.want, got, 0.000001)
 		})
 	}
 }

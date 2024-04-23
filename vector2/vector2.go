@@ -282,32 +282,6 @@ func (v Vector[T]) ToInt64() Vector[int64] {
 	}
 }
 
-/*
-func (v Vector[T]) X() T {
-	return v.x
-}
-
-// SetX changes the x component of the vector
-func (v Vector[T]) SetX(newX T) Vector[T] {
-	return Vector[T]{
-		x: newX,
-		y: v.y,
-	}
-}
-
-func (v Vector[T]) Y() T {
-	return v.y
-}
-
-// SetY changes the y component of the vector
-func (v Vector[T]) SetY(newY T) Vector[T] {
-	return Vector[T]{
-		x: v.x,
-		y: newY,
-	}
-}
-*/
-
 func (v Vector[T]) Dx(dX T) Vector[T] {
 	return Vector[T]{
 		X: v.X + dX,
@@ -374,6 +348,13 @@ func (v Vector[T]) Sub(other Vector[T]) Vector[T] {
 	return Vector[T]{
 		X: v.X - other.X,
 		Y: v.Y - other.Y,
+	}
+}
+
+func (v Vector[T]) SubXY(x, y T) Vector[T] {
+	return Vector[T]{
+		X: v.X - x,
+		Y: v.Y - y,
 	}
 }
 
