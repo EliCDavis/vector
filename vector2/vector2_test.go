@@ -6,15 +6,10 @@ import (
 	"math/rand"
 	"testing"
 
-	"github.com/EliCDavis/vector"
+	"github.com/EliCDavis/vector/test"
 	"github.com/EliCDavis/vector/vector2"
 	"github.com/stretchr/testify/assert"
 )
-
-func assertVector2InDelta[T vector.Number](t assert.TestingT, expected, actual vector2.Vector[T], delta float64) {
-	assert.InDelta(t, expected.X(), actual.X(), delta)
-	assert.InDelta(t, expected.Y(), actual.Y(), delta)
-}
 
 func TestToIntConversions(t *testing.T) {
 	start := vector2.New(1.2, -2.4)
@@ -30,7 +25,7 @@ func TestToIntConversions(t *testing.T) {
 
 	for name, tc := range tests {
 		t.Run(name, func(t *testing.T) {
-			assertVector2InDelta(t, tc.want, tc.got, 0.000001)
+			test.AssertVector2InDelta(t, tc.want, tc.got, 0.000001)
 		})
 	}
 }
@@ -102,7 +97,7 @@ func TestOperations(t *testing.T) {
 
 	for name, tc := range tests {
 		t.Run(name, func(t *testing.T) {
-			assertVector2InDelta(t, tc.want, tc.got, 0.000001)
+			test.AssertVector2InDelta(t, tc.want, tc.got, 0.000001)
 		})
 	}
 }
@@ -121,7 +116,7 @@ func TestAdd(t *testing.T) {
 		t.Run(name, func(t *testing.T) {
 			got := tc.left.Add(tc.right)
 
-			assertVector2InDelta(t, tc.want, got, 0.000001)
+			test.AssertVector2InDelta(t, tc.want, got, 0.000001)
 		})
 	}
 
@@ -129,7 +124,7 @@ func TestAdd(t *testing.T) {
 		t.Run(name, func(t *testing.T) {
 			got := tc.left.AddXY(tc.right.X(), tc.right.Y())
 
-			assertVector2InDelta(t, tc.want, got, 0.000001)
+			test.AssertVector2InDelta(t, tc.want, got, 0.000001)
 		})
 	}
 }
@@ -148,7 +143,7 @@ func TestSub(t *testing.T) {
 		t.Run(name, func(t *testing.T) {
 			got := tc.left.Sub(tc.right)
 
-			assertVector2InDelta(t, tc.want, got, 0.000001)
+			test.AssertVector2InDelta(t, tc.want, got, 0.000001)
 		})
 	}
 
@@ -156,7 +151,7 @@ func TestSub(t *testing.T) {
 		t.Run(name, func(t *testing.T) {
 			got := tc.left.SubXY(tc.right.X(), tc.right.Y())
 
-			assertVector2InDelta(t, tc.want, got, 0.000001)
+			test.AssertVector2InDelta(t, tc.want, got, 0.000001)
 		})
 	}
 }
@@ -176,7 +171,7 @@ func TestDefaults(t *testing.T) {
 
 	for name, tc := range tests {
 		t.Run(name, func(t *testing.T) {
-			assertVector2InDelta(t, tc.want, tc.got, 0.000001)
+			test.AssertVector2InDelta(t, tc.want, tc.got, 0.000001)
 		})
 	}
 }
@@ -196,7 +191,7 @@ func TestMidpoint(t *testing.T) {
 		t.Run(name, func(t *testing.T) {
 			got := tc.left.Midpoint(tc.right)
 
-			assertVector2InDelta(t, tc.want, got, 0.000001)
+			test.AssertVector2InDelta(t, tc.want, got, 0.000001)
 		})
 	}
 }
@@ -217,7 +212,7 @@ func TestLerp(t *testing.T) {
 		t.Run(name, func(t *testing.T) {
 			got := vector2.Lerp(tc.left, tc.right, tc.t)
 
-			assertVector2InDelta(t, tc.want, got, 0.000001)
+			test.AssertVector2InDelta(t, tc.want, got, 0.000001)
 		})
 	}
 }
@@ -235,7 +230,7 @@ func TestMin(t *testing.T) {
 		t.Run(name, func(t *testing.T) {
 			got := vector2.Min(tc.left, tc.right)
 
-			assertVector2InDelta(t, tc.want, got, 0.000001)
+			test.AssertVector2InDelta(t, tc.want, got, 0.000001)
 		})
 	}
 }
@@ -253,7 +248,7 @@ func TestMax(t *testing.T) {
 		t.Run(name, func(t *testing.T) {
 			got := vector2.Max(tc.left, tc.right)
 
-			assertVector2InDelta(t, tc.want, got, 0.000001)
+			test.AssertVector2InDelta(t, tc.want, got, 0.000001)
 		})
 	}
 }
@@ -309,8 +304,8 @@ func TestDot(t *testing.T) {
 func TestReciprocal(t *testing.T) {
 	a := vector2.New(2, 3)
 
-	assertVector2InDelta(t, vector2.New(float64(1)/2, float64(1)/3), a.Reciprocal(), 0.000001)
-	assertVector2InDelta(t, vector2.New(float32(1)/2, float32(1)/3), a.ReciprocalF(), 0.000001)
+	test.AssertVector2InDelta(t, vector2.New(float64(1)/2, float64(1)/3), a.Reciprocal(), 0.000001)
+	test.AssertVector2InDelta(t, vector2.New(float32(1)/2, float32(1)/3), a.ReciprocalF(), 0.000001)
 }
 
 func TestProduct(t *testing.T) {
@@ -346,7 +341,7 @@ func TestFromArray(t *testing.T) {
 		t.Run(name, func(t *testing.T) {
 			got := vector2.FromArray(tc.arr)
 
-			assertVector2InDelta(t, tc.want, got, 0.000001)
+			test.AssertVector2InDelta(t, tc.want, got, 0.000001)
 		})
 	}
 }

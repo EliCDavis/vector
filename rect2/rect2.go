@@ -111,6 +111,86 @@ func (v Rectangle[T]) ToInt64() Rectangle[int64] {
 	}
 }
 
+// X returns the x of the xy component
+func (r Rectangle[T]) X() T {
+	return r.xy.X()
+}
+
+// SetX changes the x of the xy component of the rectangle
+func (r Rectangle[T]) SetX(newX T) Rectangle[T] {
+	return Rectangle[T]{
+		xy: r.xy.SetX(newX),
+		wh: r.wh,
+	}
+}
+
+func (r Rectangle[T]) Dx(dX T) Rectangle[T] {
+	return Rectangle[T]{
+		xy: r.xy.Dx(dX),
+		wh: r.wh,
+	}
+}
+
+// Y returns the y of the xy component
+func (r Rectangle[T]) Y() T {
+	return r.xy.Y()
+}
+
+// SetY changes the y of the xy component of the rectangle
+func (r Rectangle[T]) SetY(newY T) Rectangle[T] {
+	return Rectangle[T]{
+		xy: r.xy.SetY(newY),
+		wh: r.wh,
+	}
+}
+
+func (r Rectangle[T]) Dy(dY T) Rectangle[T] {
+	return Rectangle[T]{
+		xy: r.xy.Dy(dY),
+		wh: r.wh,
+	}
+}
+
+// Width returns the x of the wh component
+func (r Rectangle[T]) Width() T {
+	return r.wh.X()
+}
+
+// SetWidth changes the x of the wh component of the rectangle
+func (r Rectangle[T]) SetWidth(newW T) Rectangle[T] {
+	return Rectangle[T]{
+		xy: r.xy,
+		wh: r.wh.SetX(newW),
+	}
+}
+
+func (r Rectangle[T]) Dw(dW T) Rectangle[T] {
+	return Rectangle[T]{
+		xy: r.xy,
+		wh: r.wh.Dx(dW),
+	}
+}
+
+// Y returns the y of the wh component
+func (r Rectangle[T]) Height() T {
+	return r.wh.Y()
+}
+
+// SetHeight changes the y of the wh component of the rectangle
+func (r Rectangle[T]) SetHeight(newH T) Rectangle[T] {
+	return Rectangle[T]{
+		xy: r.xy,
+		wh: r.wh.SetY(newH),
+	}
+}
+
+func (r Rectangle[T]) Dh(dH T) Rectangle[T] {
+	return Rectangle[T]{
+		xy: r.xy,
+		wh: r.wh.Dy(dH),
+	}
+}
+
 // XY returns the xy component
 func (r Rectangle[T]) XY() vector2.Vector[T] {
 	return r.xy
