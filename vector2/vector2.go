@@ -411,11 +411,22 @@ func (v Vector[T]) LengthSquared() T {
 }
 
 func (v Vector[T]) Length() float64 {
-	return math.Sqrt((float64)(v.LengthSquared()))
+	return mathex.Sqrt((float64)(v.LengthSquared()))
+}
+
+func (v Vector[T]) LengthF() float32 {
+	return mathex.Sqrt((float32)(v.LengthSquared()))
 }
 
 func (v Vector[T]) Normalized() Vector[T] {
 	return v.DivByConstant(v.Length())
+}
+
+func (v Vector[T]) Negated() Vector[T] {
+	return Vector[T]{
+		x: -v.x,
+		y: -v.y,
+	}
 }
 
 func (v Vector[T]) Scale(t float64) Vector[T] {

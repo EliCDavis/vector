@@ -615,6 +615,14 @@ func RandNormal(r *rand.Rand) Vector[float64] {
 	}.Normalized()
 }
 
+func (v Vector[T]) Negated() Vector[T] {
+	return Vector[T]{
+		x: -v.x,
+		y: -v.y,
+		z: -v.z,
+	}
+}
+
 func (v Vector[T]) Scale(t float64) Vector[T] {
 	return Vector[T]{
 		x: T(float64(v.x) * t),
@@ -671,7 +679,11 @@ func (v Vector[T]) DivByConstant(t float64) Vector[T] {
 }
 
 func (v Vector[T]) Length() float64 {
-	return math.Sqrt(float64(v.LengthSquared()))
+	return mathex.Sqrt(float64(v.LengthSquared()))
+}
+
+func (v Vector[T]) LengthF() float32 {
+	return mathex.Sqrt(float32(v.LengthSquared()))
 }
 
 func (v Vector[T]) LengthSquared() T {

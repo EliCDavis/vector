@@ -102,6 +102,15 @@ func Lerp[T vector.Number](a, b Vector[T], t float64) Vector[T] {
 	}
 }
 
+func (v Vector[T]) Negated() Vector[T] {
+	return Vector[T]{
+		x: -v.x,
+		y: -v.y,
+		z: -v.z,
+		w: -v.w,
+	}
+}
+
 func (v Vector[T]) Scale(t float64) Vector[T] {
 	return Vector[T]{
 		x: T(float64(v.x) * t),
@@ -441,11 +450,15 @@ func (v Vector[T]) Normalized() Vector[T] {
 }
 
 func (v Vector[T]) Length() float64 {
-	return math.Sqrt(v.LengthSquared())
+	return mathex.Sqrt(float64(v.LengthSquared()))
 }
 
-func (v Vector[T]) LengthSquared() float64 {
-	return float64((v.x * v.x) + (v.y * v.y) + (v.z * v.z) + (v.w * v.w))
+func (v Vector[T]) LengthF() float32 {
+	return mathex.Sqrt(float32(v.LengthSquared()))
+}
+
+func (v Vector[T]) LengthSquared() T {
+	return (v.x * v.x) + (v.y * v.y) + (v.z * v.z) + (v.w * v.w)
 }
 
 // Sqrt applies the math.Sqrt to each component of the vector
