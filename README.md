@@ -1,6 +1,6 @@
 # Vector
 
-![Coverage](https://img.shields.io/badge/Coverage-96.5%25-brightgreen)
+![Coverage](https://img.shields.io/badge/Coverage-96.6%25-brightgreen)
 [![Go Report Card](https://goreportcard.com/badge/github.com/EliCDavis/vector)](https://goreportcard.com/report/github.com/EliCDavis/vector)
 [![GoDoc](https://godoc.org/github.com/EliCDavis/vector?status.svg)](http://godoc.org/github.com/EliCDavis/vector)
 
@@ -63,6 +63,7 @@ Collection of **generic, immutable** vector math functions I've written overtime
 | Exp           | ✅      | ✅     | ✅      | Returns e**x, the base-e exponential for each component |
 | Exp2          | ✅      | ✅     | ✅      | Returns 2**x, the base-2 exponential for each component |
 | Expm1         | ✅      | ✅     | ✅      | Returns e**x - 1, the base-e exponential for each component minus 1. It is more accurate than Exp(x) - 1 when the component is near zero |
+| Write         | ✅      | ✅     | ✅      | Write vector component data as binary to io.Writer     |
 
 
 ## Example
