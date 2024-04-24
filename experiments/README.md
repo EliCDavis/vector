@@ -8,7 +8,7 @@ Tested on `go1.21.0 windows/amd64`
 
 Given an array of vectors and a vector A, return a new array that is the result of adding A to each element of the original array.
 
-For small array sizes, the mutable vector outperforms the immutable vector. But as the vector size grows, the opposite happens. Immutable vectors begin to out perform.
+For small array sizes, the immutable vector outperforms the mutable vector. But as the vector size grows, the opposite happens. Mutable vectors begin to out perform.
 
 ```
 goos: windows
