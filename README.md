@@ -63,6 +63,7 @@ Collection of **generic, immutable** vector math functions I've written overtime
 | Exp           | ✅      | ✅     | ✅      | Returns e**x, the base-e exponential for each component |
 | Exp2          | ✅      | ✅     | ✅      | Returns 2**x, the base-2 exponential for each component |
 | Expm1         | ✅      | ✅     | ✅      | Returns e**x - 1, the base-e exponential for each component minus 1. It is more accurate than Exp(x) - 1 when the component is near zero |
+| Write         | ✅      | ✅     | ✅      | Write vector component data as binary to io.Writer     |
 
 
 ## Example
