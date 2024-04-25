@@ -88,12 +88,43 @@ BenchmarkAddMutableVectorInPlaceTakingPointerUsingPointer-20    	393230407	     
 Formatted in CSV
 
 ```csv
-benchmark,                                                  times ran,   ns/op,         B/op,    allocs/op
-Add Vector,                                                 1000000000,  0.8899 ns/op,  0 B/op,  0 allocs/op
-Add Mutable Vector,                                         1000000000,  0.8704 ns/op,  0 B/op,  0 allocs/op
-Add Mutable Vector In Place,                                372655183,   3.291 ns/op,   0 B/op,  0 allocs/op
-Add Mutable Vector In Place Using Pointer,                  396180162,   3.012 ns/op,   0 B/op,  0 allocs/op
-Add Mutable Vector In Place With Return,                    350640970,   3.527 ns/op,   0 B/op,  0 allocs/op
-Add Mutable Vector In Place With Return Using Pointer,      396528655,   3.077 ns/op,   0 B/op,  0 allocs/op
-Add Mutable Vector In Place Taking Pointer Using Pointer,   393230407,   3.249 ns/op,   0 B/op,  0 allocs/op
+benchmark,                                                  times ran,   ns/op,   B/op,  allocs/op
+Add Vector,                                                 1000000000,  0.8899,  0,     0
+Add Mutable Vector,                                         1000000000,  0.8704,  0,     0
+Add Mutable Vector In Place,                                372655183,   3.291,   0,     0
+Add Mutable Vector In Place Using Pointer,                  396180162,   3.012,   0,     0
+Add Mutable Vector In Place With Return,                    350640970,   3.527,   0,     0
+Add Mutable Vector In Place With Return Using Pointer,      396528655,   3.077,   0,     0
+Add Mutable Vector In Place Taking Pointer Using Pointer,   393230407,   3.249,   0,     0
+```
+
+## Accessor
+
+Testing whether or not using a function to access a specific component in a vector is detrimental to perforamnce.
+
+### Results
+
+Both using a function to access a variable of a struct, and just referencing the variable directly perform almost the same. Given it's sub nanosecond, any difference is hard to tease out due to it probably being noise.
+
+### Takeaway
+
+Using a function to access a component in a vector is Okay.
+
+### Raw Data
+
+```
+goos: windows
+goarch: amd64
+pkg: github.com/EliCDavis/vector/experiments
+cpu: 13th Gen Intel(R) Core(TM) i7-13800H
+BenchmarkAccessVector-20           1000000000         0.5130 ns/op       0 B/op       0 allocs/op
+BenchmarkAccessMutableVector-20    1000000000         0.5163 ns/op       0 B/op       0 allocs/op
+```
+
+Formatted in CSV
+
+```csv
+benchmark,              times ran,   ns/op,     B/op,  allocs/op
+Access Vector           1000000000,  0.5130,    0,     0,
+Access MutableVector    1000000000,  0.5163,    0,     0,
 ```
