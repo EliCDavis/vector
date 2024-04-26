@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/EliCDavis/vector"
 	"github.com/EliCDavis/vector/vector3"
 )
 
@@ -20,14 +19,7 @@ var arrLenToTest = []int{
 var resultFloat64 []vector3.Float64
 var resultMFloat64 []MVector[float64]
 
-type MVector[T vector.Number] struct {
-	X T
-	Y T
-	Z T
-}
-
 func BenchmarkSumVector(b *testing.B) {
-
 	var vals []vector3.Float64
 	for _, testLen := range arrLenToTest {
 		vals = make([]vector3.Float64, testLen)
@@ -45,10 +37,8 @@ func BenchmarkSumVector(b *testing.B) {
 }
 
 func BenchmarkSumMutableVector(b *testing.B) {
-
 	var vals []MVector[float64]
 	for _, testLen := range arrLenToTest {
-
 		vals = make([]MVector[float64], testLen)
 		add := MVector[float64]{1., 2., 3.}
 
