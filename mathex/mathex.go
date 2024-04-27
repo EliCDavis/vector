@@ -53,6 +53,10 @@ func Clamp[T Number](f, vmin, vmax T) T {
 	return max(min(f, vmax), vmin)
 }
 
+func Clamp0[T Number](f, vmax T) T {
+	return max(min(f, vmax), 0)
+}
+
 func Abs[T Number](v T) T {
 	return T(math.Abs(float64(v)))
 }

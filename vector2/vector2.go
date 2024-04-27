@@ -325,6 +325,13 @@ func (v Vector[T]) YX() Vector[T] {
 	}
 }
 
+//func (v Vector[T]) Unwrap(i T) Vector[T] {
+//	return Vector[T]{
+//		i%v.x,
+//		i/v.x,
+//	}
+//}
+
 func (v Vector[T]) Angle(other Vector[T]) float64 {
 	denominator := mathex.Sqrt(float64(v.LengthSquared() * other.LengthSquared()))
 	if denominator < 1e-15 {
