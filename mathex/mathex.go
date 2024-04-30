@@ -36,7 +36,7 @@ func Lerp[T Number](time float64, start, end T) T {
 
 // Normalize - Normalize input value within input range
 func Normalize[T Number](value, start, end T) T {
-	return T(float64(value-start) / float64(end-start))
+	return (value-start) / (end-start)
 }
 
 // Remap - Remap input value within input range to output range
