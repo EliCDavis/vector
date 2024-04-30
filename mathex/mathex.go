@@ -30,8 +30,8 @@ func Npot[T Number](v T) T {
 //}
 
 // Lerp - Calculate linear interpolation between two floats
-func Lerp[T Number](start, end T, amount float64) T {
-	return T(float64(start) + amount*float64(end-start))
+func Lerp[T Number](time float64, start, end T) T {
+	return T(float64(start) + time*float64(end-start))
 }
 
 // Normalize - Normalize input value within input range
