@@ -217,7 +217,7 @@ func (r Rectangle[T]) Size() vector2.Vector[T] {
 }
 
 // SetXY changes the wh component of the rectangle
-func (r Rectangle[T]) SetWH(newWH vector2.Vector[T]) Rectangle[T] {
+func (r Rectangle[T]) SetSize(newWH vector2.Vector[T]) Rectangle[T] {
 	return Rectangle[T]{
 		xy: r.xy,
 		wh: newWH,
