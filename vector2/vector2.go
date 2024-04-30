@@ -286,6 +286,7 @@ func (v Vector[T]) X() T {
 	return v.x
 }
 
+// SetX changes the x component of the vector
 func (v Vector[T]) SetX(X T) Vector[T] {
 	return Vector[T]{
 		x: X,
@@ -293,6 +294,7 @@ func (v Vector[T]) SetX(X T) Vector[T] {
 	}
 }
 
+// AddX adds to the x component of the vector
 func (v Vector[T]) AddX(dX T) Vector[T] {
 	return Vector[T]{
 		x: v.x + dX,
@@ -304,6 +306,7 @@ func (v Vector[T]) Y() T {
 	return v.y
 }
 
+// SetY changes the y component of the vector
 func (v Vector[T]) SetY(Y T) Vector[T] {
 	return Vector[T]{
 		x: v.x,
@@ -311,6 +314,7 @@ func (v Vector[T]) SetY(Y T) Vector[T] {
 	}
 }
 
+// AddY adds to the y component of the vector
 func (v Vector[T]) AddY(dY T) Vector[T] {
 	return Vector[T]{
 		x: v.x,
@@ -325,13 +329,7 @@ func (v Vector[T]) YX() Vector[T] {
 	}
 }
 
-//func (v Vector[T]) Unwrap(i T) Vector[T] {
-//	return Vector[T]{
-//		i%v.x,
-//		i/v.x,
-//	}
-//}
-
+// Angle return angle in radians between vector and other vector [float64]
 func (v Vector[T]) Angle(other Vector[T]) float64 {
 	denominator := mathex.Sqrt(float64(v.LengthSquared() * other.LengthSquared()))
 	if denominator < 1e-15 {
@@ -340,6 +338,7 @@ func (v Vector[T]) Angle(other Vector[T]) float64 {
 	return mathex.Acos(mathex.Clamp(float64(v.Dot(other))/denominator, -1., 1.))
 }
 
+// AngleF return angle in radians between vector and other vector [float32]
 func (v Vector[T]) AngleF(other Vector[T]) float32 {
 	denominator := mathex.Sqrt(float32(v.LengthSquared() * other.LengthSquared()))
 	if denominator < 1e-15 {
@@ -353,6 +352,7 @@ func (v Vector[T]) Midpoint(o Vector[T]) Vector[T] {
 	return o.Add(v).Scale(0.5)
 }
 
+// Dot return dot product between vector and other vector
 func (v Vector[T]) Dot(other Vector[T]) T {
 	return v.x*other.x + v.y*other.y
 }
