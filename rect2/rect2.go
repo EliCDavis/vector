@@ -211,7 +211,7 @@ func (r Rectangle[T]) Dxy(dXY vector2.Vector[T]) Rectangle[T] {
 	}
 }
 
-// WH returns the xy component
+// Size returns the wh component
 func (r Rectangle[T]) Size() vector2.Vector[T] {
 	return r.wh
 }
