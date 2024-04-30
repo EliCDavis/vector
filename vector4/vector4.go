@@ -264,7 +264,7 @@ func (v Vector[T]) MinComponent() T {
 }
 
 func (v Vector[T]) MaxComponent() T {
-	return max(max(v.x, v.y), max(v.z, v.w))
+	return max(v.x, v.y, v.z, v.w)
 }
 
 func (v Vector[T]) ToInt() Vector[int] {
