@@ -7,6 +7,7 @@ import (
 	"math/rand"
 	"testing"
 
+	"github.com/EliCDavis/vector/test"
 	"github.com/EliCDavis/vector/vector2"
 	"github.com/EliCDavis/vector/vector3"
 	"github.com/stretchr/testify/assert"
@@ -46,6 +47,9 @@ func TestVectorOperations(t *testing.T) {
 		"yzx":          {got: start.YZX(), want: vector3.New(-2.4, 3.7, 1.2)},
 		"yxz":          {got: start.YXZ(), want: vector3.New(-2.4, 1.2, 3.7)},
 		"random":       {got: vector3.Rand(r), want: vector3.New(.373028361, 0.066000496, 0.604093851)},
+		"reciprocal":   {got: start.Reciprocal(), want: vector3.New(1/1.2, -1/2.4, 1/3.7)},
+		"reciprocal f": {got: start.ReciprocalF().ToFloat64(), want: vector3.New(1/1.2, -1/2.4, 1/3.7)},
+		"negated":      {got: start.Negated(), want: vector3.New(-1.2, 2.4, -3.7)},
 		"flip":         {got: start.Flip(), want: vector3.New(-1.2, 2.4, -3.7)},
 		"flipX":        {got: start.FlipX(), want: vector3.New(-1.2, -2.4, 3.7)},
 		"flipY":        {got: start.FlipY(), want: vector3.New(1.2, 2.4, 3.7)},
@@ -154,9 +158,7 @@ func TestFromArray(t *testing.T) {
 	for name, tc := range tests {
 		t.Run(name, func(t *testing.T) {
 			got := vector3.FromArray(tc.arr)
-			assert.InDelta(t, tc.want.X(), got.X(), 0.000001)
-			assert.InDelta(t, tc.want.Y(), got.Y(), 0.000001)
-			assert.InDelta(t, tc.want.Z(), got.Z(), 0.000001)
+			test.AssertVector3InDelta(t, tc.want, got, 0.000001)
 		})
 	}
 }
@@ -192,9 +194,7 @@ func TestAdd(t *testing.T) {
 		t.Run(name, func(t *testing.T) {
 			got := tc.left.Add(tc.right)
 
-			assert.InDelta(t, tc.want.X(), got.X(), 0.000001)
-			assert.InDelta(t, tc.want.Y(), got.Y(), 0.000001)
-			assert.InDelta(t, tc.want.Z(), got.Z(), 0.000001)
+			test.AssertVector3InDelta(t, tc.want, got, 0.000001)
 		})
 	}
 }
@@ -213,9 +213,7 @@ func TestSub(t *testing.T) {
 		t.Run(name, func(t *testing.T) {
 			got := tc.left.Sub(tc.right)
 
-			assert.InDelta(t, tc.want.X(), got.X(), 0.000001)
-			assert.InDelta(t, tc.want.Y(), got.Y(), 0.000001)
-			assert.InDelta(t, tc.want.Z(), got.Z(), 0.000001)
+			test.AssertVector3InDelta(t, tc.want, got, 0.000001)
 		})
 	}
 }
@@ -235,9 +233,7 @@ func TestMidpoint(t *testing.T) {
 		t.Run(name, func(t *testing.T) {
 			got := tc.left.Midpoint(tc.right)
 
-			assert.InDelta(t, tc.want.X(), got.X(), 0.000001)
-			assert.InDelta(t, tc.want.Y(), got.Y(), 0.000001)
-			assert.InDelta(t, tc.want.Z(), got.Z(), 0.000001)
+			test.AssertVector3InDelta(t, tc.want, got, 0.000001)
 		})
 	}
 }
@@ -258,9 +254,7 @@ func TestLerp(t *testing.T) {
 		t.Run(name, func(t *testing.T) {
 			got := vector3.Lerp(tc.t, tc.left, tc.right)
 
-			assert.InDelta(t, tc.want.X(), got.X(), 0.000001)
-			assert.InDelta(t, tc.want.Y(), got.Y(), 0.000001)
-			assert.InDelta(t, tc.want.Z(), got.Z(), 0.000001)
+			test.AssertVector3InDelta(t, tc.want, got, 0.000001)
 		})
 	}
 }
@@ -278,9 +272,7 @@ func TestMin(t *testing.T) {
 		t.Run(name, func(t *testing.T) {
 			got := vector3.Min(tc.left, tc.right)
 
-			assert.InDelta(t, tc.want.X(), got.X(), 0.000001)
-			assert.InDelta(t, tc.want.Y(), got.Y(), 0.000001)
-			assert.InDelta(t, tc.want.Z(), got.Z(), 0.000001)
+			test.AssertVector3InDelta(t, tc.want, got, 0.000001)
 		})
 	}
 }
@@ -298,9 +290,7 @@ func TestMax(t *testing.T) {
 		t.Run(name, func(t *testing.T) {
 			got := vector3.Max(tc.left, tc.right)
 
-			assert.InDelta(t, tc.want.X(), got.X(), 0.000001)
-			assert.InDelta(t, tc.want.Y(), got.Y(), 0.000001)
-			assert.InDelta(t, tc.want.Z(), got.Z(), 0.000001)
+			test.AssertVector3InDelta(t, tc.want, got, 0.000001)
 		})
 	}
 }
@@ -320,9 +310,27 @@ func TestScaleVecFloat(t *testing.T) {
 		t.Run(name, func(t *testing.T) {
 			got := tc.vec.Scale(tc.scalar)
 
-			assert.InDelta(t, tc.want.X(), got.X(), 0.000001)
-			assert.InDelta(t, tc.want.Y(), got.Y(), 0.000001)
-			assert.InDelta(t, tc.want.Z(), got.Z(), 0.000001)
+			test.AssertVector3InDelta(t, tc.want, got, 0.000001)
+		})
+	}
+}
+
+func TestScaleFVecFloat(t *testing.T) {
+	tests := map[string]struct {
+		vec    vector3.Float64
+		scalar float32
+		want   vector3.Float64
+	}{
+		"1, 2, 3 *  2 =  2,  4,  6": {vec: vector3.New(1., 2., 3.), scalar: 2, want: vector3.New(2., 4., 6.)},
+		"1, 2, 3 *  0 =  0,  0,  0": {vec: vector3.New(1., 2., 3.), scalar: 0, want: vector3.New(0., 0., 0.)},
+		"1, 2, 3 * -2 = -2, -4, -6": {vec: vector3.New(1., 2., 3.), scalar: -2, want: vector3.New(-2., -4., -6.)},
+	}
+
+	for name, tc := range tests {
+		t.Run(name, func(t *testing.T) {
+			got := tc.vec.ScaleF(tc.scalar)
+
+			test.AssertVector3InDelta(t, tc.want, got, 0.000001)
 		})
 	}
 }
@@ -342,9 +350,7 @@ func TestScaleVecInt(t *testing.T) {
 		t.Run(name, func(t *testing.T) {
 			got := tc.vec.Scale(tc.scalar)
 
-			assert.InDelta(t, tc.want.X(), got.X(), 0.000001)
-			assert.InDelta(t, tc.want.Y(), got.Y(), 0.000001)
-			assert.InDelta(t, tc.want.Z(), got.Z(), 0.000001)
+			test.AssertVector3InDelta(t, tc.want, got, 0.000001)
 		})
 	}
 }
@@ -487,6 +493,42 @@ func TestAngle(t *testing.T) {
 		a     vector3.Float64
 		b     vector3.Float64
 		angle float64
+	}{
+		"up => down: Pi": {
+			a:     vector3.Up[float64](),
+			b:     vector3.Down[float64](),
+			angle: math.Pi,
+		},
+		"up => right: Pi": {
+			a:     vector3.Up[float64](),
+			b:     vector3.Right[float64](),
+			angle: math.Pi / 2,
+		},
+
+		"up => up: 0": {
+			a:     vector3.Up[float64](),
+			b:     vector3.Up[float64](),
+			angle: 0,
+		},
+		"0 => 0: 0": {
+			a:     vector3.Zero[float64](),
+			b:     vector3.Zero[float64](),
+			angle: 0,
+		},
+	}
+
+	for name, tc := range tests {
+		t.Run(name, func(t *testing.T) {
+			assert.InDelta(t, tc.angle, tc.a.Angle(tc.b), 0.000001)
+		})
+	}
+}
+
+func TestAngleF(t *testing.T) {
+	tests := map[string]struct {
+		a     vector3.Float64
+		b     vector3.Float64
+		angle float32
 	}{
 		"up => down: Pi": {
 			a:     vector3.Up[float64](),
