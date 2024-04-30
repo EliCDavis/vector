@@ -197,7 +197,7 @@ func (r Rectangle[T]) Position() vector2.Vector[T] {
 }
 
 // SetXY changes the xy component of the rectangle
-func (r Rectangle[T]) SetXY(newXY vector2.Vector[T]) Rectangle[T] {
+func (r Rectangle[T]) SetPosition(newXY vector2.Vector[T]) Rectangle[T] {
 	return Rectangle[T]{
 		xy: newXY,
 		wh: r.wh,
