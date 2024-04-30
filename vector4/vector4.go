@@ -260,7 +260,7 @@ func (v Vector[T]) Format(format string) string {
 }
 
 func (v Vector[T]) MinComponent() T {
-	return min(min(v.x, v.y), min(v.z, v.w))
+	return min(v.x, v.y, v.z, v.w)
 }
 
 func (v Vector[T]) MaxComponent() T {
