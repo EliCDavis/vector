@@ -6,8 +6,8 @@ import (
 )
 
 type Rectangle[T vector.Number] struct {
-	xy vector2.Vector[T]
-	wh vector2.Vector[T]
+	position vector2.Vector[T]
+	size     vector2.Vector[T]
 }
 
 type (
@@ -20,47 +20,47 @@ type (
 	Int8    = Rectangle[int8]
 )
 
-func New[T vector.Number](xy vector2.Vector[T], wh vector2.Vector[T]) Rectangle[T] {
+func New[T vector.Number](position vector2.Vector[T], size vector2.Vector[T]) Rectangle[T] {
 	return Rectangle[T]{
-		xy: xy,
-		wh: wh,
+		position: position,
+		size:     size,
 	}
 }
 
 func Zero[T vector.Number]() Rectangle[T] {
 	return Rectangle[T]{
-		xy: vector2.Zero[T](),
-		wh: vector2.Zero[T](),
+		position: vector2.Zero[T](),
+		size:     vector2.Zero[T](),
 	}
 }
 
 func One[T vector.Number]() Rectangle[T] {
 	return Rectangle[T]{
-		xy: vector2.Zero[T](),
-		wh: vector2.One[T](),
+		position: vector2.Zero[T](),
+		size:     vector2.One[T](),
 	}
 }
 
 func (r Rectangle[T]) A() vector2.Vector[T] {
-	return r.xy
+	return r.position
 }
 
 func (r Rectangle[T]) SetA(a vector2.Vector[T]) Rectangle[T] {
-	dxy := a.Sub(r.xy)
+	dxy := a.Sub(r.position)
 	return Rectangle[T]{
-		xy: a,
-		wh: r.wh.Sub(dxy),
+		position: a,
+		size:     r.size.Sub(dxy),
 	}
 }
 
 func (r Rectangle[T]) B() vector2.Vector[T] {
-	return r.xy.Add(r.wh)
+	return r.position.Add(r.size)
 }
 
 func (r Rectangle[T]) SetB(b vector2.Vector[T]) Rectangle[T] {
 	return Rectangle[T]{
-		xy: r.xy,
-		wh: b,
+		position: r.position,
+		size:     b,
 	}
 }
 
@@ -73,161 +73,191 @@ func (r Rectangle[T]) VerticalLine(x T) (vector2.Vector[T], vector2.Vector[T]) {
 }
 
 func (r Rectangle[T]) Center() vector2.Vector[T] {
-	return r.xy.Add(r.wh.ScaleF(0.5))
+	return r.position.Add(r.size.ScaleF(0.5))
 }
 
 func (v Rectangle[T]) ToFloat64() Rectangle[float64] {
 	return Rectangle[float64]{
-		xy: v.xy.ToFloat64(),
-		wh: v.wh.ToFloat64(),
+		position: v.position.ToFloat64(),
+		size:     v.size.ToFloat64(),
 	}
 }
 
 func (v Rectangle[T]) ToFloat32() Rectangle[float32] {
 	return Rectangle[float32]{
-		xy: v.xy.ToFloat32(),
-		wh: v.wh.ToFloat32(),
+		position: v.position.ToFloat32(),
+		size:     v.size.ToFloat32(),
 	}
 }
 
 func (v Rectangle[T]) ToInt() Rectangle[int] {
 	return Rectangle[int]{
-		xy: v.xy.ToInt(),
-		wh: v.wh.ToInt(),
+		position: v.position.ToInt(),
+		size:     v.size.ToInt(),
 	}
 }
 
 func (v Rectangle[T]) ToInt32() Rectangle[int32] {
 	return Rectangle[int32]{
-		xy: v.xy.ToInt32(),
-		wh: v.wh.ToInt32(),
+		position: v.position.ToInt32(),
+		size:     v.size.ToInt32(),
 	}
 }
 
 func (v Rectangle[T]) ToInt64() Rectangle[int64] {
 	return Rectangle[int64]{
-		xy: v.xy.ToInt64(),
-		wh: v.wh.ToInt64(),
+		position: v.position.ToInt64(),
+		size:     v.size.ToInt64(),
 	}
 }
 
 // X returns the x of the xy component
 func (r Rectangle[T]) X() T {
-	return r.xy.X()
+	return r.position.X()
 }
 
 // SetX changes the x of the xy component of the rectangle
 func (r Rectangle[T]) SetX(newX T) Rectangle[T] {
 	return Rectangle[T]{
-		xy: r.xy.SetX(newX),
-		wh: r.wh,
+		position: r.position.SetX(newX),
+		size:     r.size,
 	}
 }
 
-func (r Rectangle[T]) Dx(dX T) Rectangle[T] {
+func (r Rectangle[T]) AddX(dX T) Rectangle[T] {
 	return Rectangle[T]{
-		xy: r.xy.Dx(dX),
-		wh: r.wh,
+		position: r.position.AddX(dX),
+		size:     r.size,
 	}
 }
 
 // Y returns the y of the xy component
 func (r Rectangle[T]) Y() T {
-	return r.xy.Y()
+	return r.position.Y()
 }
 
 // SetY changes the y of the xy component of the rectangle
 func (r Rectangle[T]) SetY(newY T) Rectangle[T] {
 	return Rectangle[T]{
-		xy: r.xy.SetY(newY),
-		wh: r.wh,
+		position: r.position.SetY(newY),
+		size:     r.size,
 	}
 }
 
-func (r Rectangle[T]) Dy(dY T) Rectangle[T] {
+func (r Rectangle[T]) AddY(dY T) Rectangle[T] {
 	return Rectangle[T]{
-		xy: r.xy.Dy(dY),
-		wh: r.wh,
+		position: r.position.AddY(dY),
+		size:     r.size,
 	}
 }
 
 // Width returns the x of the wh component
 func (r Rectangle[T]) Width() T {
-	return r.wh.X()
+	return r.size.X()
 }
 
 // SetWidth changes the x of the wh component of the rectangle
 func (r Rectangle[T]) SetWidth(newW T) Rectangle[T] {
 	return Rectangle[T]{
-		xy: r.xy,
-		wh: r.wh.SetX(newW),
+		position: r.position,
+		size:     r.size.SetX(newW),
 	}
 }
 
-func (r Rectangle[T]) Dw(dW T) Rectangle[T] {
+func (r Rectangle[T]) AddWidth(dW T) Rectangle[T] {
 	return Rectangle[T]{
-		xy: r.xy,
-		wh: r.wh.Dx(dW),
+		position: r.position,
+		size:     r.size.AddX(dW),
 	}
 }
 
 // Y returns the y of the wh component
 func (r Rectangle[T]) Height() T {
-	return r.wh.Y()
+	return r.size.Y()
 }
 
 // SetHeight changes the y of the wh component of the rectangle
 func (r Rectangle[T]) SetHeight(newH T) Rectangle[T] {
 	return Rectangle[T]{
-		xy: r.xy,
-		wh: r.wh.SetY(newH),
+		position: r.position,
+		size:     r.size.SetY(newH),
 	}
 }
 
-func (r Rectangle[T]) Dh(dH T) Rectangle[T] {
+func (r Rectangle[T]) AddHeight(dH T) Rectangle[T] {
 	return Rectangle[T]{
-		xy: r.xy,
-		wh: r.wh.Dy(dH),
+		position: r.position,
+		size:     r.size.AddY(dH),
 	}
 }
 
 // XY returns the xy component
 func (r Rectangle[T]) Position() vector2.Vector[T] {
-	return r.xy
+	return r.position
 }
 
-// SetXY changes the xy component of the rectangle
+// SetPosition changes the xy component of the rectangle
 func (r Rectangle[T]) SetPosition(newXY vector2.Vector[T]) Rectangle[T] {
 	return Rectangle[T]{
-		xy: newXY,
-		wh: r.wh,
+		position: newXY,
+		size:     r.size,
 	}
 }
 
-func (r Rectangle[T]) Dxy(dXY vector2.Vector[T]) Rectangle[T] {
+// SetPosition changes the xy component of the rectangle
+func (r Rectangle[T]) SetPositionXY(x, y T) Rectangle[T] {
 	return Rectangle[T]{
-		xy: r.xy.Add(dXY),
-		wh: r.wh,
+		position: vector2.New(x, y),
+		size:     r.size,
+	}
+}
+
+func (r Rectangle[T]) AddPosition(dXY vector2.Vector[T]) Rectangle[T] {
+	return Rectangle[T]{
+		position: r.position.Add(dXY),
+		size:     r.size,
+	}
+}
+
+func (r Rectangle[T]) AddPositionXY(x, y T) Rectangle[T] {
+	return Rectangle[T]{
+		position: r.position.AddXY(x, y),
+		size:     r.size,
 	}
 }
 
 // Size returns the wh component
 func (r Rectangle[T]) Size() vector2.Vector[T] {
-	return r.wh
+	return r.size
 }
 
-// SetXY changes the wh component of the rectangle
+// SetSize changes the wh component of the rectangle
 func (r Rectangle[T]) SetSize(newWH vector2.Vector[T]) Rectangle[T] {
 	return Rectangle[T]{
-		xy: r.xy,
-		wh: newWH,
+		position: r.position,
+		size:     newWH,
 	}
 }
 
-func (r Rectangle[T]) Dwh(dWH vector2.Vector[T]) Rectangle[T] {
+// SetSizeXY changes the wh component of the rectangle
+func (r Rectangle[T]) SetSizeXY(width, height T) Rectangle[T] {
 	return Rectangle[T]{
-		xy: r.xy,
-		wh: r.wh.Add(dWH),
+		position: r.position,
+		size:     vector2.New(width, height),
+	}
+}
+
+func (r Rectangle[T]) AddSize(dWH vector2.Vector[T]) Rectangle[T] {
+	return Rectangle[T]{
+		position: r.position,
+		size:     r.size.Add(dWH),
+	}
+}
+
+func (r Rectangle[T]) AddSizeXY(width, height T) Rectangle[T] {
+	return Rectangle[T]{
+		position: r.position,
+		size:     r.size.AddXY(width, height),
 	}
 }
 
@@ -235,8 +265,8 @@ func (r Rectangle[T]) Dwh(dWH vector2.Vector[T]) Rectangle[T] {
 // number
 func (v Rectangle[T]) Round() Rectangle[T] {
 	return New(
-		v.xy.Round(),
-		v.wh.Round(),
+		v.position.Round(),
+		v.size.Round(),
 	)
 }
 
@@ -244,16 +274,16 @@ func (v Rectangle[T]) Round() Rectangle[T] {
 // whole number, and then casts it to a int
 func (v Rectangle[T]) RoundToInt() Rectangle[int] {
 	return New(
-		v.xy.RoundToInt(),
-		v.wh.RoundToInt(),
+		v.position.RoundToInt(),
+		v.size.RoundToInt(),
 	)
 }
 
 // Ceil applies the ceil math operation to each component of the rectangle
 func (v Rectangle[T]) Ceil() Rectangle[T] {
 	return New(
-		v.xy.Ceil(),
-		v.wh.Ceil(),
+		v.position.Ceil(),
+		v.size.Ceil(),
 	)
 }
 
@@ -261,16 +291,16 @@ func (v Rectangle[T]) Ceil() Rectangle[T] {
 // and then casts it to a int
 func (v Rectangle[T]) CeilToInt() Rectangle[int] {
 	return New(
-		v.xy.CeilToInt(),
-		v.wh.CeilToInt(),
+		v.position.CeilToInt(),
+		v.size.CeilToInt(),
 	)
 }
 
 // Floor applies the floor math operation to each component of the rectangle
 func (v Rectangle[T]) Floor() Rectangle[T] {
 	return New(
-		v.xy.Floor(),
-		v.wh.Floor(),
+		v.position.Floor(),
+		v.size.Floor(),
 	)
 }
 
@@ -278,107 +308,99 @@ func (v Rectangle[T]) Floor() Rectangle[T] {
 // and then casts it to a int
 func (v Rectangle[T]) FloorToInt() Rectangle[int] {
 	return New(
-		v.xy.FloorToInt(),
-		v.wh.FloorToInt(),
+		v.position.FloorToInt(),
+		v.size.FloorToInt(),
 	)
-}
-
-
-func (r Rectangle[T]) ShiftXY(x, y T) Rectangle[T] {
-	return Rectangle[T]{
-		xy: r.xy.AddXY(x, y),
-		wh: r.wh,
-	}
 }
 
 func (r Rectangle[T]) Delta(xy vector2.Vector[T], wh vector2.Vector[T]) Rectangle[T] {
 	return Rectangle[T]{
-		xy: r.xy.Add(xy),
-		wh: r.wh.Add(wh),
+		position: r.position.Add(xy),
+		size:     r.size.Add(wh),
 	}
 }
 
 func (r Rectangle[T]) DeltaXYWH(x, y, w, h T) Rectangle[T] {
 	return Rectangle[T]{
-		xy: r.xy.AddXY(x, y),
-		wh: r.wh.AddXY(w, h),
+		position: r.position.AddXY(x, y),
+		size:     r.size.AddXY(w, h),
 	}
 }
 
 func (r Rectangle[T]) ShrinkXYWH(left, top, right, bottom T) Rectangle[T] {
 	return Rectangle[T]{
-		xy: r.xy.AddXY(left, top),
-		wh: r.wh.AddXY(-left-right, -top-bottom),
+		position: r.position.AddXY(left, top),
+		size:     r.size.AddXY(-left-right, -top-bottom),
 	}
 }
 
 func (r Rectangle[T]) Scale(f float64) Rectangle[T] {
 	return Rectangle[T]{
-		xy: r.xy,
-		wh: r.wh.Scale(f),
+		position: r.position,
+		size:     r.size.Scale(f),
 	}
 }
 
 func (r Rectangle[T]) ScaleF(f float32) Rectangle[T] {
 	return Rectangle[T]{
-		xy: r.xy,
-		wh: r.wh.ScaleF(f),
+		position: r.position,
+		size:     r.size.ScaleF(f),
 	}
 }
 
 func (r Rectangle[T]) ScaleByVector(f vector2.Float64) Rectangle[T] {
 	return Rectangle[T]{
-		xy: r.xy,
-		wh: r.wh.ScaleByVector(f),
+		position: r.position,
+		size:     r.size.ScaleByVector(f),
 	}
 }
 
 func (r Rectangle[T]) ScaleByVectorF(f vector2.Float32) Rectangle[T] {
 	return Rectangle[T]{
-		xy: r.xy,
-		wh: r.wh.ScaleByVectorF(f),
+		position: r.position,
+		size:     r.size.ScaleByVectorF(f),
 	}
 }
 
 func (r Rectangle[T]) ScaleByXYF(x, y float32) Rectangle[T] {
 	return Rectangle[T]{
-		xy: r.xy,
-		wh: r.wh.ScaleByXYF(x, y),
+		position: r.position,
+		size:     r.size.ScaleByXYF(x, y),
 	}
 }
 
 func (r Rectangle[T]) Zoom(f float64) Rectangle[T] {
 	return Rectangle[T]{
-		xy: r.xy.Scale(f),
-		wh: r.wh.Scale(f),
+		position: r.position.Scale(f),
+		size:     r.size.Scale(f),
 	}
 }
 
 func (r Rectangle[T]) ZoomF(f float32) Rectangle[T] {
 	return Rectangle[T]{
-		xy: r.xy.ScaleF(f),
-		wh: r.wh.ScaleF(f),
+		position: r.position.ScaleF(f),
+		size:     r.size.ScaleF(f),
 	}
 }
 
 func (r Rectangle[T]) ZoomByVector(f vector2.Float64) Rectangle[T] {
 	return Rectangle[T]{
-		xy: r.xy.ScaleByVector(f),
-		wh: r.wh.ScaleByVector(f),
+		position: r.position.ScaleByVector(f),
+		size:     r.size.ScaleByVector(f),
 	}
 }
 
 func (r Rectangle[T]) ZoomByVectorF(f vector2.Float32) Rectangle[T] {
 	return Rectangle[T]{
-		xy: r.xy.ScaleByVectorF(f),
-		wh: r.wh.ScaleByVectorF(f),
+		position: r.position.ScaleByVectorF(f),
+		size:     r.size.ScaleByVectorF(f),
 	}
 }
 
 func (r Rectangle[T]) ZoomByXYF(x, y float32) Rectangle[T] {
 	return Rectangle[T]{
-		xy: r.xy.ScaleByXYF(x, y),
-		wh: r.wh.ScaleByXYF(x, y),
+		position: r.position.ScaleByXYF(x, y),
+		size:     r.size.ScaleByXYF(x, y),
 	}
 }
 

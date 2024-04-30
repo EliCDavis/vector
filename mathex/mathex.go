@@ -16,6 +16,7 @@ func NearZero[T Number](v T) bool {
 	return math.Abs(float64(v)) < s
 }
 
+// Npot - Find neares power of two greater than v
 func Npot[T Number](v T) T {
 	r := 1
 	for T(r) < v {
@@ -24,11 +25,6 @@ func Npot[T Number](v T) T {
 	return T(r)
 }
 
-// FloatEquals - Check whether two given floats are almost equal
-//func FloatEquals[FT FloatT](x, y FT) bool {
-//	return (mathex.Abs(x-y) <= 0.000001*math.Max(1.0, math.Max(mathex.Abs(x), mathex.Abs(y))))
-//}
-
 // Lerp - Calculate linear interpolation between two floats
 func Lerp[T Number](time float64, start, end T) T {
 	return T(float64(start) + time*float64(end-start))
@@ -36,7 +32,7 @@ func Lerp[T Number](time float64, start, end T) T {
 
 // Normalize - Normalize input value within input range
 func Normalize[T Number](value, start, end T) T {
-	return (value-start) / (end-start)
+	return (value - start) / (end - start)
 }
 
 // Remap - Remap input value within input range to output range

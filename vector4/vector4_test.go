@@ -42,10 +42,10 @@ func TestVectorOperations(t *testing.T) {
 		"y":            {want: start.SetY(4), got: vector4.New(1.2, 4., 3.7, 4.9)},
 		"z":            {want: start.SetZ(4), got: vector4.New(1.2, -2.4, 4., 4.9)},
 		"w":            {want: start.SetW(4), got: vector4.New(1.2, -2.4, 3.7, 4.)},
-		"dx":           {want: start.Dx(4), got: vector4.New(5.2, -2.4, 3.7, 4.9)},
-		"dy":           {want: start.Dy(4), got: vector4.New(1.2, 1.6, 3.7, 4.9)},
-		"dz":           {want: start.Dz(4), got: vector4.New(1.2, -2.4, 7.7, 4.9)},
-		"dw":           {want: start.Dw(4), got: vector4.New(1.2, -2.4, 3.7, 8.9)},
+		"dx":           {want: start.AddX(4), got: vector4.New(5.2, -2.4, 3.7, 4.9)},
+		"dy":           {want: start.AddY(4), got: vector4.New(1.2, 1.6, 3.7, 4.9)},
+		"dz":           {want: start.AddZ(4), got: vector4.New(1.2, -2.4, 7.7, 4.9)},
+		"dw":           {want: start.AddW(4), got: vector4.New(1.2, -2.4, 3.7, 8.9)},
 		"add":          {want: start.Add(vector4.New(1., -2., 3., 4.)), got: vector4.New(2.2, -4.4, 6.7, 8.9)},
 		"sub":          {want: start.Sub(vector4.New(1., -2., 3., 4.)), got: vector4.New(0.2, -0.4, 0.7, 0.9)},
 		"div":          {want: start.DivByConstant(2), got: vector4.New(0.6, -1.2, 1.85, 2.45)},
@@ -157,7 +157,7 @@ func TestSwizzle_Vector2(t *testing.T) {
 		got  vector2.Float64
 		want vector2.Float64
 	}{
-		"xy": {got: start.XY(), want: vector2.New(1.2, -2.4)},
+		"xy": {got: start.Position(), want: vector2.New(1.2, -2.4)},
 		"yz": {got: start.YZ(), want: vector2.New(-2.4, 3.7)},
 		"xz": {got: start.XZ(), want: vector2.New(1.2, 3.7)},
 		"yx": {got: start.YX(), want: vector2.New(-2.4, 1.2)},

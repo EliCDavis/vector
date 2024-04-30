@@ -60,8 +60,8 @@ func TestOperations(t *testing.T) {
 	}{
 		"x":              {got: start.SetX(4), want: vector2.New(4., -2.4)},
 		"y":              {got: start.SetY(4), want: vector2.New(1.2, 4.)},
-		"dx":             {got: start.Dx(4), want: vector2.New(5.2, -2.4)},
-		"dy":             {got: start.Dy(4), want: vector2.New(1.2, 1.6)},
+		"addx":           {got: start.AddX(4), want: vector2.New(5.2, -2.4)},
+		"addy":           {got: start.AddY(4), want: vector2.New(1.2, 1.6)},
 		"abs":            {got: start.Abs(), want: vector2.New(1.2, 2.4)},
 		"floor":          {got: start.Floor(), want: vector2.New(1., -3.)},
 		"ceil":           {got: start.Ceil(), want: vector2.New(2., -2.)},

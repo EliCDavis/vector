@@ -318,7 +318,7 @@ func (v Vector[T]) SetX(newX T) Vector[T] {
 	}
 }
 
-func (v Vector[T]) Dx(dX T) Vector[T] {
+func (v Vector[T]) AddX(dX T) Vector[T] {
 	return Vector[T]{
 		x: v.x + dX,
 		y: v.y,
@@ -342,7 +342,7 @@ func (v Vector[T]) SetY(newY T) Vector[T] {
 	}
 }
 
-func (v Vector[T]) Dy(dY T) Vector[T] {
+func (v Vector[T]) AddY(dY T) Vector[T] {
 	return Vector[T]{
 		x: v.x,
 		y: v.y + dY,
@@ -366,7 +366,7 @@ func (v Vector[T]) SetZ(newZ T) Vector[T] {
 	}
 }
 
-func (v Vector[T]) Dz(dZ T) Vector[T] {
+func (v Vector[T]) AddZ(dZ T) Vector[T] {
 	return Vector[T]{
 		x: v.x,
 		y: v.y,
@@ -390,7 +390,7 @@ func (v Vector[T]) SetW(newW T) Vector[T] {
 	}
 }
 
-func (v Vector[T]) Dw(dW T) Vector[T] {
+func (v Vector[T]) AddW(dW T) Vector[T] {
 	return Vector[T]{
 		x: v.x,
 		y: v.y,
@@ -638,7 +638,7 @@ func (v Vector[T]) XYZ() vector3.Vector[T] {
 }
 
 // XY returns vector2 with the x and y components
-func (v Vector[T]) XY() vector2.Vector[T] {
+func (v Vector[T]) Position() vector2.Vector[T] {
 	return vector2.New(v.x, v.y)
 }
 
