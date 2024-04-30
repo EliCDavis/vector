@@ -283,12 +283,6 @@ func (v Rectangle[T]) FloorToInt() Rectangle[int] {
 	)
 }
 
-func (r Rectangle[T]) Shift(xy vector2.Vector[T]) Rectangle[T] {
-	return Rectangle[T]{
-		xy: r.xy.Add(xy),
-		wh: r.wh,
-	}
-}
 
 func (r Rectangle[T]) ShiftXY(x, y T) Rectangle[T] {
 	return Rectangle[T]{
