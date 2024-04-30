@@ -471,6 +471,13 @@ func (v Vector[T]) ScaleByVectorI(o Int) Vector[T] {
 	}
 }
 
+func (v Vector[T]) ScaleByXY(x, y float64) Vector[T] {
+	return Vector[T]{
+		x: T(float64(v.x) * x),
+		y: T(float64(v.y) * y),
+	}
+}
+
 func (v Vector[T]) ScaleByXYF(x, y float32) Vector[T] {
 	return Vector[T]{
 		x: T(float32(v.x) * x),

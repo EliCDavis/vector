@@ -313,14 +313,14 @@ func (v Rectangle[T]) FloorToInt() Rectangle[int] {
 	)
 }
 
-func (r Rectangle[T]) Delta(xy vector2.Vector[T], wh vector2.Vector[T]) Rectangle[T] {
+func (r Rectangle[T]) Add(xy vector2.Vector[T], wh vector2.Vector[T]) Rectangle[T] {
 	return Rectangle[T]{
 		position: r.position.Add(xy),
 		size:     r.size.Add(wh),
 	}
 }
 
-func (r Rectangle[T]) DeltaXYWH(x, y, w, h T) Rectangle[T] {
+func (r Rectangle[T]) AddXYWH(x, y, w, h T) Rectangle[T] {
 	return Rectangle[T]{
 		position: r.position.AddXY(x, y),
 		size:     r.size.AddXY(w, h),
@@ -362,6 +362,13 @@ func (r Rectangle[T]) ScaleByVectorF(f vector2.Float32) Rectangle[T] {
 	}
 }
 
+func (r Rectangle[T]) ScaleByXY(x, y float64) Rectangle[T] {
+	return Rectangle[T]{
+		position: r.position,
+		size:     r.size.ScaleByXY(x, y),
+	}
+}
+
 func (r Rectangle[T]) ScaleByXYF(x, y float32) Rectangle[T] {
 	return Rectangle[T]{
 		position: r.position,
@@ -394,6 +401,13 @@ func (r Rectangle[T]) ZoomByVectorF(f vector2.Float32) Rectangle[T] {
 	return Rectangle[T]{
 		position: r.position.ScaleByVectorF(f),
 		size:     r.size.ScaleByVectorF(f),
+	}
+}
+
+func (r Rectangle[T]) ZoomByXY(x, y float64) Rectangle[T] {
+	return Rectangle[T]{
+		position: r.position.ScaleByXY(x, y),
+		size:     r.size.ScaleByXY(x, y),
 	}
 }
 

@@ -12,7 +12,7 @@ func AssertVector2InDelta[T vector.Number](t assert.TestingT, expected, actual v
 	assert.InDelta(t, expected.Y(), actual.Y(), delta)
 }
 
-func AssertRectangleInDelta[T vector.Number](t assert.TestingT, expected, actual rect2.Rectangle[T], delta float64) {
+func AssertRectangle2InDelta[T vector.Number](t assert.TestingT, expected, actual rect2.Rectangle[T], delta float64) {
 	AssertVector2InDelta(t, expected.Position(), actual.Position(), delta)
 	AssertVector2InDelta(t, expected.Size(), actual.Size(), delta)
 }
