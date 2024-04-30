@@ -293,7 +293,7 @@ func (v Vector[T]) SetX(X T) Vector[T] {
 	}
 }
 
-func (v Vector[T]) Dx(dX T) Vector[T] {
+func (v Vector[T]) AddX(dX T) Vector[T] {
 	return Vector[T]{
 		x: v.x + dX,
 		y: v.y,

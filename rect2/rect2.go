@@ -192,12 +192,12 @@ func (r Rectangle[T]) Dh(dH T) Rectangle[T] {
 }
 
 // XY returns the xy component
-func (r Rectangle[T]) XY() vector2.Vector[T] {
+func (r Rectangle[T]) Position() vector2.Vector[T] {
 	return r.xy
 }
 
 // SetXY changes the xy component of the rectangle
-func (r Rectangle[T]) SetXY(newXY vector2.Vector[T]) Rectangle[T] {
+func (r Rectangle[T]) SetPosition(newXY vector2.Vector[T]) Rectangle[T] {
 	return Rectangle[T]{
 		xy: newXY,
 		wh: r.wh,
@@ -211,13 +211,13 @@ func (r Rectangle[T]) Dxy(dXY vector2.Vector[T]) Rectangle[T] {
 	}
 }
 
-// WH returns the xy component
-func (r Rectangle[T]) WH() vector2.Vector[T] {
+// Size returns the wh component
+func (r Rectangle[T]) Size() vector2.Vector[T] {
 	return r.wh
 }
 
 // SetXY changes the wh component of the rectangle
-func (r Rectangle[T]) SetWH(newWH vector2.Vector[T]) Rectangle[T] {
+func (r Rectangle[T]) SetSize(newWH vector2.Vector[T]) Rectangle[T] {
 	return Rectangle[T]{
 		xy: r.xy,
 		wh: newWH,
@@ -283,12 +283,6 @@ func (v Rectangle[T]) FloorToInt() Rectangle[int] {
 	)
 }
 
-func (r Rectangle[T]) Shift(xy vector2.Vector[T]) Rectangle[T] {
-	return Rectangle[T]{
-		xy: r.xy.Add(xy),
-		wh: r.wh,
-	}
-}
 
 func (r Rectangle[T]) ShiftXY(x, y T) Rectangle[T] {
 	return Rectangle[T]{

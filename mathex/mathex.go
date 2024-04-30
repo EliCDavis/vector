@@ -13,7 +13,7 @@ type Number interface {
 
 func NearZero[T Number](v T) bool {
 	const s = 1e-8
-	return Abs(float64(v)) < s
+	return math.Abs(float64(v)) < s
 }
 
 func Npot[T Number](v T) T {
@@ -30,13 +30,13 @@ func Npot[T Number](v T) T {
 //}
 
 // Lerp - Calculate linear interpolation between two floats
-func Lerp[T Number](start, end T, amount float64) T {
-	return T(float64(start) + amount*float64(end-start))
+func Lerp[T Number](time float64, start, end T) T {
+	return T(float64(start) + time*float64(end-start))
 }
 
 // Normalize - Normalize input value within input range
 func Normalize[T Number](value, start, end T) T {
-	return T(float64(value-start) / float64(end-start))
+	return (value-start) / (end-start)
 }
 
 // Remap - Remap input value within input range to output range
