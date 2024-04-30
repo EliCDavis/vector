@@ -583,8 +583,8 @@ func (v Vector[T]) FloorToInt() Vector[int] {
 // Abs applies the Abs math operation to each component of the vector
 func (v Vector[T]) Abs() Vector[T] {
 	return Vector[T]{
-		x: T(mathex.Abs(v.x)),
-		y: T(mathex.Abs(v.y)),
+		x: mathex.Abs(v.x),
+		y: mathex.Abs(v.y),
 	}
 }
 
