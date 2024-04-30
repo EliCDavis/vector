@@ -13,7 +13,7 @@ type Number interface {
 
 func NearZero[T Number](v T) bool {
 	const s = 1e-8
-	return Abs(float64(v)) < s
+	return math.Abs(float64(v)) < s
 }
 
 func Npot[T Number](v T) T {
