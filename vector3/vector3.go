@@ -103,11 +103,11 @@ func Average[T vector.Number](vectors []Vector[T]) Vector[T] {
 }
 
 // Lerp linearly interpolates between a and b by t
-func Lerp[T vector.Number](a, b Vector[T], t float64) Vector[T] {
+func Lerp[T vector.Number](t float64, a, b Vector[T]) Vector[T] {
 	return Vector[T]{
-		x: T((float64(b.x-a.x) * t) + float64(a.x)),
-		y: T((float64(b.y-a.y) * t) + float64(a.y)),
-		z: T((float64(b.z-a.z) * t) + float64(a.z)),
+		x: mathex.Lerp(t, a.x, b.x),
+		y: mathex.Lerp(t, a.y, b.y),
+		z: mathex.Lerp(t, a.z, b.z),
 	}
 }
 
@@ -679,7 +679,7 @@ func (v Vector[T]) DivByConstant(t float64) Vector[T] {
 }
 
 func (v Vector[T]) Length() float64 {
-	return mathex.Sqrt(float64(v.LengthSquared()))
+	return math.Sqrt(float64(v.LengthSquared()))
 }
 
 func (v Vector[T]) LengthF() float32 {
@@ -698,15 +698,15 @@ func (v Vector[T]) DistanceSquared(other Vector[T]) T {
 }
 
 func (v Vector[T]) Distance(other Vector[T]) float64 {
-	return mathex.Sqrt(float64(v.DistanceSquared(other)))
+	return math.Sqrt(float64(v.DistanceSquared(other)))
 }
 
 func (v Vector[T]) Angle(other Vector[T]) float64 {
-	denominator := mathex.Sqrt(float64(v.LengthSquared() * other.LengthSquared()))
+	denominator := math.Sqrt(float64(v.LengthSquared() * other.LengthSquared()))
 	if denominator < 1e-15 {
 		return 0.
 	}
-	return mathex.Acos(mathex.Clamp(float64(v.Dot(other))/denominator, -1., 1.))
+	return math.Acos(mathex.Clamp(float64(v.Dot(other))/denominator, -1., 1.))
 }
 
 func (v Vector[T]) AngleF(other Vector[T]) float32 {

@@ -83,10 +83,10 @@ func One[T vector.Number]() Vector[T] {
 }
 
 // Lerp linearly interpolates between a and b by t
-func Lerp[T vector.Number](a, b Vector[T], t float64) Vector[T] {
+func Lerp[T vector.Number](t float64, a, b Vector[T]) Vector[T] {
 	return Vector[T]{
-		x: T((float64(b.x-a.x) * t) + float64(a.x)),
-		y: T((float64(b.y-a.y) * t) + float64(a.y)),
+		x: mathex.Lerp(t, a.x, b.x),
+		y: mathex.Lerp(t, a.y, b.y),
 	}
 }
 
@@ -418,7 +418,7 @@ func (v Vector[T]) LengthSquared() T {
 }
 
 func (v Vector[T]) Length() float64 {
-	return mathex.Sqrt((float64)(v.LengthSquared()))
+	return math.Sqrt((float64)(v.LengthSquared()))
 }
 
 func (v Vector[T]) LengthF() float32 {
@@ -503,12 +503,6 @@ func (v Vector[T]) DivByConstant(t float64) Vector[T] {
 	return v.Scale(1.0 / t)
 }
 
-func (v Vector[T]) DistanceSquared(other Vector[T]) T {
-	xDist := other.x - v.x
-	yDist := other.y - v.y
-	return (xDist * xDist) + (yDist * yDist)
-}
-
 func (v Vector[T]) Project(normal Vector[T]) Vector[T] {
 	vdn := float64(v.Dot(normal))
 	ndn := float64(normal.Dot(normal))
@@ -524,9 +518,15 @@ func (v Vector[T]) Reflect(normal Vector[T]) Vector[T] {
 	return v.Sub(normal.Scale(2. * float64(v.Dot(normal))))
 }
 
+func (v Vector[T]) DistanceSquared(other Vector[T]) T {
+	xDist := other.x - v.x
+	yDist := other.y - v.y
+	return (xDist * xDist) + (yDist * yDist)
+}
+
 // Distance is the euclidean distance between two points
 func (v Vector[T]) Distance(other Vector[T]) float64 {
-	return mathex.Sqrt((float64)(v.DistanceSquared(other)))
+	return math.Sqrt((float64)(v.DistanceSquared(other)))
 }
 
 // Round takes each component of the vector and rounds it to the nearest whole

@@ -256,7 +256,7 @@ func TestLerp(t *testing.T) {
 
 	for name, tc := range tests {
 		t.Run(name, func(t *testing.T) {
-			got := vector3.Lerp(tc.left, tc.right, tc.t)
+			got := vector3.Lerp(tc.t, tc.left, tc.right)
 
 			assert.InDelta(t, tc.want.X(), got.X(), 0.000001)
 			assert.InDelta(t, tc.want.Y(), got.Y(), 0.000001)
