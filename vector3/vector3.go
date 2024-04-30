@@ -355,7 +355,7 @@ func (v Vector[T]) XZY() Vector[T] {
 	}
 }
 
-func (v Vector[T]) ZPosition() Vector[T] {
+func (v Vector[T]) ZXY() Vector[T] {
 	return Vector[T]{
 		x: v.z,
 		y: v.x,
@@ -388,7 +388,7 @@ func (v Vector[T]) YZX() Vector[T] {
 }
 
 // XY returns vector2 with the x and y components
-func (v Vector[T]) Position() vector2.Vector[T] {
+func (v Vector[T]) XY() vector2.Vector[T] {
 	return vector2.New(v.x, v.y)
 }
 

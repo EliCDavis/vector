@@ -638,7 +638,7 @@ func (v Vector[T]) XYZ() vector3.Vector[T] {
 }
 
 // XY returns vector2 with the x and y components
-func (v Vector[T]) Position() vector2.Vector[T] {
+func (v Vector[T]) XY() vector2.Vector[T] {
 	return vector2.New(v.x, v.y)
 }
 
