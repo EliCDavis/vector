@@ -192,7 +192,7 @@ func (r Rectangle[T]) Dh(dH T) Rectangle[T] {
 }
 
 // XY returns the xy component
-func (r Rectangle[T]) XY() vector2.Vector[T] {
+func (r Rectangle[T]) Position() vector2.Vector[T] {
 	return r.xy
 }
 
