@@ -42,7 +42,7 @@ func TestVectorOperations(t *testing.T) {
 		"color black":  {got: vector3.FromColor(color.Black), want: vector3.New(0., 0., 0.)},
 		"color white":  {got: vector3.FromColor(color.White), want: vector3.New(1., 1., 1.)},
 		"xzy":          {got: start.XZY(), want: vector3.New(1.2, 3.7, -2.4)},
-		"zxy":          {got: start.ZPosition(), want: vector3.New(3.7, 1.2, -2.4)},
+		"zxy":          {got: start.ZXY(), want: vector3.New(3.7, 1.2, -2.4)},
 		"zyx":          {got: start.ZYX(), want: vector3.New(3.7, -2.4, 1.2)},
 		"yzx":          {got: start.YZX(), want: vector3.New(-2.4, 3.7, 1.2)},
 		"yxz":          {got: start.YXZ(), want: vector3.New(-2.4, 1.2, 3.7)},
@@ -88,7 +88,7 @@ func TestToVector2(t *testing.T) {
 		got  vector2.Float64
 		want vector2.Float64
 	}{
-		"xy": {got: start.Position(), want: vector2.New(1.2, -2.4)},
+		"xy": {got: start.XY(), want: vector2.New(1.2, -2.4)},
 		"yz": {got: start.YZ(), want: vector2.New(-2.4, 3.7)},
 		"xz": {got: start.XZ(), want: vector2.New(1.2, 3.7)},
 		"yx": {got: start.YX(), want: vector2.New(-2.4, 1.2)},

@@ -157,7 +157,7 @@ func TestSwizzle_Vector2(t *testing.T) {
 		got  vector2.Float64
 		want vector2.Float64
 	}{
-		"xy": {got: start.Position(), want: vector2.New(1.2, -2.4)},
+		"xy": {got: start.XY(), want: vector2.New(1.2, -2.4)},
 		"yz": {got: start.YZ(), want: vector2.New(-2.4, 3.7)},
 		"xz": {got: start.XZ(), want: vector2.New(1.2, 3.7)},
 		"yx": {got: start.YX(), want: vector2.New(-2.4, 1.2)},
