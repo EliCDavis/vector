@@ -481,6 +481,8 @@ func (v Vector[T]) Sqrt() Vector[T] {
 }
 
 // Abs applies the Abs math operation to each component of the vector
+//
+//go:inline
 func (v Vector[T]) Abs() Vector[T] {
 	return New(
 		T(math.Abs(float64(v.x))),
@@ -489,6 +491,7 @@ func (v Vector[T]) Abs() Vector[T] {
 	)
 }
 
+//go:inline
 func (v Vector[T]) Clamp(min, max T) Vector[T] {
 	return Vector[T]{
 		x: T(vector.Clamp(float64(v.x), float64(min), float64(max))),
@@ -499,6 +502,8 @@ func (v Vector[T]) Clamp(min, max T) Vector[T] {
 
 // Add takes each component of our vector and adds them to the vector passed
 // in, returning a resulting vector
+//
+//go:inline
 func (v Vector[T]) Add(other Vector[T]) Vector[T] {
 	return Vector[T]{
 		x: v.x + other.x,
@@ -598,6 +603,7 @@ func (v Vector[T]) MultByVector(o Vector[T]) Vector[T] {
 	}
 }
 
+//go:inline
 func (v Vector[T]) DivByConstant(t float64) Vector[T] {
 	return Vector[T]{
 		x: T(float64(v.x) / t),
@@ -726,4 +732,12 @@ func (v Vector[T]) Expm1() Vector[T] {
 
 func (v Vector[T]) Values() (T, T, T) {
 	return v.x, v.y, v.z
+}
+
+func (v Vector[T]) Reciprocal() Vector[float64] {
+	return Vector[float64]{
+		x: 1.0 / float64(v.x),
+		y: 1.0 / float64(v.y),
+		z: 1.0 / float64(v.z),
+	}
 }

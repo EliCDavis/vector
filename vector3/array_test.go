@@ -33,6 +33,17 @@ func TestArrayBounds(t *testing.T) {
 	assert.InDelta(t, 5, max.Z(), 0.000001)
 }
 
+func TestArrayBounds_PanicsOnZeroPoints(t *testing.T) {
+	// ARRANGE ================================================================
+	pts := []vector3.Float64{}
+
+	// ACT ====================================================================
+	assert.PanicsWithError(t, "can not compute bounds from 0 vector elements", func() {
+		vector3.Float64Array(pts).Bounds()
+	})
+
+}
+
 func TestArrayDistance(t *testing.T) {
 	// ARRANGE ================================================================
 	pts := []vector3.Float64{

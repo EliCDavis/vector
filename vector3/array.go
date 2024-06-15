@@ -1,6 +1,7 @@
 package vector3
 
 import (
+	"errors"
 	"math"
 
 	"github.com/EliCDavis/vector"
@@ -13,6 +14,9 @@ type (
 	Float32Array = Array[float32]
 	IntArray     = Array[int]
 	Int64Array   = Array[int64]
+	Int32Array   = Array[int32]
+	Int16Array   = Array[int16]
+	Int8Array    = Array[int8]
 )
 
 func (v3a Array[T]) Add(other Vector[T]) (out Array[T]) {
@@ -174,24 +178,25 @@ func (v3a Array[T]) Average(vectors []Vector[T]) Vector[float64] {
 
 // Bounds returns the min and max points of an AABB encompassing
 func (v3a Array[T]) Bounds() (Vector[T], Vector[T]) {
-	min := New(math.Inf(1), math.Inf(1), math.Inf(1))
-	max := New(math.Inf(-1), math.Inf(-1), math.Inf(-1))
-
-	for _, v := range v3a {
-		min = New(
-			math.Min(float64(v.x), min.x),
-			math.Min(float64(v.y), min.y),
-			math.Min(float64(v.z), min.z),
-		)
-
-		max = New(
-			math.Max(float64(v.x), max.x),
-			math.Max(float64(v.y), max.y),
-			math.Max(float64(v.z), max.z),
-		)
+	if len(v3a) == 0 {
+		panic(errors.New("can not compute bounds from 0 vector elements"))
 	}
 
-	return New(T(min.x), T(min.y), T(min.z)), New(T(max.x), T(max.y), T(max.z))
+	minV := v3a[0]
+	maxV := v3a[0]
+
+	for i := 1; i < len(v3a); i++ {
+		v := v3a[i]
+		minV.x = min(minV.x, v.x)
+		minV.y = min(minV.y, v.y)
+		minV.z = min(minV.z, v.z)
+
+		maxV.x = max(maxV.x, v.x)
+		maxV.y = max(maxV.y, v.y)
+		maxV.z = max(maxV.z, v.z)
+	}
+
+	return minV, maxV
 }
 
 // StandardDeviation calculates the population standard deviation on each
