@@ -466,6 +466,30 @@ func TestValues(t *testing.T) {
 	assert.Equal(t, w, 4)
 }
 
+func TestComponent(t *testing.T) {
+
+	v := vector4.New(1., 2., 3., 4.)
+	tests := map[string]struct {
+		component int
+		want      float64
+	}{
+		"0": {component: 0, want: 1.},
+		"1": {component: 1, want: 2.},
+		"2": {component: 2, want: 3.},
+		"3": {component: 3, want: 4.},
+	}
+
+	for name, tc := range tests {
+		t.Run(name, func(t *testing.T) {
+			assert.Equal(t, tc.want, v.Component(tc.component))
+		})
+	}
+
+	assert.PanicsWithError(t, "invalid index: -1", func() {
+		v.Component(-1)
+	})
+}
+
 var result vector4.Float64
 
 func BenchmarkLerp(b *testing.B) {

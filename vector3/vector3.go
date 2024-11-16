@@ -741,3 +741,19 @@ func (v Vector[T]) Reciprocal() Vector[float64] {
 		z: 1.0 / float64(v.z),
 	}
 }
+
+func (v Vector[T]) Component(index int) T {
+	switch index {
+	case 0:
+		return v.x
+
+	case 1:
+		return v.y
+
+	case 2:
+		return v.z
+
+	default:
+		panic(fmt.Errorf("invalid index: %d", index))
+	}
+}

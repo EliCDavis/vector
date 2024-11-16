@@ -659,3 +659,22 @@ func (v Vector[T]) Expm1() Vector[T] {
 func (v Vector[T]) Values() (T, T, T, T) {
 	return v.x, v.y, v.z, v.w
 }
+
+func (v Vector[T]) Component(index int) T {
+	switch index {
+	case 0:
+		return v.x
+
+	case 1:
+		return v.y
+
+	case 2:
+		return v.z
+
+	case 3:
+		return v.w
+
+	default:
+		panic(fmt.Errorf("invalid index: %d", index))
+	}
+}

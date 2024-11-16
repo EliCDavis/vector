@@ -598,3 +598,26 @@ func TestValues(t *testing.T) {
 	assert.Equal(t, y, 2)
 	assert.Equal(t, z, 3)
 }
+
+func TestComponent(t *testing.T) {
+
+	v := vector3.New(1., 2., 3.)
+	tests := map[string]struct {
+		component int
+		want      float64
+	}{
+		"0": {component: 0, want: 1.},
+		"1": {component: 1, want: 2.},
+		"2": {component: 2, want: 3.},
+	}
+
+	for name, tc := range tests {
+		t.Run(name, func(t *testing.T) {
+			assert.Equal(t, tc.want, v.Component(tc.component))
+		})
+	}
+
+	assert.PanicsWithError(t, "invalid index: -1", func() {
+		v.Component(-1)
+	})
+}
