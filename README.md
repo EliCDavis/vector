@@ -13,6 +13,8 @@ Collection of **generic, immutable** vector math functions I've written overtime
 | Abs           | ✅      | ✅     | ✅      | Returns a vector with each component's absolute value  |
 | Add           | ✅      | ✅     | ✅      | Component Wise Addition                                |
 | Angle         | ✅      | ✅     |         | Returns the angle between two vectors                  |
+| ToArr         | ✅      | ✅     | ✅      | Returns a slice containing the vector component data   |
+| ToFixedArr    | ✅      | ✅     | ✅      | Returns a array containing the vector component data   |
 | Ceil          | ✅      | ✅     | ✅      | Ceils each vectors component to the nearest integer    |
 | Clamp         | ✅      | ✅     | ✅      | Clamps each component between two values               |
 | ContainsNaN   | ✅      | ✅     | ✅      | Returns true if any component of the vector is NaN     |
@@ -57,6 +59,8 @@ Collection of **generic, immutable** vector math functions I've written overtime
 | YX            | ✅      | ✅     | ✅      | Equivalent to vector2.New[T](v.y, v.x)                 |
 | ZX            |         | ✅     | ✅      | Equivalent to vector2.New[T](v.z, v.x)                 |
 | ZY            |         | ✅     | ✅      | Equivalent to vector2.New[T](v.z, v.y)                 |
+| Lerp          | ✅      | ✅     | ✅      | Interpolates between two vectors by t.                 |
+| LerpClamped   | ✅      | ✅     | ✅      | Interpolates between two vectors by t. T is clamped 0 to 1 |
 | Log           | ✅      | ✅     | ✅      | Returns the natural logarithm for each component       |
 | Log2          | ✅      | ✅     | ✅      | Returns the binary logarithm for each component        |
 | Log10         | ✅      | ✅     | ✅      | Returns the decimal logarithm for each component       |
