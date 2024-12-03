@@ -94,6 +94,28 @@ func TestOperations(t *testing.T) {
 	}
 }
 
+func TestLerpClamped(t *testing.T) {
+	tests := map[string]struct {
+		left  vector2.Float64
+		right vector2.Float64
+		t     float64
+		want  vector2.Float64
+	}{
+		"(0, 0, 0) =(0)=> (0, 0, 0) = (0, 0, 0)":       {left: vector2.New(0., 0.), right: vector2.New(0., 0.), t: 0, want: vector2.New(0., 0.)},
+		"(0, 0, 0) =(0.5)=> (1, 2, 3) = (0.5, 1, 1.5)": {left: vector2.New(0., 0.), right: vector2.New(1., 2.), t: 0.5, want: vector2.New(0.5, 1.)},
+		"(0, 0, 0) =(1)=> (1, 2, 3) = (1, 2, 3)":       {left: vector2.New(0., 0.), right: vector2.New(1., 2.), t: 1, want: vector2.New(1., 2.)},
+	}
+
+	for name, tc := range tests {
+		t.Run(name, func(t *testing.T) {
+			got := vector2.LerpClamped(tc.left, tc.right, tc.t)
+
+			assert.InDelta(t, tc.want.X(), got.X(), 0.000001)
+			assert.InDelta(t, tc.want.Y(), got.Y(), 0.000001)
+		})
+	}
+}
+
 func TestAdd(t *testing.T) {
 	tests := map[string]struct {
 		left  vector2.Float64
@@ -275,6 +297,20 @@ func TestBadJSON(t *testing.T) {
 	assert.Error(t, unmarshallErr)
 	assert.Equal(t, 0., out.X())
 	assert.Equal(t, 0., out.Y())
+}
+
+func TestToArray(t *testing.T) {
+	v := vector2.New(1., 2.)
+
+	arr := v.ToArr()
+	assert.Len(t, arr, 2)
+	assert.Equal(t, 1., arr[0])
+	assert.Equal(t, 2., arr[1])
+
+	arrFixed := v.ToFixedArr()
+	assert.Len(t, arrFixed, 2)
+	assert.Equal(t, 1., arrFixed[0])
+	assert.Equal(t, 2., arrFixed[1])
 }
 
 func TestDot(t *testing.T) {

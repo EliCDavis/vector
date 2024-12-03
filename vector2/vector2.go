@@ -89,6 +89,14 @@ func Lerp[T vector.Number](a, b Vector[T], t float64) Vector[T] {
 	}
 }
 
+func LerpClamped[T vector.Number](a, b Vector[T], t float64) Vector[T] {
+	tClean := vector.Clamp(t, 0, 1)
+	return Vector[T]{
+		x: T((float64(b.x-a.x) * tClean) + float64(a.x)),
+		y: T((float64(b.y-a.y) * tClean) + float64(a.y)),
+	}
+}
+
 func Min[T vector.Number](a, b Vector[T]) Vector[T] {
 	return New(
 		T(math.Min(float64(a.x), float64(b.x))),
@@ -147,6 +155,14 @@ func FromArray[T vector.Number](data []T) Vector[T] {
 	}
 
 	return v
+}
+
+func (v Vector[T]) ToArr() []T {
+	return []T{v.x, v.y}
+}
+
+func (v Vector[T]) ToFixedArr() [2]T {
+	return [2]T{v.x, v.y}
 }
 
 func Rand(r *rand.Rand) Vector[float64] {

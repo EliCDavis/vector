@@ -285,6 +285,63 @@ func TestLerp(t *testing.T) {
 	}
 }
 
+func TestLerpClamped(t *testing.T) {
+	tests := map[string]struct {
+		left  vector4.Float64
+		right vector4.Float64
+		t     float64
+		want  vector4.Float64
+	}{
+		"(0, 0, 0, 0) =(0)=> (0, 0, 0, 0) = (0, 0, 0, 0)": {
+			left:  vector4.New(0., 0., 0., 0.),
+			right: vector4.New(0., 0., 0., 0.),
+			t:     0,
+			want:  vector4.New(0., 0., 0., 0.),
+		},
+		"(0, 0, 0, 0) =(0.5)=> (1, 2, 3, 4) = (0.5, 1, 1.5, 2.0)": {
+			left:  vector4.New(0., 0., 0., 0.),
+			right: vector4.New(1., 2., 3., 4.),
+			t:     0.5,
+			want:  vector4.New(0.5, 1., 1.5, 2.),
+		},
+		"(0, 0, 0, 0) =(1)=> (1, 2, 3, 4) = (1, 2, 3, 4)": {
+			left:  vector4.New(0., 0., 0., 0.),
+			right: vector4.New(1., 2., 3., 4.),
+			t:     1,
+			want:  vector4.New(1., 2., 3., 4.),
+		},
+	}
+
+	for name, tc := range tests {
+		t.Run(name, func(t *testing.T) {
+			got := vector4.LerpClamped(tc.left, tc.right, tc.t)
+
+			assert.InDelta(t, tc.want.X(), got.X(), 0.000001)
+			assert.InDelta(t, tc.want.Y(), got.Y(), 0.000001)
+			assert.InDelta(t, tc.want.Z(), got.Z(), 0.000001)
+			assert.InDelta(t, tc.want.W(), got.W(), 0.000001)
+		})
+	}
+}
+
+func TestToArray(t *testing.T) {
+	v := vector4.New(1., 2., 3., 4.)
+
+	arr := v.ToArr()
+	assert.Len(t, arr, 4)
+	assert.Equal(t, 1., arr[0])
+	assert.Equal(t, 2., arr[1])
+	assert.Equal(t, 3., arr[2])
+	assert.Equal(t, 4., arr[3])
+
+	arrFixed := v.ToFixedArr()
+	assert.Len(t, arrFixed, 4)
+	assert.Equal(t, 1., arrFixed[0])
+	assert.Equal(t, 2., arrFixed[1])
+	assert.Equal(t, 3., arrFixed[2])
+	assert.Equal(t, 4., arrFixed[3])
+}
+
 func TestMin(t *testing.T) {
 	tests := map[string]struct {
 		left  vector4.Float64

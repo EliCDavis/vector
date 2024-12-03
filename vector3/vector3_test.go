@@ -262,6 +262,29 @@ func TestLerp(t *testing.T) {
 	}
 }
 
+func TestLerpClamped(t *testing.T) {
+	tests := map[string]struct {
+		left  vector3.Float64
+		right vector3.Float64
+		t     float64
+		want  vector3.Float64
+	}{
+		"(0, 0, 0) =(0)=> (0, 0, 0) = (0, 0, 0)":       {left: vector3.New(0., 0., 0.), right: vector3.New(0., 0., 0.), t: 0, want: vector3.New(0., 0., 0.)},
+		"(0, 0, 0) =(0.5)=> (1, 2, 3) = (0.5, 1, 1.5)": {left: vector3.New(0., 0., 0.), right: vector3.New(1., 2., 3.), t: 0.5, want: vector3.New(0.5, 1., 1.5)},
+		"(0, 0, 0) =(1)=> (1, 2, 3) = (1, 2, 3)":       {left: vector3.New(0., 0., 0.), right: vector3.New(1., 2., 3.), t: 1, want: vector3.New(1., 2., 3.)},
+	}
+
+	for name, tc := range tests {
+		t.Run(name, func(t *testing.T) {
+			got := vector3.LerpClamped(tc.left, tc.right, tc.t)
+
+			assert.InDelta(t, tc.want.X(), got.X(), 0.000001)
+			assert.InDelta(t, tc.want.Y(), got.Y(), 0.000001)
+			assert.InDelta(t, tc.want.Z(), got.Z(), 0.000001)
+		})
+	}
+}
+
 func TestMin(t *testing.T) {
 	tests := map[string]struct {
 		left  vector3.Float64
@@ -348,11 +371,18 @@ func TestScaleVecInt(t *testing.T) {
 
 func TestToArray(t *testing.T) {
 	v := vector3.New(1., 2., 3.)
+
 	arr := v.ToArr()
 	assert.Len(t, arr, 3)
 	assert.Equal(t, 1., arr[0])
 	assert.Equal(t, 2., arr[1])
 	assert.Equal(t, 3., arr[2])
+
+	arrFixed := v.ToFixedArr()
+	assert.Len(t, arrFixed, 3)
+	assert.Equal(t, 1., arrFixed[0])
+	assert.Equal(t, 2., arrFixed[1])
+	assert.Equal(t, 3., arrFixed[2])
 }
 
 func TestNearZero(t *testing.T) {

@@ -101,6 +101,16 @@ func Lerp[T vector.Number](a, b Vector[T], t float64) Vector[T] {
 	}
 }
 
+func LerpClamped[T vector.Number](a, b Vector[T], t float64) Vector[T] {
+	tClean := vector.Clamp(t, 0, 1)
+	return Vector[T]{
+		x: T((float64(b.x-a.x) * tClean) + float64(a.x)),
+		y: T((float64(b.y-a.y) * tClean) + float64(a.y)),
+		z: T((float64(b.z-a.z) * tClean) + float64(a.z)),
+		w: T((float64(b.w-a.w) * tClean) + float64(a.w)),
+	}
+}
+
 func (v Vector[T]) Scale(t float64) Vector[T] {
 	return Vector[T]{
 		x: T(float64(v.x) * t),
@@ -207,6 +217,14 @@ func FromArray[T vector.Number](data []T) Vector[T] {
 	}
 
 	return v
+}
+
+func (v Vector[T]) ToArr() []T {
+	return []T{v.x, v.y, v.z, v.w}
+}
+
+func (v Vector[T]) ToFixedArr() [4]T {
+	return [4]T{v.x, v.y, v.z, v.w}
 }
 
 func (v Vector[T]) MarshalJSON() ([]byte, error) {
