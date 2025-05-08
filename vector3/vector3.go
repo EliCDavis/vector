@@ -625,6 +625,14 @@ func (v Vector[T]) DivByConstant(t float64) Vector[T] {
 	}
 }
 
+func (v Vector[T]) Mod(t float64) Vector[T] {
+	return Vector[T]{
+		x: T(math.Mod(float64(v.x), t)),
+		y: T(math.Mod(float64(v.y), t)),
+		z: T(math.Mod(float64(v.z), t)),
+	}
+}
+
 func (v Vector[T]) Length() float64 {
 	return math.Sqrt(v.LengthSquared())
 }

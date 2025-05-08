@@ -407,6 +407,15 @@ func (v Vector[T]) LengthSquared() float64 {
 	return float64((v.x * v.x) + (v.y * v.y) + (v.z * v.z) + (v.w * v.w))
 }
 
+func (v Vector[T]) Mod(t float64) Vector[T] {
+	return Vector[T]{
+		x: T(math.Mod(float64(v.x), t)),
+		y: T(math.Mod(float64(v.y), t)),
+		z: T(math.Mod(float64(v.z), t)),
+		w: T(math.Mod(float64(v.w), t)),
+	}
+}
+
 // Sqrt applies the math.Sqrt to each component of the vector
 func (v Vector[T]) Sqrt() Vector[T] {
 	return New(

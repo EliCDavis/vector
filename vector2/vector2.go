@@ -325,6 +325,13 @@ func (v Vector[T]) Sub(other Vector[T]) Vector[T] {
 	}
 }
 
+func (v Vector[T]) Mod(t float64) Vector[T] {
+	return Vector[T]{
+		x: T(math.Mod(float64(v.x), t)),
+		y: T(math.Mod(float64(v.y), t)),
+	}
+}
+
 func (v Vector[T]) Length() float64 {
 	return math.Sqrt(float64(v.x*v.x) + float64(v.y*v.y))
 }

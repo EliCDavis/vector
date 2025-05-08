@@ -76,6 +76,7 @@ func TestOperations(t *testing.T) {
 		"flip":          {got: start.Flip(), want: vector2.New(-1.2, 2.4)},
 		"flipX":         {got: start.FlipX(), want: vector2.New(-1.2, -2.4)},
 		"flipY":         {got: start.FlipY(), want: vector2.New(1.2, 2.4)},
+		"mod(1)":        {got: start.Mod(1), want: vector2.New(.2, -.4)},
 
 		// Math package functions
 		"log":   {got: start.Log(), want: vector2.New(0.1823215, math.NaN())},
