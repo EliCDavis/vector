@@ -519,6 +519,15 @@ func (v Vector[T]) MultByVector(o Vector[T]) Vector[T] {
 	}
 }
 
+func (v Vector[T]) DivByVector(o Vector[T]) Vector[T] {
+	return Vector[T]{
+		x: v.x / o.x,
+		y: v.y / o.y,
+		z: v.z / o.z,
+		w: v.w / o.w,
+	}
+}
+
 func (v Vector[T]) ContainsNaN() bool {
 	if math.IsNaN(float64(v.x)) {
 		return true

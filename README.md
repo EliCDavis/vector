@@ -8,66 +8,68 @@ Collection of **generic, immutable** vector math functions I've written overtime
 
 ## API
 
-| Function      | Vector2 | Vector3 | Vector4 | Description                                            |
-|---------------|---------|---------|---------|--------------------------------------------------------|
-| Abs           | ✅      | ✅     | ✅      | Returns a vector with each component's absolute value  |
-| Add           | ✅      | ✅     | ✅      | Component Wise Addition                                |
-| Angle         | ✅      | ✅     |         | Returns the angle between two vectors                  |
-| ToArr         | ✅      | ✅     | ✅      | Returns a slice containing the vector component data   |
-| ToFixedArr    | ✅      | ✅     | ✅      | Returns a array containing the vector component data   |
-| Ceil          | ✅      | ✅     | ✅      | Ceils each vectors component to the nearest integer    |
-| Clamp         | ✅      | ✅     | ✅      | Clamps each component between two values               |
-| ContainsNaN   | ✅      | ✅     | ✅      | Returns true if any component of the vector is NaN     |
-| Cross         |         | ✅     |          | Returns the cross product between two vectors          |
-| Dot           | ✅      | ✅     | ✅      | Returns the dot product between two vectors            |
-| Flip          | ✅      | ✅     | ✅      | Scales the vector by -1                                |
-| FlipX         | ✅      | ✅     | ✅      | Returns a vector with the X component multiplied by -1 |
-| FlipY         | ✅      | ✅     | ✅      | Returns a vector with the Y component multiplied by -1 |
-| FlipZ         |         | ✅     | ✅      | Returns a vector with the Z component multiplied by -1 |
-| FlipW         |         |         | ✅      | Returns a vector with the W component multiplied by -1 |
-| Floor         | ✅      | ✅     | ✅      | Floors each vectors component                          |
-| Format        | ✅      | ✅     | ✅      | Build a string with vector data                        |
-| Length        | ✅      | ✅     | ✅      | Returns the length of the vector                       |
-| LengthSquared | ✅      | ✅     | ✅      | Returns the squared length of the vector               |
-| Max           | ✅      | ✅     | ✅      | Returns a new vector where each component is the largest value between the two vectors |
-| MaxX          | ✅      | ✅     | ✅      | Returns the largest X component between the two vectors |
-| MaxY          | ✅      | ✅     | ✅      | Returns the largest Y component between the two vectors |
-| MaxZ          |         | ✅     | ✅      | Returns the largest Z component between the two vectors |
-| MaxW          |         |         | ✅      | Returns the largest W component between the two vectors |
-| MaxComponent  | ✅      | ✅     | ✅      | Returns the vectors largest component                  |
-| Midpoint      | ✅      | ✅     | ✅      | Finds the mid point between two vectors                |
-| Min           | ✅      | ✅     | ✅      | Returns a new vector where each component is the smallest value between the two vectors |
-| MinX          | ✅      | ✅     | ✅      | Returns the smallest X component between the two vectors |
-| MinY          | ✅      | ✅     | ✅      | Returns the smallest Y component between the two vectors |
-| MinZ          |         | ✅     | ✅      | Returns the smallest Z component between the two vectors |
-| MinW          |         |         | ✅      | Returns the smallest W component between the two vectors |
-| MinComponent  | ✅      | ✅     | ✅      | Returns the vectors smallest component                 |
-| Normalized    | ✅      | ✅     | ✅      | Returns the normalized vector                          |
-| NearZero      | ✅      | ✅     | ✅      | Returns true if all of the components are near 0       |
-| Round         | ✅      | ✅     | ✅      | Rounds each vectors component to the nearest integer   |
-| Scale         | ✅      | ✅     | ✅      | Scales the vector by some constant                     |
-| Sqrt          | ✅      | ✅     | ✅      | Returns a vector with each component's square root     |
-| Sub           | ✅      | ✅     | ✅      | Component Wise Subtraction                             |
-| Values        | ✅      | ✅     | ✅      | Returns all components of the vector                   |
-| X             | ✅      | ✅     | ✅      | Returns the x component of the vector                  |
-| Y             | ✅      | ✅     | ✅      | Returns the y component of the vector                  |
-| Z             |         | ✅     | ✅      | Returns the z component of the vector                  |
-| W             |         |         | ✅      | Returns the w component of the vector                  |
-| XY            |         | ✅     | ✅      | Equivalent to vector2.New[T](v.x, v.y)                 |
-| YZ            |         | ✅     | ✅      | Equivalent to vector2.New[T](v.y, v.z)                 |
-| XZ            |         | ✅     | ✅      | Equivalent to vector2.New[T](v.x, v.z)                 |
-| YX            | ✅      | ✅     | ✅      | Equivalent to vector2.New[T](v.y, v.x)                 |
-| ZX            |         | ✅     | ✅      | Equivalent to vector2.New[T](v.z, v.x)                 |
-| ZY            |         | ✅     | ✅      | Equivalent to vector2.New[T](v.z, v.y)                 |
-| Lerp          | ✅      | ✅     | ✅      | Interpolates between two vectors by t.                 |
-| LerpClamped   | ✅      | ✅     | ✅      | Interpolates between two vectors by t. T is clamped 0 to 1 |
-| Log           | ✅      | ✅     | ✅      | Returns the natural logarithm for each component       |
-| Log2          | ✅      | ✅     | ✅      | Returns the binary logarithm for each component        |
-| Log10         | ✅      | ✅     | ✅      | Returns the decimal logarithm for each component       |
-| Exp           | ✅      | ✅     | ✅      | Returns e**x, the base-e exponential for each component |
-| Exp2          | ✅      | ✅     | ✅      | Returns 2**x, the base-2 exponential for each component |
-| Expm1         | ✅      | ✅     | ✅      | Returns e**x - 1, the base-e exponential for each component minus 1. It is more accurate than Exp(x) - 1 when the component is near zero |
-| Write         | ✅      | ✅     | ✅      | Write vector component data as binary to io.Writer     |
+| Function      | Vector2 | Vector3 | Vector4 | Description                                                                                                                              |
+| ------------- | ------- | ------- | ------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| Abs           | ✅       | ✅       | ✅       | Returns a vector with each component's absolute value                                                                                    |
+| Add           | ✅       | ✅       | ✅       | Component Wise Addition                                                                                                                  |
+| Angle         | ✅       | ✅       |         | Returns the angle between two vectors                                                                                                    |
+| ToArr         | ✅       | ✅       | ✅       | Returns a slice containing the vector component data                                                                                     |
+| ToFixedArr    | ✅       | ✅       | ✅       | Returns a array containing the vector component data                                                                                     |
+| Ceil          | ✅       | ✅       | ✅       | Ceils each vectors component to the nearest integer                                                                                      |
+| Clamp         | ✅       | ✅       | ✅       | Clamps each component between two values                                                                                                 |
+| ContainsNaN   | ✅       | ✅       | ✅       | Returns true if any component of the vector is NaN                                                                                       |
+| Cross         |         | ✅       |         | Returns the cross product between two vectors                                                                                            |
+| Dot           | ✅       | ✅       | ✅       | Returns the dot product between two vectors                                                                                              |
+| DivByVector   | ✅       | ✅       | ✅       | Component wise division                                                                                                                  |
+| Flip          | ✅       | ✅       | ✅       | Scales the vector by -1                                                                                                                  |
+| FlipX         | ✅       | ✅       | ✅       | Returns a vector with the X component multiplied by -1                                                                                   |
+| FlipY         | ✅       | ✅       | ✅       | Returns a vector with the Y component multiplied by -1                                                                                   |
+| FlipZ         |         | ✅       | ✅       | Returns a vector with the Z component multiplied by -1                                                                                   |
+| FlipW         |         |         | ✅       | Returns a vector with the W component multiplied by -1                                                                                   |
+| Floor         | ✅       | ✅       | ✅       | Floors each vectors component                                                                                                            |
+| Format        | ✅       | ✅       | ✅       | Build a string with vector data                                                                                                          |
+| Length        | ✅       | ✅       | ✅       | Returns the length of the vector                                                                                                         |
+| LengthSquared | ✅       | ✅       | ✅       | Returns the squared length of the vector                                                                                                 |
+| Max           | ✅       | ✅       | ✅       | Returns a new vector where each component is the largest value between the two vectors                                                   |
+| MaxX          | ✅       | ✅       | ✅       | Returns the largest X component between the two vectors                                                                                  |
+| MaxY          | ✅       | ✅       | ✅       | Returns the largest Y component between the two vectors                                                                                  |
+| MaxZ          |         | ✅       | ✅       | Returns the largest Z component between the two vectors                                                                                  |
+| MaxW          |         |         | ✅       | Returns the largest W component between the two vectors                                                                                  |
+| MaxComponent  | ✅       | ✅       | ✅       | Returns the vectors largest component                                                                                                    |
+| Midpoint      | ✅       | ✅       | ✅       | Finds the mid point between two vectors                                                                                                  |
+| Min           | ✅       | ✅       | ✅       | Returns a new vector where each component is the smallest value between the two vectors                                                  |
+| MinX          | ✅       | ✅       | ✅       | Returns the smallest X component between the two vectors                                                                                 |
+| MinY          | ✅       | ✅       | ✅       | Returns the smallest Y component between the two vectors                                                                                 |
+| MinZ          |         | ✅       | ✅       | Returns the smallest Z component between the two vectors                                                                                 |
+| MinW          |         |         | ✅       | Returns the smallest W component between the two vectors                                                                                 |
+| MinComponent  | ✅       | ✅       | ✅       | Returns the vectors smallest component                                                                                                   |
+| MultByVector  | ✅       | ✅       | ✅       | component wise multiplication, also known as Hadamard product                                                                            |
+| Normalized    | ✅       | ✅       | ✅       | Returns the normalized vector                                                                                                            |
+| NearZero      | ✅       | ✅       | ✅       | Returns true if all of the components are near 0                                                                                         |
+| Round         | ✅       | ✅       | ✅       | Rounds each vectors component to the nearest integer                                                                                     |
+| Scale         | ✅       | ✅       | ✅       | Scales the vector by some constant                                                                                                       |
+| Sqrt          | ✅       | ✅       | ✅       | Returns a vector with each component's square root                                                                                       |
+| Sub           | ✅       | ✅       | ✅       | Component Wise Subtraction                                                                                                               |
+| Values        | ✅       | ✅       | ✅       | Returns all components of the vector                                                                                                     |
+| X             | ✅       | ✅       | ✅       | Returns the x component of the vector                                                                                                    |
+| Y             | ✅       | ✅       | ✅       | Returns the y component of the vector                                                                                                    |
+| Z             |         | ✅       | ✅       | Returns the z component of the vector                                                                                                    |
+| W             |         |         | ✅       | Returns the w component of the vector                                                                                                    |
+| XY            |         | ✅       | ✅       | Equivalent to vector2.New[T](v.x, v.y)                                                                                                   |
+| YZ            |         | ✅       | ✅       | Equivalent to vector2.New[T](v.y, v.z)                                                                                                   |
+| XZ            |         | ✅       | ✅       | Equivalent to vector2.New[T](v.x, v.z)                                                                                                   |
+| YX            | ✅       | ✅       | ✅       | Equivalent to vector2.New[T](v.y, v.x)                                                                                                   |
+| ZX            |         | ✅       | ✅       | Equivalent to vector2.New[T](v.z, v.x)                                                                                                   |
+| ZY            |         | ✅       | ✅       | Equivalent to vector2.New[T](v.z, v.y)                                                                                                   |
+| Lerp          | ✅       | ✅       | ✅       | Interpolates between two vectors by t.                                                                                                   |
+| LerpClamped   | ✅       | ✅       | ✅       | Interpolates between two vectors by t. T is clamped 0 to 1                                                                               |
+| Log           | ✅       | ✅       | ✅       | Returns the natural logarithm for each component                                                                                         |
+| Log2          | ✅       | ✅       | ✅       | Returns the binary logarithm for each component                                                                                          |
+| Log10         | ✅       | ✅       | ✅       | Returns the decimal logarithm for each component                                                                                         |
+| Exp           | ✅       | ✅       | ✅       | Returns e**x, the base-e exponential for each component                                                                                  |
+| Exp2          | ✅       | ✅       | ✅       | Returns 2**x, the base-2 exponential for each component                                                                                  |
+| Expm1         | ✅       | ✅       | ✅       | Returns e**x - 1, the base-e exponential for each component minus 1. It is more accurate than Exp(x) - 1 when the component is near zero |
+| Write         | ✅       | ✅       | ✅       | Write vector component data as binary to io.Writer                                                                                       |
 
 
 ## Example

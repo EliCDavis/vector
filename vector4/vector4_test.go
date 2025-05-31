@@ -50,6 +50,7 @@ func TestVectorOperations(t *testing.T) {
 		"ceil":         {want: start.Ceil(), got: vector4.New(2., -2., 4., 5.)},
 		"round":        {want: start.Round(), got: vector4.New(1., -2., 4., 5.)},
 		"multByVector": {want: start.MultByVector(vector4.New(2., 4., 6., 7.)), got: vector4.New(2.4, -9.6, 22.2, 34.3)},
+		"divByVector":  {got: start.DivByVector(vector4.New(2., 4., 6., 7.)), want: vector4.New(0.6, -0.6, 0.6166666666666, .7)},
 		"sqrt":         {want: start.Sqrt(), got: vector4.New(1.0954451, math.NaN(), 1.923538, 2.213594)},
 		"clamp":        {want: start.Clamp(1, 2), got: vector4.New(1.2, 1., 2., 2.)},
 		"center":       {want: vector4.Midpoint(start, vector4.New(2.4, 2.4, 4.7, 4.7)), got: vector4.New(1.8, 0., 4.2, 4.8)},

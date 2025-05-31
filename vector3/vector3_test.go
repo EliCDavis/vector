@@ -30,6 +30,8 @@ func TestVectorOperations(t *testing.T) {
 		"ceil":         {got: start.Ceil(), want: vector3.New(2., -2., 4.)},
 		"round":        {got: start.Round(), want: vector3.New(1., -2., 4.)},
 		"multByVector": {got: start.MultByVector(vector3.New(2., 4., 6.)), want: vector3.New(2.4, -9.6, 22.2)},
+		"divByVector":  {got: start.DivByVector(vector3.New(2., 4., 6.)), want: vector3.New(0.6, -0.6, 0.6166666666666)},
+		"Reciprocal":   {got: vector3.New(1, 2, -4).Reciprocal(), want: vector3.New(1, 0.5, -.25)},
 		"sqrt":         {got: start.Sqrt(), want: vector3.New(1.0954451, math.NaN(), 1.923538)},
 		"clamp":        {got: start.Clamp(1, 2), want: vector3.New(1.2, 1., 2.)},
 		"cross":        {got: start.Cross(vector3.New(2., 3., 4.)), want: vector3.New(-20.7, 2.6, 8.4)},

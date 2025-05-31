@@ -362,6 +362,13 @@ func (v Vector[T]) DivByConstant(t float64) Vector[T] {
 	return v.Scale(1.0 / t)
 }
 
+func (v Vector[T]) DivByVector(o Vector[T]) Vector[T] {
+	return Vector[T]{
+		x: v.x / o.x,
+		y: v.y / o.y,
+	}
+}
+
 func (v Vector[T]) DistanceSquared(other Vector[T]) float64 {
 	xDist := other.x - v.x
 	yDist := other.y - v.y

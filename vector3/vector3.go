@@ -625,6 +625,14 @@ func (v Vector[T]) DivByConstant(t float64) Vector[T] {
 	}
 }
 
+func (v Vector[T]) DivByVector(o Vector[T]) Vector[T] {
+	return Vector[T]{
+		x: v.x / o.x,
+		y: v.y / o.y,
+		z: v.z / o.z,
+	}
+}
+
 func (v Vector[T]) Mod(t float64) Vector[T] {
 	return Vector[T]{
 		x: T(math.Mod(float64(v.x), t)),
