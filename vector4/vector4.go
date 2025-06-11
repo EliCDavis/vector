@@ -714,3 +714,15 @@ func (v Vector[T]) Component(index int) T {
 		panic(fmt.Errorf("invalid index: %d", index))
 	}
 }
+
+func (v Vector[T]) DistanceSquared(other Vector[T]) float64 {
+	xDist := other.x - v.x
+	yDist := other.y - v.y
+	zDist := other.z - v.z
+	wDist := other.w - v.w
+	return float64((xDist * xDist) + (yDist * yDist) + (zDist * zDist) + (wDist * wDist))
+}
+
+func (v Vector[T]) Distance(other Vector[T]) float64 {
+	return math.Sqrt(v.DistanceSquared(other))
+}
