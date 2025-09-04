@@ -318,6 +318,28 @@ func (v Vector[T]) Add(other Vector[T]) Vector[T] {
 	}
 }
 
+func (v Vector[T]) AddX(other T) Vector[T] {
+	return Vector[T]{
+		x: v.x + other,
+		y: v.y,
+	}
+}
+
+func (v Vector[T]) AddY(other T) Vector[T] {
+	return Vector[T]{
+		x: v.x,
+		y: v.y + other,
+	}
+}
+
+// Fract returns the fractional part of each component of the vector. This is calculated as x - floor(x).
+func (v Vector[T]) Fract() Vector[T] {
+	return Vector[T]{
+		x: T(float64(v.x) - math.Floor(float64(v.x))),
+		y: T(float64(v.y) - math.Floor(float64(v.y))),
+	}
+}
+
 func (v Vector[T]) Sub(other Vector[T]) Vector[T] {
 	return Vector[T]{
 		x: v.x - other.x,
